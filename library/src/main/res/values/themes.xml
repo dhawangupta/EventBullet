@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <style name="AppTheme.nLiveo" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/nliveo_blue_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/nliveo_blue_alpha_colorPrimaryDark</item>
+
+        <item name="android:windowActionModeOverlay">true</item>
+    </style>
+
+    <style name="Theme.nLiveo" parent="AppTheme.nLiveo" />
+</resources>
