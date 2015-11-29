@@ -37,6 +37,7 @@ public class MapsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        //testing git
         //retrieving places
         try {
             GetPlacesAsyncTask task = new GetPlacesAsyncTask();
