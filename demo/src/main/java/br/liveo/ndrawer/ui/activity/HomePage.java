@@ -27,8 +27,13 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
     public void onInt(Bundle savedInstanceState) {
 
         // User Information
+
+        if(Name_value!=null){
+        this.userName.setText(Name_value);
+        this.userEmail.setText(Email_value);
+        }else{
         this.userName.setText("Abc");
-        this.userEmail.setText("abc@abc.com");
+        this.userEmail.setText("abc@abc.com");}
         this.userPhoto.setImageResource(R.drawable.arimit_icon);
         this.userBackground.setImageResource(R.drawable.ic_user_background_first);
 
