@@ -184,18 +184,12 @@ public class
         } else {
             _passwordText.setError(null);
         }
-<<<<<<< HEAD
 
         if(!HelperMethods.isInternetAvailable(this))
             valid = false;
 
-=======
-
-
-
         if(!HelperMethods.isInternetAvailable(this))
             valid = false;
->>>>>>> origin/master
         return valid;
     }
 
