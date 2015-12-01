@@ -100,7 +100,11 @@ public class
         for(User x: returnValues){
 
             if(x.email.equals(email) && x.password.equals(password)) {
+
+                Toast.makeText(getApplicationContext(), "Welcome" + x.name, Toast.LENGTH_LONG);
+
                 //Toast.makeText(getApplicationContext(), "Welcome" + x.name, Toast.LENGTH_LONG);
+
                 loggedInUser = x;
                 UserStatus userStatus = new UserStatus();
                 userStatus.SetStatus(true);
@@ -113,7 +117,18 @@ public class
                 startActivity(moreDetailsIntent);
                 break;
             }
+          //  Toast.makeText(getApplicationContext(),"Incorrent Username or Password",Toast.LENGTH_SHORT).show();
         }
+
+//        new android.os.Handler().postDelayed(
+//                new Runnable() {
+//                    public void run() {
+//                        // On complete call either onLoginSuccess or onLoginFailed
+//                        onLoginSuccess();
+//                        // onLoginFailed();
+//                        progressDialog.dismiss();
+//                    }
+//                }, 3000);
 
 
         new android.os.Handler().postDelayed(
@@ -125,6 +140,7 @@ public class
                         onLoginFailed();
                     }
                 }, 3000);
+
     }
 
 
@@ -171,6 +187,9 @@ public class
         } else {
             _passwordText.setError(null);
         }
+
+
+
         if(!HelperMethods.isInternetAvailable(this))
             valid = false;
         return valid;
