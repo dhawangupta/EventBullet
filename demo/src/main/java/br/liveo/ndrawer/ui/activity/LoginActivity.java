@@ -99,14 +99,17 @@ public class
         for(User x: returnValues){
 
             if(x.email.equals(email) && x.password.equals(password)) {
+<<<<<<< HEAD
                 Toast.makeText(getApplicationContext(), "Welcome" + x.name, Toast.LENGTH_LONG);
+=======
+                //Toast.makeText(getApplicationContext(), "Welcome" + x.name, Toast.LENGTH_LONG);
+>>>>>>> origin/master
                 loggedInUser = x;
-                Bundle userBundle = new Bundle();
-                userBundle.putString("username", x.name);
-                Intent moreDetailsIntent = new Intent(this,MainActivity.class);
-                moreDetailsIntent.putExtras(userBundle);
+                Intent moreDetailsIntent = new Intent(LoginActivity.this, HomePage.class);
+                Toast.makeText(getApplicationContext(),"You done Successfully",Toast.LENGTH_SHORT).show();
+                moreDetailsIntent.putExtra("name",x.name);
+                moreDetailsIntent.putExtra("email",x.email);
                 startActivity(moreDetailsIntent);
-
                 break;
             }
           //  Toast.makeText(getApplicationContext(),"Incorrent Username or Password",Toast.LENGTH_SHORT).show();
@@ -130,20 +133,15 @@ public class
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
-
                 // TODO: Implement successful signup logic here
-                Toast.makeText(getApplicationContext(), "Welcome" + loggedInUser.name, Toast.LENGTH_LONG).show();
+              //  Toast.makeText(getApplicationContext(), "Welcome" + loggedInUser.name, Toast.LENGTH_LONG).show();
                 // By default we just finish the Activity and log them in automatically
                 //this.finish();
             }
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        // Disable going back to the MainActivity
-        moveTaskToBack(true);
-    }
+
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
@@ -175,8 +173,15 @@ public class
         } else {
             _passwordText.setError(null);
         }
+<<<<<<< HEAD
 
 
+=======
+        if(!HelperMethods.isInternetAvailable(this))
+            valid = false;
+>>>>>>> origin/master
         return valid;
     }
+
+
 }
