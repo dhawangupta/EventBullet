@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import br.liveo.ndrawer.MapsActivity;
+import br.liveo.ndrawer.MongoLabPlace.Place;
 import br.liveo.ndrawer.R;
 
 
@@ -18,12 +22,17 @@ public class ContentActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_activity);
 
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("My title");     //title for the toolbar
+
         setTitle(R.id.title);
 
         Intent intent = getIntent();
-        int imageviewId = Integer.parseInt(intent.getExtras().getString("imageviewId").substring(9,10));
-        String place_name = intent.getExtras().getString("place_name"+imageviewId);
-        String place_content = intent.getExtras().getString("place_content"+imageviewId);
+        int imageviewId = intent.getExtras().getInt("imageviewId");
+        ArrayList<Place> VaranasiPlaces = (ArrayList<Place>) intent.getExtras().getSerializable("placesObject");
+        String place_name = VaranasiPlaces.get(imageviewId).getName();
+        String place_content = VaranasiPlaces.get(imageviewId).getContent();;
 
         TextView t1 = (TextView)findViewById(R.id.place_name);
         TextView t2 = (TextView)findViewById(R.id.place_content);

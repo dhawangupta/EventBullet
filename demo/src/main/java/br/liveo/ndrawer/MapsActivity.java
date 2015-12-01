@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import br.liveo.ndrawer.ImageLoader.ImageLoader;
@@ -37,7 +38,6 @@ public class MapsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        // 3g test
         //retrieving places
         try {
             GetPlacesAsyncTask task = new GetPlacesAsyncTask();
@@ -49,54 +49,67 @@ public class MapsActivity extends FragmentActivity {
                 e.printStackTrace();
             }
 
+            int loader = R.drawable.loader;         //loader image
+            final Intent[] intents = new Intent[VaranasiPlaces.size()];
 
             //dyanmically creating imageviews
+            LinearLayout imageviews = (LinearLayout) findViewById(R.id.imageviews);
             ImageView[] iv = new ImageView[VaranasiPlaces.size()];
-//            for(int i=0; i<VaranasiPlaces.size(); i++){
-//                iv[i] = new ImageView(this);
-//
-//
-//            }
 
+            //converting px to dp
+            final float scale = getResources().getDisplayMetrics().density;
+            int dpWidthInPx  = (int) (150 * scale);
+            int dpHeightInPx = (int) (150 * scale);
+            int dpMarginInPx = (int) (1*scale);
 
-            int loader = R.drawable.loader;
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dpWidthInPx, dpHeightInPx);
+            params.setMargins(dpMarginInPx, dpMarginInPx, dpMarginInPx, dpMarginInPx);
 
-            final Intent[] intents = new Intent[30];
+            for(int j=0; j<VaranasiPlaces.size(); j++){
+                iv[j] = new ImageView(this);
+                iv[j].setId(j+1);
+                iv[j].setLayoutParams(params);
+                imageviews.addView(iv[j]);
 
-    //loop show to multiple images
-    for (i = 1; i <= 11; i++) {
-        String idImageView = "imageview" + i;
-        // Imageview to show
-        iv[i] = (ImageView) findViewById(MapsActivity.this.getResources().getIdentifier(idImageView, "id", getPackageName()));
+                // Image url
+                String image_url = VaranasiPlaces.get(j).getImageURL();
+                // ImageLoader class instance
+                ImageLoader imgLoader = new ImageLoader(getApplicationContext());
+                // whenever you want to load an image from url
+                // call DisplayImage function
+                // url - image url to load
+                // loader - loader image, will be displayed before getting image
+                // image - ImageView
+                imgLoader.DisplayImage(image_url, loader, iv[j]);
 
-        // Image url
-        String image_url = VaranasiPlaces.get(i - 1).getImageURL();
-        // ImageLoader class instance
-        ImageLoader imgLoader = new ImageLoader(getApplicationContext());
-        // whenever you want to load an image from url
-        // call DisplayImage function
-        // url - image url to load
-        // loader - loader image, will be displayed before getting image
-        // image - ImageView
-        imgLoader.DisplayImage(image_url, loader, iv[i]);
+                //on-click action:
+                final int finalJ = j;
+                iv[j].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        intents[finalJ] = new Intent(MapsActivity.this, ContentActivity.class);
 
+                        intents[finalJ].putExtra("imageviewId", finalJ);
+                        intents[finalJ].putExtra("placesObject", VaranasiPlaces);
+                        startActivity(intents[finalJ]);
+                    }
+                });
 
-        //on-click action:
-        iv[i].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intents[i] = new Intent(MapsActivity.this, ContentActivity.class);
-
-                intents[i].putExtra("imageviewId", getResources().getResourceEntryName(v.getId()));
-                intents[i].putExtra("place_name"+i, VaranasiPlaces.get(i - 1).getName());
-                intents[i].putExtra("place_content"+i, VaranasiPlaces.get(i - 1).getContent());
-                startActivity(intents[i]);
             }
-        });
 
-    }
+
+
+
+
+
+            //following lines of code can be used for retrieving ids when used in a loop
+//        String idImageView = "imageview" + i;
+//        iv[i] = (ImageView) findViewById(MapsActivity.this.getResources().getIdentifier(i+"", "id", getPackageName()));
+
+
+
+
         } catch (IndexOutOfBoundsException e){
-    //startActivity(new Intent(MapsActivity.this, ChooseCity.class));
     Toast.makeText(this, "Check your internet!!!", Toast.LENGTH_LONG).show();
         }
         setUpMapIfNeeded();
