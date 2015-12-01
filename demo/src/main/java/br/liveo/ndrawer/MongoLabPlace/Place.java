@@ -1,6 +1,8 @@
 package br.liveo.ndrawer.MongoLabPlace;
 
-public class Place {
+import java.io.Serializable;
+
+public class Place implements Serializable{
 
 	public String place_id;
 	public String name;
