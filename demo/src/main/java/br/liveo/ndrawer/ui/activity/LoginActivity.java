@@ -14,6 +14,7 @@ import android.widget.Toast;
 import br.liveo.ndrawer.HelperMethods;
 import br.liveo.ndrawer.MongoLabUser.GetUserAsyncTask;
 import br.liveo.ndrawer.MongoLabUser.User;
+import br.liveo.ndrawer.MongoLabUser.UserStatus;
 import br.liveo.ndrawer.R;
 
 import java.util.ArrayList;
@@ -102,10 +103,14 @@ public class
                 //Toast.makeText(getApplicationContext(), "Welcome" + x.name, Toast.LENGTH_LONG);
 
                 loggedInUser = x;
+                UserStatus userStatus = new UserStatus();
+                userStatus.SetStatus(true);
+                userStatus.SetUser_Id(x.user_id);
+                userStatus.SetName(x.name);
+                userStatus.SetEmail(x.email);
+                userStatus.SetPassword(x.password);
                 Intent moreDetailsIntent = new Intent(LoginActivity.this, HomePage.class);
                 Toast.makeText(getApplicationContext(),"You done Successfully",Toast.LENGTH_SHORT).show();
-                moreDetailsIntent.putExtra("name",x.name);
-                moreDetailsIntent.putExtra("email",x.email);
                 startActivity(moreDetailsIntent);
                 break;
             }
@@ -122,6 +127,16 @@ public class
 //                    }
 //                }, 3000);
 
+
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        // On complete call either onLoginSuccess or onLoginFailed
+                        //onLoginSuccess();
+                        progressDialog.dismiss();
+                        onLoginFailed();
+                    }
+                }, 3000);
 
     }
 
@@ -142,7 +157,6 @@ public class
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
-        finish();
     }
 
     public void onLoginFailed() {
@@ -170,10 +184,18 @@ public class
         } else {
             _passwordText.setError(null);
         }
+<<<<<<< HEAD
 
         if(!HelperMethods.isInternetAvailable(this))
             valid = false;
 
+=======
+
+
+
+        if(!HelperMethods.isInternetAvailable(this))
+            valid = false;
+>>>>>>> origin/master
         return valid;
     }
 
