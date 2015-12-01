@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import br.liveo.ndrawer.HelperMethods;
 import br.liveo.ndrawer.MongoLabUser.GetUserAsyncTask;
 import br.liveo.ndrawer.MongoLabUser.User;
 import br.liveo.ndrawer.R;
@@ -97,8 +98,8 @@ public class
 
         for(User x: returnValues){
 
-            if(x.email==email && x.password==password) {
-                //Toast.makeText(getApplicationContext(), "Welcome" + x.name, Toast.LENGTH_LONG);
+            if(x.email.equals(email) && x.password.equals(password)) {
+                Toast.makeText(getApplicationContext(), "Welcome" + x.name, Toast.LENGTH_LONG);
                 loggedInUser = x;
                 Bundle userBundle = new Bundle();
                 userBundle.putString("username", x.name);
@@ -108,18 +109,20 @@ public class
 
                 break;
             }
+          //  Toast.makeText(getApplicationContext(),"Incorrent Username or Password",Toast.LENGTH_SHORT).show();
         }
 
+//        new android.os.Handler().postDelayed(
+//                new Runnable() {
+//                    public void run() {
+//                        // On complete call either onLoginSuccess or onLoginFailed
+//                        onLoginSuccess();
+//                        // onLoginFailed();
+//                        progressDialog.dismiss();
+//                    }
+//                }, 3000);
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+
     }
 
 
@@ -172,6 +175,7 @@ public class
         } else {
             _passwordText.setError(null);
         }
+
 
         return valid;
     }

@@ -25,79 +25,9 @@
             android:id="@+id/imageviews"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
 
-            <!-- page1 -->
-            <ImageView
-                android:id="@+id/imageview1"
-                android:layout_marginEnd="1dp"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:clickable="true"/>
-            <ImageView
-                android:id="@+id/imageview2"
-                android:layout_marginEnd="1dp"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:clickable="true" />
-            <ImageView
-                android:id="@+id/imageview3"
-                android:layout_marginEnd="1dp"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:clickable="true" />
-            <ImageView
-                android:id="@+id/imageview4"
-                android:layout_marginEnd="1dp"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:clickable="true" />
-            <ImageView
-                android:id="@+id/imageview5"
-                android:layout_marginEnd="1dp"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:clickable="true" />
-            <!-- page2 -->
-            <ImageView
-                android:id="@+id/imageview6"
-                android:layout_marginEnd="1dp"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:clickable="true" />
-            <ImageView
-                android:id="@+id/imageview7"
-                android:layout_marginEnd="1dp"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:clickable="true" />
-            <ImageView
-                android:id="@+id/imageview8"
-                android:layout_marginEnd="1dp"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:clickable="true"/>
-
-            <ImageView
-                android:id="@+id/imageview9"
-                android:layout_marginEnd="1dp"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:clickable="true" />
-            <!-- page3 -->
-            <ImageView
-                android:id="@+id/imageview10"
-                android:layout_marginEnd="1dp"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:clickable="true" />
-
-            <ImageView
-                android:id="@+id/imageview11"
-                android:layout_marginEnd="1dp"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:clickable="true"/>
         </LinearLayout>
     </br.liveo.ndrawer.HorizontalScrollView>
 </LinearLayout>
