@@ -19,9 +19,6 @@ import br.liveo.ndrawer.R;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-//import butterknife.ButterKnife;
-//import butterknife.InjectView;
-
 public class
         LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -99,11 +96,11 @@ public class
         for(User x: returnValues){
 
             if(x.email.equals(email) && x.password.equals(password)) {
-<<<<<<< HEAD
+
                 Toast.makeText(getApplicationContext(), "Welcome" + x.name, Toast.LENGTH_LONG);
-=======
+
                 //Toast.makeText(getApplicationContext(), "Welcome" + x.name, Toast.LENGTH_LONG);
->>>>>>> origin/master
+
                 loggedInUser = x;
                 Intent moreDetailsIntent = new Intent(LoginActivity.this, HomePage.class);
                 Toast.makeText(getApplicationContext(),"You done Successfully",Toast.LENGTH_SHORT).show();
@@ -173,13 +170,10 @@ public class
         } else {
             _passwordText.setError(null);
         }
-<<<<<<< HEAD
 
-
-=======
         if(!HelperMethods.isInternetAvailable(this))
             valid = false;
->>>>>>> origin/master
+
         return valid;
     }
 
