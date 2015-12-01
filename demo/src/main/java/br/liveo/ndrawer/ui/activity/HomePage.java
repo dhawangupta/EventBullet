@@ -14,6 +14,7 @@ import br.liveo.Model.HelpLiveo;
 import br.liveo.interfaces.OnItemClickListener;
 import br.liveo.interfaces.OnPrepareOptionsMenuLiveo;
 import br.liveo.navigationliveo.NavigationLiveo;
+import br.liveo.ndrawer.MongoLabUser.UserStatus;
 import br.liveo.ndrawer.R;
 import br.liveo.ndrawer.ui.fragment.AFragment;
 import br.liveo.ndrawer.ui.fragment.MainFragment;
@@ -27,13 +28,24 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
     public void onInt(Bundle savedInstanceState) {
 
         // User Information
+           if(UserStatus.LoginStatus){
+               UserStatus userStatus = new UserStatus();
+        this.userName.setText(userStatus.GetName());
+        this.userEmail.setText(userStatus.GetEmail());}
+        else{
+        this.userName.setText("Please Log In");
+        this.userEmail.setText("");
+               this.userName.setOnClickListener(new View.OnClickListener() {
 
-        if(Name_value!=null){
-        this.userName.setText(Name_value);
-        this.userEmail.setText(Email_value);
-        }else{
-        this.userName.setText("Abc");
-        this.userEmail.setText("abc@abc.com");}
+                   @Override
+                   public void onClick(View v) {
+                       // Start the Signup activity
+                       Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                       startActivity(intent);
+
+                   }
+               });
+           }
         this.userPhoto.setImageResource(R.drawable.arimit_icon);
         this.userBackground.setImageResource(R.drawable.ic_user_background_first);
 
@@ -45,6 +57,7 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
         mHelpLiveo.addSeparator(); // Item separator
         mHelpLiveo.add(getString(R.string.others), R.mipmap.ic_delete_black_24dp);
         mHelpLiveo.add(getString(R.string.settings), R.mipmap.ic_settings_black_24dp);
+        mHelpLiveo.add("Log out",R.mipmap.icon_logout);
 
         with(this).startingPosition(2) //Starting position in the list
                 .addAllHelpItem(mHelpLiveo.getHelp())
@@ -95,6 +108,22 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
                 mFragment = new ViewPagerFragment();
                 break;
 
+            case 6: {
+                this.userName.setText("Please Log In");
+                this.userEmail.setText("");
+                this.userName.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        // Start the Signup activity
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+
+                    }
+                });
+                mFragment = new ViewPagerFragment();
+                break;
+            }
             default:
                 mFragment = MainFragment.newInstance(mHelpLiveo.get(position).getName());
                 break;
