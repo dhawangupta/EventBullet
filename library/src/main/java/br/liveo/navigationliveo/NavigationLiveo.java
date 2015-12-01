@@ -94,9 +94,6 @@ public abstract class NavigationLiveo extends AppCompatActivity {
 
     public static final String CURRENT_POSITION = "CURRENT_POSITION";
 
-    public  String Name_value;
-
-    public  String Email_value;
 
     /**
      * onCreate(Bundle savedInstanceState).
@@ -107,8 +104,6 @@ public abstract class NavigationLiveo extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Name_value = getIntent().getStringExtra("name");
-        Email_value = getIntent().getStringExtra("email");
         mountListNavigation(savedInstanceState);
 
         if (savedInstanceState != null) {
