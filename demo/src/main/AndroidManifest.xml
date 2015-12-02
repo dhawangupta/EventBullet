@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.liveo.ndrawer" >
+    package="com.placediscovery" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -23,17 +23,16 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name" >
-
         </activity>
         <activity
             android:name=".ui.activity.HomePage"
             android:label="@string/app_name"
             android:theme="@style/nLiveoDrawer" >
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.ChooseCity"
@@ -41,13 +40,13 @@
         </activity>
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:theme="@style/AppTheme.Dark"
             android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Dark"
             android:windowSoftInputMode="stateUnchanged" />
         <activity
             android:name=".ui.activity.SignupActivity"
-            android:theme="@style/AppTheme.Dark"
             android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Dark"
             android:windowSoftInputMode="stateUnchanged" />
 
         <meta-data
@@ -65,8 +64,7 @@
         </activity>
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"
-            >
+            android:label="@string/title_activity_maps" >
         </activity>
     </application>
 
