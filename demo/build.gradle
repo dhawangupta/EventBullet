@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "br.liveo.ndrawer"
+        applicationId "com.placediscovery"
         minSdkVersion 21
         targetSdkVersion 22
         versionCode 1
