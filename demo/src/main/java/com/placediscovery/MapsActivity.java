@@ -1,8 +1,6 @@
 package com.placediscovery;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,8 +21,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import com.placediscovery.R;
-import com.placediscovery.ui.activity.ChooseCity;
 import com.placediscovery.ui.activity.ContentActivity;
 
 public class MapsActivity extends FragmentActivity {
