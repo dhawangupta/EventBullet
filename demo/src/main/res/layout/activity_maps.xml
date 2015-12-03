@@ -12,10 +12,10 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:id="@+id/map"
-        tools:context="br.liveo.ndrawer.ui.activity.MapsActivity"
+        tools:context="com.placediscovery.ui.activity.MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
-    <br.liveo.ndrawer.HorizontalScrollView
+    <com.placediscovery.HorizontalScrollView
         android:id="@+id/hs"
         android:scrollbars="none"
         android:layout_width="wrap_content"
@@ -29,5 +29,5 @@
             android:orientation="horizontal">
 
         </LinearLayout>
-    </br.liveo.ndrawer.HorizontalScrollView>
+    </com.placediscovery.HorizontalScrollView>
 </LinearLayout>
