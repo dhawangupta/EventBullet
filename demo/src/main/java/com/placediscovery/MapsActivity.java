@@ -25,32 +25,41 @@ import com.placediscovery.ui.activity.ContentActivity;
 
 public class MapsActivity extends FragmentActivity {
 
-    ArrayList<Place> VaranasiPlaces = new ArrayList<Place>();
+    ArrayList<Place> places = new ArrayList<Place>();
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    public static int i;
+    String selectedCity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        selectedCity = getIntent().getExtras().getString("selectedCity");
         //retrieving places
         try {
-            GetPlacesAsyncTask task = new GetPlacesAsyncTask();
+
             try {
-                VaranasiPlaces = task.execute().get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
+                places = (ArrayList<Place>) HelperMethods.readObjectFromFile("saved_"+selectedCity);
+            } catch (NullPointerException n){
+                GetPlacesAsyncTask task = new GetPlacesAsyncTask(selectedCity);
+                try {
+                    places = task.execute().get();
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
 
+
             int loader = R.drawable.loader;         //loader image
-            final Intent[] intents = new Intent[VaranasiPlaces.size()];
+            final Intent[] intents = new Intent[places.size()];
 
             //dyanmically creating imageviews
             LinearLayout imageviews = (LinearLayout) findViewById(R.id.imageviews);
-            ImageView[] iv = new ImageView[VaranasiPlaces.size()];
+            ImageView[] iv = new ImageView[places.size()];
 
             //converting px to dp
             final float scale = getResources().getDisplayMetrics().density;
@@ -61,14 +70,14 @@ public class MapsActivity extends FragmentActivity {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dpWidthInPx, dpHeightInPx);
             params.setMargins(dpMarginInPx, dpMarginInPx, dpMarginInPx, dpMarginInPx);
 
-            for(int j=0; j<VaranasiPlaces.size(); j++){
+            for(int j=0; j<places.size(); j++){
                 iv[j] = new ImageView(this);
                 iv[j].setId(j+1);
                 iv[j].setLayoutParams(params);
                 imageviews.addView(iv[j]);
 
                 // Image url
-                String image_url = VaranasiPlaces.get(j).getImageURL();
+                String image_url = places.get(j).getImageURL();
                 // ImageLoader class instance
                 ImageLoader imgLoader = new ImageLoader(getApplicationContext());
                 // whenever you want to load an image from url
@@ -86,7 +95,7 @@ public class MapsActivity extends FragmentActivity {
                         intents[finalJ] = new Intent(MapsActivity.this, ContentActivity.class);
 
                         intents[finalJ].putExtra("imageviewId", finalJ);
-                        intents[finalJ].putExtra("placesObject", VaranasiPlaces);
+                        intents[finalJ].putExtra("placesObject", places);
                         startActivity(intents[finalJ]);
                     }
                 });
@@ -157,15 +166,13 @@ public class MapsActivity extends FragmentActivity {
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.setMyLocationEnabled(true);
 
-        //VaranasiPlaces = (ArrayList<Place>)HelperMethods.readObjectFromFile("varanasiPlaces");
         try{
-            Place first = VaranasiPlaces.get(0);
+            Place first = places.get(0);
             if(first!=null)
             {
-                // Toast.makeText(getApplicationContext(),first.getLatitude(),Toast.LENGTH_LONG);
                 LatLng flatlang = new LatLng(Double.parseDouble(first.getLatitude()), Double.parseDouble(first.getLongitude()));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(flatlang, 10));
-                for (Place x : VaranasiPlaces)
+                for (Place x : places)
                 {
                     mMap.addMarker(new MarkerOptions().position(
                             new LatLng( Double.parseDouble(x.getLatitude()),
