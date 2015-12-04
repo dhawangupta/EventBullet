@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
+import com.placediscovery.HelperMethods;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -20,6 +21,11 @@ public class GetPlacesAsyncTask extends AsyncTask<Place, Void, ArrayList<Place>>
 
 	static String server_output = null;
 	static String temp_output = null;
+	String selectedCity;
+
+	public GetPlacesAsyncTask(String selectedCity){
+		this.selectedCity = selectedCity;
+	}
 
 	@Override
 	protected ArrayList<Place> doInBackground(Place... arg0) {
@@ -28,7 +34,7 @@ public class GetPlacesAsyncTask extends AsyncTask<Place, Void, ArrayList<Place>>
 		try
 		{
 
-			PlaceQueryBuilder qb = new PlaceQueryBuilder();
+			PlaceQueryBuilder qb = new PlaceQueryBuilder(selectedCity);
 			URL url = new URL(qb.buildContactsGetURL());
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
@@ -68,7 +74,7 @@ public class GetPlacesAsyncTask extends AsyncTask<Place, Void, ArrayList<Place>>
 				places.add(temp);
 
 			}
-
+			HelperMethods.saveObjectToCache("saved_"+selectedCity, places);
 		}catch (Exception e) {
 			e.getMessage();
 		}
