@@ -1,6 +1,10 @@
 package com.placediscovery.ui.activity;
-
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,7 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.Profile;
+import com.facebook.login.LoginResult;
 import com.placediscovery.MongoLabUser.SaveUserAsyncTask;
+import com.facebook.login.widget.LoginButton;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.R;
 
@@ -25,18 +32,54 @@ public class SignupActivity extends AppCompatActivity {
     protected EditText _passwordText;
     protected Button _signupButton;
     protected TextView _loginLink;
+    private TextView info;
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
+    Profile profile;
+    User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_signup);
+        callbackManager = CallbackManager.Factory.create();
+
         //ButterKnife.inject(this);
         _loginLink = (TextView) findViewById(R.id.link_login);
         _nameText = (EditText) findViewById(R.id.input_name);
         _emailText = (EditText) findViewById(R.id.input_email);
         _passwordText = (EditText) findViewById(R.id.input_password);
         _signupButton = (Button) findViewById(R.id.btn_signup);
+        info = (TextView)findViewById(R.id.info);
+        loginButton = (LoginButton)findViewById(R.id.login_button);
+        loginButton.setReadPermissions("user_friends");
+        loginButton.setReadPermissions("public_profile");
+        loginButton.setReadPermissions("email");
+        loginButton.setReadPermissions("user_birthday");
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                user = new User();
+                user.setName(profile.getName());
+                user.setEmail(profile.getId());
+                 Intent intent =  new Intent(SignupActivity.this,UserTestActivity.class);
+                intent.putExtra("name",user.getName());
+                intent.putExtra("email",user.getEmail());
+                startActivity(intent);
+            }
 
+
+            @Override
+            public void onCancel() {
+              Toast.makeText(getApplicationContext(),"onCancel() is called",Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+             Toast.makeText(getApplicationContext(),"onError() is called",Toast.LENGTH_SHORT);
+            }
+        });
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +94,8 @@ public class SignupActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
     }
 
     public void signup() {
@@ -70,8 +115,7 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.show();
 
         // TODO: Implement your own signup logic here.
-
-        User user = new User();
+             user = new User();
         user.name = _nameText.getText().toString();
         user.email = _emailText.getText().toString();
         user.password = _passwordText.getText().toString();
@@ -134,5 +178,9 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }

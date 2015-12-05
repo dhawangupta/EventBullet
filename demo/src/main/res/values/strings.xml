@@ -17,18 +17,14 @@
 <resources>
 
     <string name="app_name">AudioTour</string>
-
     <string name="sign_in">Sign in</string>
-
     <string name="home">Home</string>
     <string name="add_money">Search City</string>
     <string name="recharge">My Tours</string>
     <string name="others">Others</string>
     <string name="settings">Settings</string>
-
     <string name="add">Login</string>
     <string name="search">Search</string>
-
     <string name="send">First</string>
     <string name="important">Second</string>
     <string name="documents">Third</string>
@@ -40,7 +36,7 @@
     <string name="hello_world">Hello world!</string>
     <!-- Settings. -->
     <string name="action_settings">Settings</string>
-    <!-- Send message.  -->
+    <!-- Send message. -->
     <string name="com_ovrhere_sendMessage">First</string>
     <!-- Cancel string. -->
     <string name="com_ovrhere_button_cancel">Cancel</string>
@@ -48,16 +44,13 @@
     <string name="com_ovrhere_button_advanced">Advanced</string>
 
     <!-- Use Camera light (experi). -->
-    <string name="com_ovrhere_checkbox_camlight">Use Camera Flash (Experimental)
-        </string>
+    <string name="com_ovrhere_checkbox_camlight">Use Camera Flash (Experimental)</string>
     <!-- Use camera (not found) -->
     <string name="com_ovrhere_checkbox_camFlashNotFound">Use Camera Flash (Not Found)</string>
     <!-- Loop the message. -->
     <string name="com_ovrhere_checkbox_loopMessage">Loop message</string>
-
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_ui_cards">UiCardsActivity</string>
-
 
     <!-- Content Strings -->
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur magna tortor, semper eu feugiat eu, vehicula vitae lacus.</string>
@@ -78,10 +71,10 @@
                                 Put the description here e.g;
                                 Howrah Bridge is a cantilever bridge with a suspended span over the Hooghly River in West Bengal, India. Commissioned in 1943, the bridge was originally named the New Howrah Bridge, because it replaced a pontoon bridge at the same location linking the two cities of Howrah and Kolkata (Calcutta). On 14 June 1965 it was renamed Rabindra Setu after the great Bengali poet Rabindranath Tagore, who was the first Indian and Asian Nobel laureate.
                                 Put the description here e.g;
-                                Howrah Bridge is a cantilever bridge with a suspended span over the Hooghly River in West Bengal, India. Commissioned in 1943, the bridge was originally named the New Howrah Bridge, because it replaced a pontoon bridge at the same location linking the two cities of Howrah and Kolkata (Calcutta). On 14 June 1965 it was renamed Rabindra Setu after the great Bengali poet Rabindranath Tagore, who was the first Indian and Asian Nobel laureate.
-
-                                </string>
+                                Howrah Bridge is a cantilever bridge with a suspended span over the Hooghly River in West Bengal, India. Commissioned in 1943, the bridge was originally named the New Howrah Bridge, because it replaced a pontoon bridge at the same location linking the two cities of Howrah and Kolkata (Calcutta). On 14 June 1965 it was renamed Rabindra Setu after the great Bengali poet Rabindranath Tagore, who was the first Indian and Asian Nobel laureate.</string>
     <string name="read_more">Read more</string>
+    <string name="title_activity_user_test">UserTestActivity</string>
 
-
+    <!-- Facebook app ID -->
+    <string name="facebook_app_id">138984996466634</string>
 </resources>
