@@ -60,6 +60,7 @@ public class SignupActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+
                 user = new User();
                 user.setName(profile.getName());
                 user.setEmail(profile.getId());
