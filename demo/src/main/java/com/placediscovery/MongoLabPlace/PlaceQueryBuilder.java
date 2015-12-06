@@ -2,6 +2,12 @@ package com.placediscovery.MongoLabPlace;
 
 public class PlaceQueryBuilder {
 
+	String selectedCity;
+
+	PlaceQueryBuilder(String selectedCity){
+		this.selectedCity = selectedCity;
+	}
+
 	/**
 	 * Specify your database name here
 	 * @return
@@ -43,7 +49,7 @@ public class PlaceQueryBuilder {
 	 */
 	public String documentRequest()
 	{
-		return "places";
+		return selectedCity;    //this corresponds to the city particular city  collection in the database, it is defined by ChooseCity.java
 	}
 
 	/**
