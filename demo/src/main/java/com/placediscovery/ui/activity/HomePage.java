@@ -1,7 +1,5 @@
 
 package com.placediscovery.ui.activity;
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,7 +14,6 @@ import br.liveo.interfaces.OnPrepareOptionsMenuLiveo;
 import br.liveo.navigationliveo.NavigationLiveo;
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
-import com.placediscovery.ui.fragment.AFragment;
 import com.placediscovery.ui.fragment.MainFragment;
 import com.placediscovery.ui.fragment.ViewPagerFragment;
 
@@ -51,11 +48,11 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
 
         // Creating items navigation
         mHelpLiveo = new HelpLiveo();
-        mHelpLiveo.add(getString(R.string.add_money), R.mipmap.ic_send);
-        mHelpLiveo.add(getString(R.string.recharge), R.mipmap.ic_send_black_24dp);
-        mHelpLiveo.add(getString(R.string.home), R.mipmap.ic_home);
+        mHelpLiveo.add(getString(R.string.choose_city), R.mipmap.ic_send);
+        mHelpLiveo.add(getString(R.string.add_place), R.mipmap.ic_send_black_24dp);
+        mHelpLiveo.add(getString(R.string.saved_place), R.mipmap.ic_delete_black_24dp);
         mHelpLiveo.addSeparator(); // Item separator
-        mHelpLiveo.add(getString(R.string.others), R.mipmap.ic_delete_black_24dp);
+        mHelpLiveo.add(getString(R.string.home), R.mipmap.ic_home);
         mHelpLiveo.add(getString(R.string.settings), R.mipmap.ic_settings_black_24dp);
         mHelpLiveo.add("Log out",R.mipmap.icon_logout);
 
