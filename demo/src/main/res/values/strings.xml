@@ -16,14 +16,14 @@
 -->
 <resources>
 
-    <string name="app_name">AudioTour</string>
+    <string name="app_name">Place Discovery</string>
 
     <string name="sign_in">Sign in</string>
 
     <string name="home">Home</string>
-    <string name="add_money">Search City</string>
-    <string name="recharge">My Tours</string>
-    <string name="others">Others</string>
+    <string name="choose_city">Choose City</string>
+    <string name="add_place">Add a Place</string>
+    <string name="saved_place">My Saved Places </string>
     <string name="settings">Settings</string>
 
     <string name="add">Login</string>
@@ -60,7 +60,6 @@
 
 
     <!-- Content Strings -->
-    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur magna tortor, semper eu feugiat eu, vehicula vitae lacus.</string>
     <string name="recyclerview_fab_example">RecyclerView FAB example</string>
     <string name="floating_action_menu">Floating Action Menu</string>
     <string name="lorem_ipsum_large">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed ultricies risus. Integer nisi orci, lacinia sit amet mi in, mollis scelerisque purus. Nunc risus ligula, maximus eu orci a, facilisis dictum velit. Proin nec laoreet magna. Nulla ut sagittis lorem. Morbi id enim fermentum, semper diam et, tempus leo. Aliquam vel congue orci. Suspendisse potenti. Curabitur finibus diam augue, vel bibendum sapien ultrices non.</string>
@@ -69,18 +68,7 @@
     <string name="action_new">Settings</string>
     <string name="logo_desc">App logo</string>
     <string name="blog_title">Place Title</string>
-    <string name="blog_content">Put the description here e.g;
-                                Howrah Bridge is a cantilever bridge with a suspended span over the Hooghly River in West Bengal, India. Commissioned in 1943, the bridge was originally named the New Howrah Bridge, because it replaced a pontoon bridge at the same location linking the two cities of Howrah and Kolkata (Calcutta). On 14 June 1965 it was renamed Rabindra Setu after the great Bengali poet Rabindranath Tagore, who was the first Indian and Asian Nobel laureate.
-                                Put the description here e.g;
-                                Howrah Bridge is a cantilever bridge with a suspended span over the Hooghly River in West Bengal, India. Commissioned in 1943, the bridge was originally named the New Howrah Bridge, because it replaced a pontoon bridge at the same location linking the two cities of Howrah and Kolkata (Calcutta). On 14 June 1965 it was renamed Rabindra Setu after the great Bengali poet Rabindranath Tagore, who was the first Indian and Asian Nobel laureate.
-                                Put the description here e.g;
-                                Howrah Bridge is a cantilever bridge with a suspended span over the Hooghly River in West Bengal, India. Commissioned in 1943, the bridge was originally named the New Howrah Bridge, because it replaced a pontoon bridge at the same location linking the two cities of Howrah and Kolkata (Calcutta). On 14 June 1965 it was renamed Rabindra Setu after the great Bengali poet Rabindranath Tagore, who was the first Indian and Asian Nobel laureate.
-                                Put the description here e.g;
-                                Howrah Bridge is a cantilever bridge with a suspended span over the Hooghly River in West Bengal, India. Commissioned in 1943, the bridge was originally named the New Howrah Bridge, because it replaced a pontoon bridge at the same location linking the two cities of Howrah and Kolkata (Calcutta). On 14 June 1965 it was renamed Rabindra Setu after the great Bengali poet Rabindranath Tagore, who was the first Indian and Asian Nobel laureate.
-                                Put the description here e.g;
-                                Howrah Bridge is a cantilever bridge with a suspended span over the Hooghly River in West Bengal, India. Commissioned in 1943, the bridge was originally named the New Howrah Bridge, because it replaced a pontoon bridge at the same location linking the two cities of Howrah and Kolkata (Calcutta). On 14 June 1965 it was renamed Rabindra Setu after the great Bengali poet Rabindranath Tagore, who was the first Indian and Asian Nobel laureate.
 
-                                </string>
     <string name="read_more">Read more</string>
 
 
