@@ -65,7 +65,7 @@ public class MapsActivity extends FragmentActivity {
             //converting px to dp
             final float scale = getResources().getDisplayMetrics().density;
             int dpWidthInPx  = (int) (150 * scale);
-            int dpHeightInPx = (int) (150 * scale);
+            int dpHeightInPx = (int) (100 * scale);
             int dpMarginInPx = (int) (1*scale);
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dpWidthInPx, dpHeightInPx);

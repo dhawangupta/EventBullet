@@ -233,7 +233,7 @@ public class
                 }
                 //  Toast.makeText(getApplicationContext(),"Incorrent Username or Password",Toast.LENGTH_SHORT).show();
             }
-            Toast.makeText(getApplicationContext(),"Incorrect Username Or Password",Toast.LENGTH_SHORT).show();
+
             _loginButton.setEnabled(true);
         }
 
