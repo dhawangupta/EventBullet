@@ -25,6 +25,7 @@ import com.placediscovery.ui.activity.ContentActivity;
 
 public class MapsActivity extends FragmentActivity {
 
+    //Test
     ArrayList<Place> places = new ArrayList<Place>();
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     String selectedCity;
