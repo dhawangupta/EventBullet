@@ -95,24 +95,8 @@ public class UserQueryBuilder {
 		return String
 		.format("{\"name\": \"%s\", "
 				+ "\"email\": \"%s\", \"password\": \"%s\" "
-				+ "}",
+				+ "\"savedplaces\":\"\"}",
 				user.name, user.email, user.password);
 	}
-	
-	/**
-	 * Update a given contact record
-	 * @param place
-	 * @return
 
-	public String setContactData(Place place) {
-		return String.format("{ \"$set\" : " 
-				+ "{\"name\" : \"%s\", "
-				+ "\"last_name\" : \"%s\", "
-				+ "\"email\" : \"%s\", "
-				+ "}" + "}",
-				place.getName(),
-				place.getLatitude(),
-				place.getLongitude());
-	}
-	 */
 }
