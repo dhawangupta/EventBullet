@@ -48,11 +48,11 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
 
         // Creating items navigation
         mHelpLiveo = new HelpLiveo();
-        mHelpLiveo.add(getString(R.string.choose_city), R.mipmap.ic_send);
-        mHelpLiveo.add(getString(R.string.add_place), R.mipmap.ic_send_black_24dp);
-        mHelpLiveo.add(getString(R.string.saved_place), R.mipmap.ic_delete_black_24dp);
-        mHelpLiveo.addSeparator(); // Item separator
+        mHelpLiveo.add(getString(R.string.search_city), R.mipmap.ic_send);
+        mHelpLiveo.add(getString(R.string.my_tours), R.mipmap.ic_send_black_24dp);
         mHelpLiveo.add(getString(R.string.home), R.mipmap.ic_home);
+        mHelpLiveo.addSeparator(); // Item separator
+        mHelpLiveo.add(getString(R.string.others), R.mipmap.ic_delete_black_24dp);
         mHelpLiveo.add(getString(R.string.settings), R.mipmap.ic_settings_black_24dp);
         mHelpLiveo.add("Log out",R.mipmap.icon_logout);
 
@@ -97,9 +97,9 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
                 startActivity(new Intent(this, ChooseCity.class));
                 return;
 
-//            case 1:
-//                startActivity(new Intent(this, ContentActivity.class));
-//                return;
+            case 1:
+                startActivity(new Intent(this, AddPlace.class));
+                return;
 
             case 2:
                 mFragment = new ViewPagerFragment();
