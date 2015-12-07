@@ -97,9 +97,9 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
                 startActivity(new Intent(this, ChooseCity.class));
                 return;
 
-//            case 1:
-//                startActivity(new Intent(this, ContentActivity.class));
-//                return;
+            case 1:
+                startActivity(new Intent(this, AddPlace.class));
+                return;
 
             case 2:
                 mFragment = new ViewPagerFragment();
