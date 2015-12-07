@@ -1,14 +1,25 @@
 package com.placediscovery.MongoLabUser;
 
+import java.io.Serializable;
+
 /**
  * Created by Dhawan Gupta on 04-10-2015.
  */
-public class User {
+public class User implements Serializable{
 
     public  String user_id;
     public String name;
     public String email;
     public String password;
+    public String savedplaces;
+
+    public String getSavedplaces() {
+        return savedplaces;
+    }
+
+    public void setSavedplaces(String savedplaces) {
+        this.savedplaces = savedplaces;
+    }
 
     public String getUser_id() {
         return user_id;
