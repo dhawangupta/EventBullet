@@ -71,7 +71,7 @@
             android:name=".ui.activity.UserTestActivity"
             android:label="@string/title_activity_user_test" >
         </activity>
-        
+
         <activity
             android:name=".ui.activity.AddPlace"
             android:launchMode="singleTask"
