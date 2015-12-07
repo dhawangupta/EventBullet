@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MapsActivity;
 import com.placediscovery.MongoLabPlace.Place;
+import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
 
 
@@ -64,8 +65,15 @@ public class ContentActivity extends ActionBarActivity {
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ContentActivity.this, "Added to List", Toast.LENGTH_SHORT).show();
+                if(UserStatus.GetStatus()){
+
+                    Toast.makeText(ContentActivity.this, "Added to List", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(ContentActivity.this, "Please login first", Toast.LENGTH_LONG).show();
+                }
             }
+
         });
 
     }
