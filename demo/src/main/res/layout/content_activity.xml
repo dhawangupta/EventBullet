@@ -6,7 +6,13 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
-
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/color_primary"
+        android:minHeight="?attr/actionBarSize"
+        android:elevation="6dp"></android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
@@ -15,7 +21,7 @@
         android:layout_marginBottom="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="64dp"
         card_view:cardCornerRadius="0dp"
         card_view:cardElevation="2dp">
 
@@ -31,16 +37,20 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/contentPageImage"
+                    android:id="@+id/imageView"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"/>     <!-- Height of image on content page -->
+                    android:layout_height="320dp"
+                    android:background="@drawable/kolkata"
+                    android:contentDescription="@string/place_holder"
+                    android:gravity="top"
+                    android:elevation="3dp"/>
 
                 <br.liveo.navigationliveo.FloatingActionButton
                     android:id="@+id/fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/contentPageImage"
+                    android:layout_below="@+id/imageView"
                     android:layout_marginTop="-35dp"
                     android:layout_marginBottom="0dp"
                     android:layout_marginRight="10dp"
