@@ -13,8 +13,8 @@ public class UserStatus {
     public void SetStatus(boolean status){
         this.LoginStatus = status;
     }
-    public boolean GetStatus(){
-        return this.LoginStatus;
+    public static boolean GetStatus(){
+        return LoginStatus;
     }
 
     // this is for userid
