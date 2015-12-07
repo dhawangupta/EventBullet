@@ -25,62 +25,62 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
     public void onInt(Bundle savedInstanceState) {
 
         // User Information
-           if(UserStatus.LoginStatus){
-               UserStatus userStatus = new UserStatus();
-        this.userName.setText(userStatus.GetName());
-        this.userEmail.setText(userStatus.GetEmail());}
+        if(UserStatus.LoginStatus){
+            UserStatus userStatus = new UserStatus();
+            this.userName.setText(userStatus.GetName());
+            this.userEmail.setText(userStatus.GetEmail());}
         else{
-        this.userName.setText("Please Log In");
-        this.userEmail.setText("");
-               this.userName.setOnClickListener(new View.OnClickListener() {
+            this.userName.setText("Please Log In");
+            this.userEmail.setText("");
+            this.userName.setOnClickListener(new View.OnClickListener() {
 
-                   @Override
-                   public void onClick(View v) {
-                       // Start the Signup activity
-                       Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                       startActivity(intent);
+                @Override
+                public void onClick(View v) {
+                    // Start the Signup activity
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
 
-                   }
-               });
-           }
+                }
+            });
+        }
         this.userPhoto.setImageResource(R.drawable.arimit_icon);
         this.userBackground.setImageResource(R.drawable.ic_user_background_first);
 
         // Creating items navigation
         mHelpLiveo = new HelpLiveo();
-        mHelpLiveo.add(getString(R.string.search_city), R.mipmap.ic_send);
-        mHelpLiveo.add(getString(R.string.my_tours), R.mipmap.ic_send_black_24dp);
-        mHelpLiveo.add(getString(R.string.home), R.mipmap.ic_home);
+        mHelpLiveo.add(getString(R.string.choose_city), R.mipmap.ic_send);
+        mHelpLiveo.add(getString(R.string.add_place), R.mipmap.ic_send_black_24dp);
+        mHelpLiveo.add(getString(R.string.saved_place), R.mipmap.ic_delete_black_24dp);
         mHelpLiveo.addSeparator(); // Item separator
-        mHelpLiveo.add(getString(R.string.others), R.mipmap.ic_delete_black_24dp);
+        mHelpLiveo.add(getString(R.string.home), R.mipmap.ic_home);
         mHelpLiveo.add(getString(R.string.settings), R.mipmap.ic_settings_black_24dp);
         mHelpLiveo.add("Log out",R.mipmap.icon_logout);
 
         with(this).startingPosition(2) //Starting position in the list
                 .addAllHelpItem(mHelpLiveo.getHelp())
 
-                //{optional} - List Customization "If you remove these methods and the list will take his white standard color"
-                //.selectorCheck(R.drawable.selector_check) //Inform the background of the selected item color
-                //.colorItemDefault(R.color.nliveo_blue_colorPrimary) //Inform the standard color name, icon and counter
-                //.colorItemSelected(R.color.nliveo_purple_colorPrimary) //State the name of the color, icon and meter when it is selected
-                //.backgroundList(R.color.nliveo_black_light) //Inform the list of background color
-                //.colorLineSeparator(R.color.nliveo_transparent) //Inform the color of the subheader line
+                        //{optional} - List Customization "If you remove these methods and the list will take his white standard color"
+                        //.selectorCheck(R.drawable.selector_check) //Inform the background of the selected item color
+                        //.colorItemDefault(R.color.nliveo_blue_colorPrimary) //Inform the standard color name, icon and counter
+                        //.colorItemSelected(R.color.nliveo_purple_colorPrimary) //State the name of the color, icon and meter when it is selected
+                        //.backgroundList(R.color.nliveo_black_light) //Inform the list of background color
+                        //.colorLineSeparator(R.color.nliveo_transparent) //Inform the color of the subheader line
 
-                //{optional} - SubHeader Customization
+                        //{optional} - SubHeader Customization
                 .colorItemSelected(R.color.nliveo_blue_colorPrimary)
                 .colorNameSubHeader(R.color.nliveo_blue_colorPrimary)
-                //.colorLineSeparator(R.color.nliveo_blue_colorPrimary)
+                        //.colorLineSeparator(R.color.nliveo_blue_colorPrimary)
 
-                //.footerItem(R.string.settings, R.mipmap.ic_settings_black_24dp)
+                        //.footerItem(R.string.settings, R.mipmap.ic_settings_black_24dp)
 
-                //{optional} - Footer Customization
-                //.footerNameColor(R.color.nliveo_blue_colorPrimary)
-                //.footerIconColor(R.color.nliveo_blue_colorPrimary)
-                //.footerBackground(R.color.nliveo_white)
+                        //{optional} - Footer Customization
+                        //.footerNameColor(R.color.nliveo_blue_colorPrimary)
+                        //.footerIconColor(R.color.nliveo_blue_colorPrimary)
+                        //.footerBackground(R.color.nliveo_white)
 
                 .setOnClickUser(onClickPhoto)
                 .setOnPrepareOptionsMenu(onPrepare)
-                //.setOnClickFooter(onClickFooter)
+                        //.setOnClickFooter(onClickFooter)
                 .build();
 
         int position = this.getCurrentPosition();
@@ -97,9 +97,9 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
                 startActivity(new Intent(this, ChooseCity.class));
                 return;
 
-            case 1:
-                startActivity(new Intent(this, AddPlace.class));
-                return;
+//            case 1:
+//                startActivity(new Intent(this, ContentActivity.class));
+//                return;
 
             case 2:
                 mFragment = new ViewPagerFragment();
