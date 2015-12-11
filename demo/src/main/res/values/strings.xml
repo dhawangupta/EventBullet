@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-   ~ Copyright 2015 Rudson Lima
 
-   ~ Licensed under the Apache License, Version 2.0 (the "License");
-   ~ you may not use this file except in compliance with the License.
-   ~ You may obtain a copy of the License at
-
-   ~ http://www.apache.org/licenses/LICENSE-2.0
-
-   ~ Unless required by applicable law or agreed to in writing, software
-   ~ distributed under the License is distributed on an "AS IS" BASIS,
-   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   ~ See the License for the specific language governing permissions and
-   ~ limitations under the License.
--->
 <resources>
 
     <string name="app_name">Place Discovery</string>
@@ -30,40 +16,18 @@
     <string name="documents">Third</string>
 
     <!-- Toast -->
-    <string name="open_user_profile">Open user profile</string>
-    <string name="open_settings">Open settings</string>
-    <string name="logout">Logout</string>
     <string name="hello_world">Hello world!</string>
     <!-- Settings. -->
     <string name="action_settings">Settings</string>
-    <!-- Send message. -->
-    <string name="com_ovrhere_sendMessage">First</string>
-    <!-- Cancel string. -->
-    <string name="com_ovrhere_button_cancel">Cancel</string>
-    <!-- Advanced button -->
-    <string name="com_ovrhere_button_advanced">Advanced</string>
 
-    <!-- Use Camera light (experi). -->
-    <string name="com_ovrhere_checkbox_camlight">Use Camera Flash (Experimental)</string>
-    <!-- Use camera (not found) -->
-    <string name="com_ovrhere_checkbox_camFlashNotFound">Use Camera Flash (Not Found)</string>
-    <!-- Loop the message. -->
-    <string name="com_ovrhere_checkbox_loopMessage">Loop message</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_ui_cards">UiCardsActivity</string>
 
     <!-- Content Strings -->
-    <string name="recyclerview_fab_example">RecyclerView FAB example</string>
-    <string name="floating_action_menu">Floating Action Menu</string>
-    <string name="lorem_ipsum_large">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed ultricies risus. Integer nisi orci, lacinia sit amet mi in, mollis scelerisque purus. Nunc risus ligula, maximus eu orci a, facilisis dictum velit. Proin nec laoreet magna. Nulla ut sagittis lorem. Morbi id enim fermentum, semper diam et, tempus leo. Aliquam vel congue orci. Suspendisse potenti. Curabitur finibus diam augue, vel bibendum sapien ultrices non.</string>
     <string name="place_holder">Place holder</string>
-    <string name="action_refresh">Settings</string>
-    <string name="action_new">Settings</string>
-    <string name="logo_desc">App logo</string>
-    <string name="blog_title">Place Title</string>
-    <string name="read_more">Read more</string>
     <string name="title_activity_user_test">UserTestActivity</string>
 
     <!-- Facebook app ID -->
     <string name="facebook_app_id">138984996466634</string>
+    <string name="title_activity_add_place">Map</string>
+    <string name="title_activity_form">Form</string>
 </resources>

@@ -99,4 +99,19 @@ public class UserQueryBuilder {
 				user.name, user.email, user.password);
 	}
 
+	/**
+	 * Update a given user record
+	 * @param user
+	 * @return
+	 */
+	public String setUserData(User user) {
+		return String.format("{ \"$set\" : "
+						+ "{\"name\" : \"%s\", "
+						+ "\"email\" : \"%s\", "
+						+ "\"password\" : \"%s\", "
+						+ "\"savedplaces\" : \"%s\" }" + "}",
+				user.getName(),
+				user.getEmail(), user.getPassword(),
+				user.getSavedplaces());
+	}
 }

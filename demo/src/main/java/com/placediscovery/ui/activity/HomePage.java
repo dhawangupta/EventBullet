@@ -12,6 +12,8 @@ import br.liveo.Model.HelpLiveo;
 import br.liveo.interfaces.OnItemClickListener;
 import br.liveo.interfaces.OnPrepareOptionsMenuLiveo;
 import br.liveo.navigationliveo.NavigationLiveo;
+
+import com.placediscovery.AddPlaceMaps;
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
 import com.placediscovery.ui.fragment.MainFragment;
@@ -27,8 +29,8 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
         // User Information
         if(UserStatus.LoginStatus){
             UserStatus userStatus = new UserStatus();
-            this.userName.setText(userStatus.GetName());
-            this.userEmail.setText(userStatus.GetEmail());}
+            this.userName.setText(userStatus.getName());
+            this.userEmail.setText(userStatus.getEmail());}
         else{
             this.userName.setText("Please Log In");
             this.userEmail.setText("");
@@ -98,7 +100,7 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
                 return;
 
             case 1:
-                startActivity(new Intent(this, AddPlace.class));
+                startActivity(new Intent(this, AddPlaceMaps.class));
                 return;
 
             case 2:

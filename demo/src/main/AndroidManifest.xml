@@ -48,8 +48,10 @@
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Dark"
             android:windowSoftInputMode="stateUnchanged" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -71,17 +73,20 @@
             android:name=".ui.activity.UserTestActivity"
             android:label="@string/title_activity_user_test" >
         </activity>
-        
         <activity
-            android:name=".ui.activity.AddPlace"
-            android:launchMode="singleTask"
-            android:label="Add_Places" />
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".AddPlaceMaps"
+            android:label="@string/title_activity_add_place" >
+        </activity>
+        <activity
+            android:name=".Form"
+            android:label="@string/title_activity_form" >
+        </activity>
 
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
     </application>
 
 </manifest>
