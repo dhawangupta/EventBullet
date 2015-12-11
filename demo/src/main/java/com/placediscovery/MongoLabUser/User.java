@@ -7,12 +7,21 @@ import java.io.Serializable;
  */
 public class User implements Serializable{
 
-    public  String user_id;
+    public String user_id;
     public String name;
     public String email;
     public String password;
     public String savedplaces;
 
+    public User(){}
+
+    public User(UserStatus userStatus){
+        user_id = userStatus.getUser_Id();
+        name = userStatus.getName();
+        email = userStatus.getEmail();
+        password = userStatus.getPassword();
+        savedplaces = userStatus.getSavedPlaces();
+    }
     public String getSavedplaces() {
         return savedplaces;
     }

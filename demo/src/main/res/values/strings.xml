@@ -28,4 +28,6 @@
 
     <!-- Facebook app ID -->
     <string name="facebook_app_id">138984996466634</string>
+    <string name="title_activity_add_place">Map</string>
+    <string name="title_activity_form">Form</string>
 </resources>

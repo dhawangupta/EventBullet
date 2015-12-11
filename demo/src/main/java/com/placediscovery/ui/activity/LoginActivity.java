@@ -194,6 +194,7 @@ public class
                     temp.setName(userObj.get("name").toString());
                     temp.setEmail(userObj.get("email").toString());
                     temp.setPassword(userObj.get("password").toString());
+                    temp.setSavedplaces(userObj.get("savedplaces").toString());
 
                     users.add(temp);
 
@@ -215,19 +216,16 @@ public class
 
                 if(x.email.equals(email) && x.password.equals(password)) {
 
-                    Toast.makeText(getApplicationContext(), "Welcome" + x.name, Toast.LENGTH_SHORT);
-
-                    //Toast.makeText(getApplicationContext(), "Welcome" + x.name, Toast.LENGTH_LONG);
-
                     loggedInUser = x;
                     UserStatus userStatus = new UserStatus();
-                    userStatus.SetStatus(true);
-                    userStatus.SetUser_Id(x.user_id);
-                    userStatus.SetName(x.name);
-                    userStatus.SetEmail(x.email);
-                    userStatus.SetPassword(x.password);
+                    userStatus.setLoginStatus(true);
+                    userStatus.setUser_Id(x.user_id);
+                    userStatus.setName(x.name);
+                    userStatus.setEmail(x.email);
+                    userStatus.setPassword(x.password);
+                    userStatus.setSavedPlaces(x.savedplaces);
                     Intent moreDetailsIntent = new Intent(LoginActivity.this, HomePage.class);
-                    Toast.makeText(getApplicationContext(),"You done Successfully",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Welcome " + x.name+ ", You are now logged in.",Toast.LENGTH_SHORT).show();
                     startActivity(moreDetailsIntent);
                     break;
                 }
