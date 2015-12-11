@@ -3,49 +3,62 @@ package com.placediscovery.MongoLabUser;
 /**
  * Created by MOHIT on 01-12-2015.
  */
+
+//TODO: using sharedpref to maintain global state of logged in user
+
 public class UserStatus {
     public static boolean LoginStatus= false;
     public static String User_Id=null;
     public static String Name=null;
     public static String Email=null;
     public static String Password=null;
-    // this is for status
-    public void SetStatus(boolean status){
-        this.LoginStatus = status;
-    }
-    public static boolean GetStatus(){
+    public static String SavedPlaces=null;
+
+    public static boolean isLoginStatus() {
         return LoginStatus;
     }
 
-    // this is for userid
-    public void SetUser_Id(String user_Id){
-        this.User_Id = user_Id;
-    }
-    public String GetUser_Id(){
-        return this.User_Id;
+    public static void setLoginStatus(boolean loginStatus) {
+        LoginStatus = loginStatus;
     }
 
-    //this is for name
-    public void SetName(String name){
-        this.Name = name;
-    }
-    public String GetName(){
-        return this.Name;
+    public static String getUser_Id() {
+        return User_Id;
     }
 
-    //this is for email
-    public void SetEmail(String email){
-        this.Email = email;
-    }
-    public String GetEmail(){
-        return this.Email;
+    public static void setUser_Id(String user_Id) {
+        User_Id = user_Id;
     }
 
-    //this is for password
-    public void SetPassword(String password){
-        this.Password = password;
+    public static String getName() {
+        return Name;
     }
-    public String GetPassword(){
-        return this.Password;
+
+    public static void setName(String name) {
+        Name = name;
+    }
+
+    public static String getEmail() {
+        return Email;
+    }
+
+    public static void setEmail(String email) {
+        Email = email;
+    }
+
+    public static String getPassword() {
+        return Password;
+    }
+
+    public static void setPassword(String password) {
+        Password = password;
+    }
+
+    public static String getSavedPlaces() {
+        return SavedPlaces;
+    }
+
+    public static void setSavedPlaces(String savedPlaces) {
+        SavedPlaces = savedPlaces;
     }
 }

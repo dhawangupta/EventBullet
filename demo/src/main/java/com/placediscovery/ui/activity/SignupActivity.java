@@ -120,6 +120,7 @@ public class SignupActivity extends AppCompatActivity {
         user.name = _nameText.getText().toString();
         user.email = _emailText.getText().toString();
         user.password = _passwordText.getText().toString();
+        user.savedplaces = "";
 
         SaveUserAsyncTask tsk = new SaveUserAsyncTask();
         tsk.execute(user);
