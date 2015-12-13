@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class CityManager {
 
-    private static String[] cityArray = {"Kolkata", "Mumbai", "New Delhi", "Chennai", "Bangalore", "Varanasi"};
+    private static String[] cityArray = {"Kolkata", "Mumbai", "New Delhi", "Chennai", "Bangalore", "Varanasi", "Jaipur"};
     private static String loremIpsum = "Description";
 
     private static CityManager mInstance;
