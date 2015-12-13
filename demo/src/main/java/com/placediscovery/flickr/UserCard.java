@@ -1,5 +1,5 @@
 package com.placediscovery.flickr;
-
+//Batra
 public class UserCard {
 
 	public String name;
