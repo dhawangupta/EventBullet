@@ -50,16 +50,27 @@ public class ChooseCity extends Activity implements ViewHolderResponser {
 
         Intent intent = new Intent(ChooseCity.this, MapsActivity.class);
 
+        //Add here for selecting city from card layout. "cityname" should be same as that in db.
         switch (position) {
+            case 0 : intent.putExtra("selectedCity","kolkata");
+                startActivity(intent);
+                break;
             case 1 : intent.putExtra("selectedCity","mumbai");
                 startActivity(intent);
                 break;
             case 2 : intent.putExtra("selectedCity","newdelhi");
                 startActivity(intent);
                 break;
+            case 4 : intent.putExtra("selectedCity","bengaluru");
+                startActivity(intent);
+                break;
             case 5 : intent.putExtra("selectedCity", "varanasi");
                 startActivity(intent);
                 break;
+            case 6 : intent.putExtra("selectedCity","jaipur");
+                startActivity(intent);
+                break;
+
         }
 
 
