@@ -86,7 +86,23 @@
             android:name=".Form"
             android:label="@string/title_activity_form" >
         </activity>
+        <activity
+            android:name=".flickr.FlickrMain"
+            android:label="@string/title_activity_flickr_main" >
+        </activity>
+        <activity
+            android:name="com.placediscovery.flickr.FlickrjActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="flickrj-android-sample-oauth" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
