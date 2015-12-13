@@ -10,6 +10,8 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -17,6 +19,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
 }
 
 dependencies {
@@ -29,6 +36,7 @@ dependencies {
     compile 'com.android.support:design:22.2.0'
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.facebook.android:facebook-android-sdk:4.8.2'
+
     compile 'org.slf4j:slf4j-android:1.7.13'
     compile 'oauth.signpost:signpost-core:1.2.1.2'
     compile 'oauth.signpost:signpost-commonshttp4:1.2.1.2'
