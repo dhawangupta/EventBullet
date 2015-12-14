@@ -13,7 +13,7 @@ import br.liveo.interfaces.OnItemClickListener;
 import br.liveo.interfaces.OnPrepareOptionsMenuLiveo;
 import br.liveo.navigationliveo.NavigationLiveo;
 
-import com.placediscovery.AddPlaceMaps;
+import com.placediscovery.ui.activity.addingPlace.AddPlaceMaps;
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
 import com.placediscovery.ui.fragment.MainFragment;
