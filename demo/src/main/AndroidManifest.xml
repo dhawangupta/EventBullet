@@ -83,6 +83,10 @@
             android:label="@string/title_activity_add_place" >
         </activity>
         <activity
+            android:name=".ui.activity.addingPlace.AddPlace"
+            android:label="@string/title_activity_add_place" >
+        </activity>
+        <activity
             android:name=".Form"
             android:label="@string/title_activity_form" >
         </activity>

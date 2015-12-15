@@ -13,6 +13,7 @@ import br.liveo.interfaces.OnItemClickListener;
 import br.liveo.interfaces.OnPrepareOptionsMenuLiveo;
 import br.liveo.navigationliveo.NavigationLiveo;
 
+import com.placediscovery.ui.activity.addingPlace.AddPlace;
 import com.placediscovery.ui.activity.addingPlace.AddPlaceMaps;
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
@@ -106,6 +107,10 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
             case 2:
                 mFragment = new ViewPagerFragment();
                 break;
+
+            case 4:
+                startActivity(new Intent(this, AddPlace.class));
+                return;
 
             case 6: {
                 this.userName.setText("Please Log In");

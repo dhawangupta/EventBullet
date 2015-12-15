@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.placediscovery.ImageLoader.ImageLoader;
@@ -25,16 +29,81 @@ import com.placediscovery.ui.activity.ContentActivity;
 
 public class MapsActivity extends FragmentActivity {
 
-    //Test
+    //AppCompatActivity extends FragmentActivity
+    Spinner spinner;
+    // Create a Data Source it may be an Array of String or ArrayList<String>
+    String []arr = {"Filter","Gaming","Drugs","Sex","Partying","Religious","Others"};
+    // An adapter to show data
+    ArrayAdapter<String> adapter;
+
     ArrayList<Place> places = new ArrayList<Place>();
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     String selectedCity;
+    protected Button travel;
+    protected Button explore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        travel = (Button) findViewById(R.id.btn_travel);
+        explore = (Button) findViewById(R.id.btn_explore);
+        spinner = (Spinner) findViewById(R.id.spinnerCountry);
+        adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, arr);
+        spinner.setAdapter(adapter);
+// Used OnItemSelected Listener for Spinner item click, here i am showing a toast
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = spinner.getSelectedItem().toString();
+                Toast.makeText(getApplicationContext(), "Clicked" + selectedItem, Toast.LENGTH_LONG).show();
+// Filter option chosen
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        travel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MapsActivity.this, "Travel Places", Toast.LENGTH_SHORT).show();
+                //change map places to travel places
+            }
+        });
+
+        explore.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MapsActivity.this, "Explore Places", Toast.LENGTH_SHORT).show();
+                //change map places to explore places
+            }
+        });
+
+
+
+//        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setTitle("Add Place");  //title for the toolbar
+//
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//
+//        mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });         //back icon added
+
 
         selectedCity = getIntent().getExtras().getString("selectedCity");
         //retrieving places
