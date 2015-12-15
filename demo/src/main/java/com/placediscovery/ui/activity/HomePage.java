@@ -17,6 +17,7 @@ import com.placediscovery.ui.activity.addingPlace.AddPlaceContent;
 import com.placediscovery.ui.activity.addingPlace.AddPlaceMaps;
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
+import com.placediscovery.ui.activity.addingPlace.AddPlaceSelectCity;
 import com.placediscovery.ui.fragment.MainFragment;
 import com.placediscovery.ui.fragment.ViewPagerFragment;
 
@@ -109,7 +110,7 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
                 break;
 
             case 4:
-                startActivity(new Intent(this, AddPlaceContent.class));
+                startActivity(new Intent(this, AddPlaceSelectCity.class));
                 return;
 
             case 6: {
