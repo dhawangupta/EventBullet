@@ -13,7 +13,7 @@ import br.liveo.interfaces.OnItemClickListener;
 import br.liveo.interfaces.OnPrepareOptionsMenuLiveo;
 import br.liveo.navigationliveo.NavigationLiveo;
 
-import com.placediscovery.ui.activity.addingPlace.AddPlace;
+import com.placediscovery.ui.activity.addingPlace.AddPlaceContent;
 import com.placediscovery.ui.activity.addingPlace.AddPlaceMaps;
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
@@ -109,7 +109,7 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
                 break;
 
             case 4:
-                startActivity(new Intent(this, AddPlace.class));
+                startActivity(new Intent(this, AddPlaceContent.class));
                 return;
 
             case 6: {

@@ -21,7 +21,7 @@ public class AddPlaceMaps extends FragmentActivity implements GoogleMap.OnMapLon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_place);
+        setContentView(R.layout.activity_add_place_maps);
         setUpMapIfNeeded();
     }
 
