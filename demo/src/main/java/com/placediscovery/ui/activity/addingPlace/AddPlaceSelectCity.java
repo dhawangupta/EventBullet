@@ -33,7 +33,6 @@ public class AddPlaceSelectCity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        String selectedCity = (String) getListAdapter().getItem(position);
 
 
     }
