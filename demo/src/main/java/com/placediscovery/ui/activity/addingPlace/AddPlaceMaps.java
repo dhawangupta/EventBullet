@@ -67,7 +67,7 @@ public class AddPlaceMaps extends FragmentActivity implements GoogleMap.OnMapLon
      */
     private void setUpMap() {
         mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(Constants.varanasiLat,Constants.varanasiLon))
+                .position(Constants.varanasiLatLng)
                 .title("click to add a place")).setDraggable(true);
         mMap.setOnInfoWindowClickListener(this);
     }

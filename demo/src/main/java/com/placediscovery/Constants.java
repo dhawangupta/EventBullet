@@ -12,12 +12,12 @@ public final  class Constants
     //These are going to be used for the initial point in the map when adding a place
     // first one is lattitude and second one is longitude
 
-    LatLng varanasiLatLng = new LatLng(25.480694,83.6);
+    public static LatLng varanasiLatLng = new LatLng(25.480694,83.6);
 
     //TODO: add corrected lat and long and for other cities also
-    LatLng bangaloreLatLng = new LatLng(25.480694,83.6);
-    LatLng kolkataLatLng = new LatLng(25.480694,83.6);
-    LatLng jaipurLatLng = new LatLng(25.480694,83.6);
+    public static LatLng bangaloreLatLng = new LatLng(25.480694,83.6);
+    public static LatLng kolkataLatLng = new LatLng(25.480694,83.6);
+    public static LatLng jaipurLatLng = new LatLng(25.480694,83.6);
 
     public static final String Latitutude="LATITUDE";
     public static final String Longitude="LONGITUDE";

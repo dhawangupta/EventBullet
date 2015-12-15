@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.placediscovery.Constants;
 import com.placediscovery.R;
 
 
@@ -32,8 +34,28 @@ public class AddPlaceSelectCity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+        LatLng selectedCityLatLng=null;
 
+        //position corresponds to position of cities in cityArray
+        switch (position){
+            case 0: selectedCityLatLng = Constants.kolkataLatLng;
+                break;
+//            case 1: selectedCityLatLng = Constants.mumbaiLatLng;
+//                break;
+//            case 2: selectedCityLatLng = Constants.newdelhiLatLng;
+//                break;
+//            case 3: selectedCityLatLng = Constants.chennaiLatLng;
+//                break;
+            case 4: selectedCityLatLng = Constants.bangaloreLatLng;
+                break;
+            case 5: selectedCityLatLng = Constants.varanasiLatLng;
+                break;
+            case 6: selectedCityLatLng = Constants.jaipurLatLng;
+                break;
+        }
 
-
+        Intent i = new Intent(this,AddPlaceMaps.class);
+        i.putExtra("selectedCityLatLng",selectedCityLatLng);
+        startActivity(i);
     }
 }
