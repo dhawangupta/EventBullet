@@ -4,26 +4,26 @@ package com.placediscovery.ui.activity;
  * Created by ARIMIT on 14-Oct-15.
  */
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 
 import com.placediscovery.HelperMethods;
-import com.placediscovery.MongoLabPlace.PlaceQueryBuilder;
 import com.placediscovery.ui.activity.adapter.CityAdapter;
 
 import com.placediscovery.R;
 import com.placediscovery.ui.activity.adapter.CityManager;
 import com.placediscovery.MapsActivity;
-public class ChooseCity extends Activity implements ViewHolderResponser {
+public class ChooseCity extends AppCompatActivity implements ViewHolderResponser {
 
     private RecyclerView mRecyclerView;
     private CityAdapter mAdapter;
@@ -38,6 +38,21 @@ public class ChooseCity extends Activity implements ViewHolderResponser {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new CityAdapter(CityManager.getInstance().getCities(), R.layout.row_country,new WeakReference<ViewHolderResponser>(this), this);
         mRecyclerView.setAdapter(mAdapter);
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Add Place");  //title for the toolbar
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });         //back icon added
     }
 
 

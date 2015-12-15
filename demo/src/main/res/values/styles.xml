@@ -10,7 +10,7 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
 
-        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:windowBackground">@color/soft_background</item>
 
         <item name="colorControlNormal">@color/iron</item>
         <item name="colorControlActivated">@color/white</item>
@@ -24,14 +24,11 @@
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
         <item name="colorAccent">@color/white</item>
         <item name="android:textColorPrimary">@color/iron</item>
-        <item name="android:background">@color/primary</item>
+        <item name="android:windowBackground">@color/soft_background</item>
     </style>
 
 
     <!-- Content Styles -->
-    <style name="ActionBarStyle" parent="Widget.AppCompat.ActionBar.Solid">
-        <item name="elevation">0dp</item>
-    </style>
 
     <style name="MenuLabelsStyle">
         <item name="android:background">@drawable/fab_label_background</item>
@@ -63,5 +60,22 @@
         <item name="fab_colorPressed">#2E7D32</item>
         <item name="fab_colorRipple">#1B5E20</item>
     </style>
+
+    <style name="MyApp.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- THIS is where you can color the arrow! -->
+        <item name="android:textColorPrimary">@color/monsoon</item>
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="colorControlNormal">@color/monsoon</item>
+    </style>
+
+    <!--&lt;!&ndash;&lt;!&ndash; Base application theme. &ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;<style name="Transparent.ActionBar" parent="Theme.AppCompat.Light">&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:textColorPrimary">@color/aluminum</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="colorPrimary">@android:color/transparent</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="windowActionBarOverlay">true</item>&ndash;&gt;-->
+    <!--</style>-->
+
+
 
 </resources>
