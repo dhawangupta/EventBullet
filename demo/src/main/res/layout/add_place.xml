@@ -17,7 +17,8 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:background="@color/white">
 
 
 
@@ -25,6 +26,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:paddingTop="0dp"
             android:paddingLeft="0dp"
             android:paddingRight="0dp">
@@ -41,49 +43,57 @@
                 android:gravity="top"
                 android:elevation="3dp"/>
 
-                <!--  Place Title -->
-                <android.support.design.widget.TextInputLayout
+            <!--  Place Title -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
+
+                <EditText android:id="@+id/place_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:paddingLeft="80dp"
-                    android:paddingRight="80dp">
+                    android:inputType="text"
+                    android:textColor="@color/aluminum"
+                    android:hint="Title"/>
+            </android.support.design.widget.TextInputLayout>
 
-                    <EditText android:id="@+id/place_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:hint="Title" />
-                </android.support.design.widget.TextInputLayout>
+            <!--  Place Details -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
 
-                <!--  Place Details -->
-                <android.support.design.widget.TextInputLayout
+                <EditText android:id="@+id/place_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp">
+                    android:inputType="text"
+                    android:textColor="@color/aluminum"
+                    android:hint="Details"/>
+            </android.support.design.widget.TextInputLayout>
 
-                    <EditText android:id="@+id/place_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:hint="Details"/>
-                </android.support.design.widget.TextInputLayout>
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_submit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Submit"
+                android:textSize="18sp"
+                android:background="@color/color_primary" />
 
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/btn_submit"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="24dp"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp"
-                    android:text="Submit"/>
 
-
-            </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </RelativeLayout>
