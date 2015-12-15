@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +15,6 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import com.placediscovery.ImageLoader.ImageLoader;
-import com.placediscovery.MapsActivity;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.MongoLabUser.UserQueryBuilder;
@@ -29,7 +27,7 @@ public class ContentActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_activity);
+        setContentView(R.layout.activity_content);
 
         //Following is the upper toolbar code which is not needed for now.
         /*

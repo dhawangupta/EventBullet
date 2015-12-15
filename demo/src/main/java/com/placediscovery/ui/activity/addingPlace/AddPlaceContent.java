@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.placediscovery.R;
 
 
-public class AddPlace extends ActionBarActivity {
+public class AddPlaceContent extends ActionBarActivity {
 
     protected EditText place_title;
     protected EditText place_details;
@@ -23,7 +23,7 @@ public class AddPlace extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_place);
+        setContentView(R.layout.activity_add_place_content);
 
         place_title = (EditText) findViewById(R.id.place_name);
         place_details = (EditText) findViewById(R.id.place_content);
@@ -48,7 +48,7 @@ public class AddPlace extends ActionBarActivity {
         iv.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Toast.makeText(AddPlace.this, "Add Image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddPlaceContent.this, "Add Image", Toast.LENGTH_SHORT).show();
 
             }
         });
