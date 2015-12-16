@@ -102,7 +102,7 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
                 return;
 
             case 1:
-                startActivity(new Intent(this, AddPlaceMaps.class));
+                startActivity(new Intent(this, AddPlaceSelectCity.class));
                 return;
 
             case 2:
@@ -110,7 +110,7 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
                 break;
 
             case 4:
-                startActivity(new Intent(this, AddPlaceSelectCity.class));
+                startActivity(new Intent(this, AddPlaceContent.class));     //this is only temporary
                 return;
 
             case 6: {
