@@ -72,7 +72,13 @@
                 <EditText android:id="@+id/place_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
+                    android:editable="true"
+                    android:enabled="true"
+                    android:minLines="1"
+                    android:maxLines="6"
+                    android:isScrollContainer="true"
+                    android:focusable="true"
                     android:textColor="@color/aluminum"
                     android:hint="Details"/>
             </android.support.design.widget.TextInputLayout>

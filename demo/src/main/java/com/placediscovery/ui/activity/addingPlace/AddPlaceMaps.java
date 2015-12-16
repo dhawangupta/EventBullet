@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -17,11 +18,14 @@ public class AddPlaceMaps extends FragmentActivity implements GoogleMap.OnMapLon
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     Marker marker=null;
+    LatLng selectedCityLatLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_place);
+        setContentView(R.layout.activity_add_place_maps);
+
+        selectedCityLatLng = getIntent().getExtras().getParcelable("selectedCityLatLng");
         setUpMapIfNeeded();
     }
 
@@ -67,8 +71,10 @@ public class AddPlaceMaps extends FragmentActivity implements GoogleMap.OnMapLon
      */
     private void setUpMap() {
         mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(Constants.varanasiLat,Constants.varanasiLon))
+                .position(selectedCityLatLng)
                 .title("click to add a place")).setDraggable(true);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedCityLatLng, 10));
+
         mMap.setOnInfoWindowClickListener(this);
     }
 
@@ -76,6 +82,7 @@ public class AddPlaceMaps extends FragmentActivity implements GoogleMap.OnMapLon
     @Override
     public void onInfoWindowClick(Marker marker) {
         Intent i =new Intent(AddPlaceMaps.this,Form.class);
+        //TODO: use AddPlaceContent instead of Form
         i.putExtra(Constants.Latitutude,marker.getPosition().latitude);
         i.putExtra(Constants.Longitude,marker.getPosition().longitude);
         marker.remove();
@@ -84,6 +91,32 @@ public class AddPlaceMaps extends FragmentActivity implements GoogleMap.OnMapLon
 
     @Override
     public void onMapLongClick(LatLng latLng) {
+
+
+
+        //TODO: use the following code wherever an alert dialog is needed
+        // we will show a prompt to user whenever s/he tries adding the marked location
+
+//        new AlertDialog.Builder(AddPlace.this)
+//                .setTitle("Add Place")
+//                .setMessage("Are you sure you want to add this place?")
+//                .setPositiveButton(android.R.string.yes, new
+//                        DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface
+//                                                        dialog, int which) {
+//                                // continue with saving in database
+//                            }
+//                        })
+//                .setNegativeButton(android.R.string.no, new
+//                        DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface
+//                                                        dialog, int which) {
+//                                // do nothing
+//                            }
+//                        })
+//                .setIcon(android.R.drawable.ic_dialog_alert)
+//                .show();
+//        // submit place details to database
 
     }
 }
