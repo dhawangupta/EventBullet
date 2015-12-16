@@ -21,20 +21,6 @@ public class FlickrMain extends AppCompatActivity  {
 
 
     File fileUri;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_flickr_main);
-
-        Button btnFlickr = (Button) findViewById(R.id.btnFlickr);
-        btnFlickr.setOnClickListener(mFlickrClickListener);
-
-        Button btnPick = (Button) findViewById(R.id.btnPick);
-        btnPick.setOnClickListener(mPickClickListener);
-
-    }
-
     View.OnClickListener mPickClickListener = new View.OnClickListener() {
 
         @Override
@@ -46,7 +32,6 @@ public class FlickrMain extends AppCompatActivity  {
             startActivityForResult(intent, 102);
         }
     };
-
     View.OnClickListener mFlickrClickListener = new View.OnClickListener() {
 
         @Override
@@ -65,6 +50,19 @@ public class FlickrMain extends AppCompatActivity  {
         }
     };
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_flickr_main);
+
+        Button btnFlickr = (Button) findViewById(R.id.btnFlickr);
+        btnFlickr.setOnClickListener(mFlickrClickListener);
+
+        Button btnPick = (Button) findViewById(R.id.btnPick);
+        btnPick.setOnClickListener(mPickClickListener);
+
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -82,16 +80,24 @@ public class FlickrMain extends AppCompatActivity  {
             }
 
         }
-    };
+    }
 
     public String getPath(Uri uri) {
         String[] projection = { MediaStore.Images.Media.DATA };
 
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
+//        Cursor cursor = managedQuery(uri, projection, null, null, null);
+//        int column_index = cursor
+//                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//        cursor.moveToFirst();
+        String res = null;
+
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if(cursor.moveToFirst()){
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
     }
 
 }
