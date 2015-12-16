@@ -40,12 +40,12 @@ public class AddPlaceSelectCity extends ListActivity {
         switch (position){
             case 0: selectedCityLatLng = Constants.kolkataLatLng;
                 break;
-//            case 1: selectedCityLatLng = Constants.mumbaiLatLng;
-//                break;
-//            case 2: selectedCityLatLng = Constants.newdelhiLatLng;
-//                break;
-//            case 3: selectedCityLatLng = Constants.chennaiLatLng;
-//                break;
+            case 1: selectedCityLatLng = Constants.mumbaiLatLng;
+                break;
+            case 2: selectedCityLatLng = Constants.newdelhiLatLng;
+                break;
+            case 3: selectedCityLatLng = Constants.chennaiLatLng;
+               break;
             case 4: selectedCityLatLng = Constants.bangaloreLatLng;
                 break;
             case 5: selectedCityLatLng = Constants.varanasiLatLng;
