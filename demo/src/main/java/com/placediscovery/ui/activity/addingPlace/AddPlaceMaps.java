@@ -92,5 +92,31 @@ public class AddPlaceMaps extends FragmentActivity implements GoogleMap.OnMapLon
     @Override
     public void onMapLongClick(LatLng latLng) {
 
+
+
+        //TODO: use the following code wherever an alert dialog is needed
+        // we will show a prompt to user whenever s/he tries adding the marked location
+
+//        new AlertDialog.Builder(AddPlace.this)
+//                .setTitle("Add Place")
+//                .setMessage("Are you sure you want to add this place?")
+//                .setPositiveButton(android.R.string.yes, new
+//                        DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface
+//                                                        dialog, int which) {
+//                                // continue with saving in database
+//                            }
+//                        })
+//                .setNegativeButton(android.R.string.no, new
+//                        DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface
+//                                                        dialog, int which) {
+//                                // do nothing
+//                            }
+//                        })
+//                .setIcon(android.R.drawable.ic_dialog_alert)
+//                .show();
+//        // submit place details to database
+
     }
 }
