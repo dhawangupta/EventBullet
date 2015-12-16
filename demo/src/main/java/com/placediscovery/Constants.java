@@ -13,6 +13,7 @@ public final  class Constants
     public static final String Kolkata="Kolkata";
     public static final String Mumbai="Mumbai";
     public static final String NewDelhi="NewDelhi";
+    public static final String Chennai="Chennai"
 
     //These are going to be used for the initial point in the map when adding a place
     // first one is lattitude and second one is longitude
@@ -23,7 +24,7 @@ public final  class Constants
     public static LatLng jaipurLatLng = new LatLng(26.9,75.8);
     public static LatLng mumbaiLatLng = new LatLng(18.98,72.83);
     public static LatLng newdelhiLatLng = new LatLng(28.61,77.21);
-    public static LatLng chennaiLatLng = new LatLng(28.61,77.21);
+    public static LatLng chennaiLatLng = new LatLng(13.08,80.27);
 
     public static final String Latitutude="LATITUDE";
     public static final String Longitude="LONGITUDE";
