@@ -18,13 +18,12 @@ public final  class Constants
     // first one is lattitude and second one is longitude
 
     public static LatLng varanasiLatLng = new LatLng(25.28,82.96);
-
-    //TODO: add corrected lat and long and for other cities also
     public static LatLng bangaloreLatLng = new LatLng(12.96,77.56);
     public static LatLng kolkataLatLng = new LatLng(22.56,88.36);
     public static LatLng jaipurLatLng = new LatLng(26.9,75.8);
     public static LatLng mumbaiLatLng = new LatLng(18.98,72.83);
-    public static LatLng newDelhiLatLng = new LatLng(28.61,77.21);
+    public static LatLng newdelhiLatLng = new LatLng(28.61,77.21);
+    public static LatLng chennaiLatLng = new LatLng(28.61,77.21);
 
     public static final String Latitutude="LATITUDE";
     public static final String Longitude="LONGITUDE";
