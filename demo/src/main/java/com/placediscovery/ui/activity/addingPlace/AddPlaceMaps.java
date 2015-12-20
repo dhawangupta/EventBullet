@@ -11,7 +11,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.placediscovery.Constants;
-import com.placediscovery.Form;
 import com.placediscovery.R;
 
 public class AddPlaceMaps extends FragmentActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener {
@@ -81,8 +80,7 @@ public class AddPlaceMaps extends FragmentActivity implements GoogleMap.OnMapLon
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Intent i =new Intent(AddPlaceMaps.this,Form.class);
-        //TODO: use AddPlaceContent instead of Form
+        Intent i =new Intent(AddPlaceMaps.this,AddPlaceContent.class);
         i.putExtra(Constants.Latitutude,marker.getPosition().latitude);
         i.putExtra(Constants.Longitude,marker.getPosition().longitude);
         marker.remove();
