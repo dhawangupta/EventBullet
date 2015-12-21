@@ -141,13 +141,18 @@ public class MapsActivity extends FragmentActivity {
             params.setMargins(dpMarginInPx, dpMarginInPx, dpMarginInPx, dpMarginInPx);
 
             for(int j=0; j<places.size(); j++){
+                // Image url
+                String image_url = places.get(j).getImageURL();
+
+                if(image_url.equals("")){
+                    continue;
+                }
+
                 iv[j] = new ImageView(this);
                 iv[j].setId(j+1);
                 iv[j].setLayoutParams(params);
                 imageviews.addView(iv[j]);
 
-                // Image url
-                String image_url = places.get(j).getImageURL();
                 // ImageLoader class instance
                 ImageLoader imgLoader = new ImageLoader(getApplicationContext());
                 // whenever you want to load an image from url
