@@ -50,6 +50,7 @@ public class ContentActivity extends ActionBarActivity {
         int loader = R.drawable.loader;         //loader image
         // Image url
         String image_url = places.get(imageviewId).getImageURL();
+        String hd_url = image_url.substring(0,image_url.length()-6)+".jpg";
         // ImageLoader class instance
         ImageLoader imgLoader = new ImageLoader(getApplicationContext());
         // whenever you want to load an image from url
@@ -57,7 +58,7 @@ public class ContentActivity extends ActionBarActivity {
         // url - image url to load
         // loader - loader image, will be displayed before getting image
         // image - ImageView
-        imgLoader.DisplayImage(image_url, loader, (ImageView)findViewById(R.id.contentPageImage));
+        imgLoader.DisplayImage(hd_url, loader, (ImageView)findViewById(R.id.contentPageImage));
 
 
         //some toolbar code
