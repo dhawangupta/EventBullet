@@ -4,7 +4,6 @@ package com.placediscovery.ui.activity.adapter;
  * Created by ARIMIT on 18-Sep-15.
  */
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
