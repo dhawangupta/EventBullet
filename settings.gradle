@@ -1,2 +1,2 @@
-include ':demo', ':facebook'
+include ':app'
 include ':library'
