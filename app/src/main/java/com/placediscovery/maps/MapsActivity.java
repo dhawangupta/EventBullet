@@ -16,30 +16,29 @@ import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
-import com.placediscovery.HelperMethods;
 import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.GetPlacesAsyncTask;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
+import com.placediscovery.ui.HelperMethods;
 import com.placediscovery.ui.activity.ContentActivity;
 
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity {
 
+    protected Button travel;
+    protected Button explore;
     //AppCompatActivity extends FragmentActivity
     Spinner spinner;
     // Create a Data Source it may be an Array of String or ArrayList<String>
     String []arr = {"Filter","Gaming","Drugs","Sex","Partying","Religious","Others"};
     // An adapter to show data
     ArrayAdapter<String> adapter;
-
     ArrayList<Place> places = new ArrayList<>();
 //    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     MapView mapView=null;
     String selectedCity;
-    protected Button travel;
-    protected Button explore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

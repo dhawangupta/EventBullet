@@ -1,5 +1,11 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:id="@+id/map"
-    tools:context="com.placediscovery.ui.activity.addingPlace.AddPlaceMaps"
-    android:name="com.google.android.gms.maps.SupportMapFragment" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.mapbox.mapboxsdk.views.MapView
+        android:id="@+id/mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        mapbox:access_token="pk.eyJ1IjoienViZXIiLCJhIjoiY2lpaGVjM3ptMDA3MXU2a25iYnB0dzluYyJ9.z0PcPwFB-Jv2EpJqbJ5Qdw" />
+</LinearLayout>
