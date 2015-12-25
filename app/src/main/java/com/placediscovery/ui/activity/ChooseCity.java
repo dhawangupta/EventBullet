@@ -14,9 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
-import com.placediscovery.HelperMethods;
 import com.placediscovery.R;
 import com.placediscovery.maps.MapsActivity;
+import com.placediscovery.ui.HelperMethods;
 import com.placediscovery.ui.activity.adapter.CityAdapter;
 import com.placediscovery.ui.activity.adapter.CityManager;
 
