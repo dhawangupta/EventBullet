@@ -2,6 +2,7 @@ package com.placediscovery.maps;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import com.mapbox.mapboxsdk.annotations.Marker;
@@ -132,7 +133,7 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
      * @return If true the listener has consumed the event and the info window will not be closed.
      */
     @Override
-    public boolean onMarkerClick(Marker marker) {
+    public boolean onMarkerClick(@NonNull Marker marker) {
         Intent i = new Intent(AddPlaceMaps.this, AddPlaceContent.class);
         i.putExtra(Constants.Latitutude, marker.getPosition().getLatitude());
         i.putExtra(Constants.Longitude, marker.getPosition().getLongitude());
