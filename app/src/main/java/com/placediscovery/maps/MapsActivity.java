@@ -20,7 +20,6 @@ import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.GetPlacesAsyncTask;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
-import com.placediscovery.ui.HelperMethods;
 import com.placediscovery.ui.activity.ContentActivity;
 
 import java.util.ArrayList;
@@ -107,9 +106,11 @@ public class MapsActivity extends FragmentActivity {
         //retrieving places
         try {
 
-            try {
-                places = (ArrayList<Place>) HelperMethods.readObjectFromFile("saved_" + selectedCity);
-            } catch (NullPointerException n){
+//            try
+//            {
+//                places = (ArrayList<Place>) HelperMethods.readObjectFromFile("saved_" + selectedCity);
+//            } catch (NullPointerException n)
+            {
                 GetPlacesAsyncTask task = new GetPlacesAsyncTask(selectedCity);
                 try {
                     places = task.execute().get();
