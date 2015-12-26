@@ -3,11 +3,12 @@ package com.placediscovery.ui.activity.addingPlace;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.placediscovery.Constants;
 import com.placediscovery.R;
 import com.placediscovery.maps.AddPlaceMaps;
@@ -55,7 +56,7 @@ public class AddPlaceSelectCity extends ListActivity {
         }
 
         Intent i = new Intent(this,AddPlaceMaps.class);
-        i.putExtra("selectedCityLatLng",selectedCityLatLng);
+        i.putExtra("selectedCityLatLng", (Parcelable) selectedCityLatLng);
         startActivity(i);
     }
 }
