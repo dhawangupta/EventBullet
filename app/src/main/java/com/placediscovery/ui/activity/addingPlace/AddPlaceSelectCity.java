@@ -3,15 +3,19 @@ package com.placediscovery.ui.activity.addingPlace;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.placediscovery.Constants;
 import com.placediscovery.R;
 import com.placediscovery.maps.AddPlaceMaps;
+
+import static com.placediscovery.Constants.cityArray;
+import static com.placediscovery.Constants.selectedCityLat;
+import static com.placediscovery.Constants.selectedCityLon;
 
 
 /**
@@ -21,7 +25,7 @@ import com.placediscovery.maps.AddPlaceMaps;
 
 public class AddPlaceSelectCity extends ListActivity {
 
-    private static String[] cityArray = {"Kolkata", "Mumbai", "New Delhi", "Chennai", "Bangalore", "Varanasi", "Jaipur"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,10 @@ public class AddPlaceSelectCity extends ListActivity {
         }
 
         Intent i = new Intent(this,AddPlaceMaps.class);
-        i.putExtra("selectedCityLatLng", (Parcelable) selectedCityLatLng);
+        i.putExtra(selectedCityLat,selectedCityLatLng.getLatitude());
+        System.out.println(selectedCityLatLng.getLatitude());
+        i.putExtra(selectedCityLon,selectedCityLatLng.getLongitude());
+        Toast.makeText(getApplicationContext(),String.valueOf(selectedCityLatLng.getLatitude()),Toast.LENGTH_LONG).show();
         startActivity(i);
     }
 }

@@ -16,9 +16,16 @@ public final  class Constants
     public static final String NewDelhi="NewDelhi";
     public static final String Chennai="Chennai";
 
+    public final static String[] cityArray = {"Kolkata", "Mumbai", "New Delhi", "Chennai", "Bangalore", "Varanasi", "Jaipur"};
+
+
+    public static final String selectedCityLat="selectedCityLat";
+    public static final String selectedCityLon="selectedCityLon";
+
     //These are going to be used for the initial point in the map when adding a place
     // first one is lattitude and second one is longitude
-
+    public static final String Latitutude="LATITUDE";
+    public static final String Longitude="LONGITUDE";
     public static LatLng varanasiLatLng = new LatLng(25.28,82.96);
     public static LatLng bangaloreLatLng = new LatLng(12.96,77.56);
     public static LatLng kolkataLatLng = new LatLng(22.56,88.36);
@@ -26,7 +33,4 @@ public final  class Constants
     public static LatLng mumbaiLatLng = new LatLng(18.98,72.83);
     public static LatLng newdelhiLatLng = new LatLng(28.61,77.21);
     public static LatLng chennaiLatLng = new LatLng(13.08,80.27);
-
-    public static final String Latitutude="LATITUDE";
-    public static final String Longitude="LONGITUDE";
 }
