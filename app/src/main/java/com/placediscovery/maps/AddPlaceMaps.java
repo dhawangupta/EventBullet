@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
-import com.mapbox.mapboxsdk.camera.CameraPosition;
-import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
@@ -36,29 +34,19 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
     private void setUpMapIfNeeded(Bundle savedInstanceState) {
         mapView = (MapView) findViewById(R.id.mapview);
         mapView.setStyleUrl(Style.MAPBOX_STREETS);
-        mapView.setCenterCoordinate(selectedCityLatLng);
+        mapView.setCenterCoordinate(new LatLng(selectedCityLatLng));
         mapView.setZoomLevel(11);
         mapView.setTiltEnabled(true);
         mapView.setMyLocationEnabled(true);
-        mapView.onCreate(savedInstanceState);
-        setUpMap();
-
-    }
-
-
-    private void setUpMap() {
-
         mapView.addMarker(new MarkerOptions()
+                        .position(new LatLng(selectedCityLatLng))
                         .snippet("click to add a place")
         );
-        CameraPosition.Builder builder = new CameraPosition.Builder();
-        builder.target(selectedCityLatLng);
-        builder.bearing(270);
-        CameraPosition campos = builder.build();
-        mapView.moveCamera(CameraUpdateFactory.newCameraPosition(campos));
-
-        mapView.setOnInfoWindowClickListener(this);
+        mapView.onCreate(savedInstanceState);
     }
+
+
+
 
 
 //    @Override
