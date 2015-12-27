@@ -73,27 +73,27 @@
             android:name=".ui.activity.UserTestActivity"
             android:label="@string/title_activity_user_test" >
         </activity>
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--<activity-->
+            <!--android:name="com.facebook.FacebookActivity"-->
+            <!--android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
         <activity
             android:name=".ui.activity.addingPlace.AddPlaceSelectCity"
             android:label="@string/title_activity_add_place" >
         </activity>
         <activity
-            android:name=".ui.activity.addingPlace.AddPlaceMaps"
+            android:name=".maps.AddPlaceMaps"
             android:label="@string/title_activity_add_place" >
         </activity>
         <activity
             android:name=".ui.activity.addingPlace.AddPlaceContent"
             android:label="@string/title_activity_add_place" >
         </activity>
-        <activity
-            android:name=".facebook.FacebookBaseActivity"
-            android:label="@string/title_activity_facebook_base" >
-        </activity>
+        <!--<activity-->
+            <!--android:name=".facebook.FacebookBaseActivity"-->
+            <!--android:label="@string/title_activity_facebook_base" >-->
+        <!--</activity>-->
     </application>
 
 </manifest>
