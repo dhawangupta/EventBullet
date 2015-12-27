@@ -14,11 +14,11 @@ import android.widget.Toast;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
-import com.placediscovery.HelperMethods;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.MongoLabUser.UserQueryBuilder;
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
+import com.placediscovery.ui.HelperMethods;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -217,12 +217,12 @@ public class
 
                     loggedInUser = x;
                     UserStatus userStatus = new UserStatus();
-                    userStatus.setLoginStatus(true);
-                    userStatus.setUser_Id(x.user_id);
-                    userStatus.setName(x.name);
-                    userStatus.setEmail(x.email);
-                    userStatus.setPassword(x.password);
-                    userStatus.setSavedPlaces(x.savedplaces);
+                    UserStatus.setLoginStatus(true);
+                    UserStatus.setUser_Id(x.user_id);
+                    UserStatus.setName(x.name);
+                    UserStatus.setEmail(x.email);
+                    UserStatus.setPassword(x.password);
+                    UserStatus.setSavedPlaces(x.savedplaces);
                     Intent moreDetailsIntent = new Intent(LoginActivity.this, HomePage.class);
                     Toast.makeText(getApplicationContext(),"Welcome " + x.name+ ", You are now logged in.",Toast.LENGTH_SHORT).show();
                     startActivity(moreDetailsIntent);

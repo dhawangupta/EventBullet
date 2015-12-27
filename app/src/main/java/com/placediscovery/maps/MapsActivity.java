@@ -16,30 +16,29 @@ import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
-import com.placediscovery.HelperMethods;
 import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.GetPlacesAsyncTask;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
+import com.placediscovery.ui.HelperMethods;
 import com.placediscovery.ui.activity.ContentActivity;
 
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity {
 
+    protected Button travel;
+    protected Button explore;
     //AppCompatActivity extends FragmentActivity
-    Spinner spinner;
+//    Spinner spinner;
     // Create a Data Source it may be an Array of String or ArrayList<String>
     String []arr = {"Filter","Gaming","Drugs","Sex","Partying","Religious","Others"};
     // An adapter to show data
     ArrayAdapter<String> adapter;
-
     ArrayList<Place> places = new ArrayList<>();
 //    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     MapView mapView=null;
     String selectedCity;
-    protected Button travel;
-    protected Button explore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,43 +48,43 @@ public class MapsActivity extends FragmentActivity {
 
         travel = (Button) findViewById(R.id.btn_travel);
         explore = (Button) findViewById(R.id.btn_explore);
-        spinner = (Spinner) findViewById(R.id.spinnerCountry);
+//        spinner = (Spinner) findViewById(R.id.spinnerCountry);
         adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, arr);
-        spinner.setAdapter(adapter);
+//        spinner.setAdapter(adapter);
 // Used OnItemSelected Listener for Spinner item click, here i am showing a toast
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = spinner.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), "Clicked" + selectedItem, Toast.LENGTH_LONG).show();
-// Filter option chosen
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        travel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MapsActivity.this, "Travel Places", Toast.LENGTH_SHORT).show();
-                //change map places to travel places
-            }
-        });
-
-        explore.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MapsActivity.this, "Explore Places", Toast.LENGTH_SHORT).show();
-                //change map places to explore places
-            }
-        });
-
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String selectedItem = spinner.getSelectedItem().toString();
+//                Toast.makeText(getApplicationContext(), "Clicked" + selectedItem, Toast.LENGTH_LONG).show();
+//// Filter option chosen
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//
+//        travel.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MapsActivity.this, "Travel Places", Toast.LENGTH_SHORT).show();
+//                //change map places to travel places
+//            }
+//        });
+//
+//        explore.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MapsActivity.this, "Explore Places", Toast.LENGTH_SHORT).show();
+//                //change map places to explore places
+//            }
+//        });
+//
 
 
 //        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -108,9 +107,10 @@ public class MapsActivity extends FragmentActivity {
         //retrieving places
         try {
 
-            try {
-                places = (ArrayList<Place>) HelperMethods.readObjectFromFile("saved_" + selectedCity);
-            } catch (NullPointerException n){
+            //following is giving error for now hence commented 26/12/2015
+//            try {
+//                places = (ArrayList<Place>) HelperMethods.readObjectFromFile("saved_" + selectedCity);
+//            } catch (NullPointerException n){
                 GetPlacesAsyncTask task = new GetPlacesAsyncTask(selectedCity);
                 try {
                     places = task.execute().get();
@@ -118,7 +118,7 @@ public class MapsActivity extends FragmentActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
+//            }
 
 
             int loader = R.drawable.loader;         //loader image
