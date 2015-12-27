@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.placediscovery.Constants;
@@ -59,10 +60,15 @@ public class AddPlaceSelectCity extends ListActivity {
         }
 
 
-        Intent i = new Intent(this,AddPlaceMaps.class);
-        i.putExtra(selectedCityLat,selectedCityLatLng.getLatitude());
-        i.putExtra(selectedCityLon, selectedCityLatLng.getLongitude());
-
-        startActivity(i);
+        if(selectedCityLatLng==null)
+        {
+            Toast.makeText(getApplicationContext(),"selectedCityLatLng is null",Toast.LENGTH_LONG).show();
+        }
+        else {
+            Intent i = new Intent(this, AddPlaceMaps.class);
+            i.putExtra(selectedCityLat, selectedCityLatLng.getLatitude());
+            i.putExtra(selectedCityLon, selectedCityLatLng.getLongitude());
+            startActivity(i);
+        }
     }
 }
