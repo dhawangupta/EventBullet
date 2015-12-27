@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
@@ -20,7 +18,6 @@ import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.GetPlacesAsyncTask;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
-import com.placediscovery.ui.HelperMethods;
 import com.placediscovery.ui.activity.ContentActivity;
 
 import java.util.ArrayList;
@@ -106,19 +103,12 @@ public class MapsActivity extends FragmentActivity {
         selectedCity = getIntent().getExtras().getString("selectedCity");
         //retrieving places
         try {
-
-<<<<<<< HEAD
 //            try
 //            {
 //                places = (ArrayList<Place>) HelperMethods.readObjectFromFile("saved_" + selectedCity);
 //            } catch (NullPointerException n)
-            {
-=======
-            //following is giving error for now hence commented 26/12/2015
-//            try {
-//                places = (ArrayList<Place>) HelperMethods.readObjectFromFile("saved_" + selectedCity);
-//            } catch (NullPointerException n){
->>>>>>> refs/remotes/dhawangupta/master
+
+
                 GetPlacesAsyncTask task = new GetPlacesAsyncTask(selectedCity);
                 try {
                     places = task.execute().get();
@@ -126,7 +116,6 @@ public class MapsActivity extends FragmentActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-//            }
 
 
             int loader = R.drawable.loader;         //loader image

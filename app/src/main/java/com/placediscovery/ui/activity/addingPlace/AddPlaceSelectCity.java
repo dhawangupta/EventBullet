@@ -59,11 +59,16 @@ public class AddPlaceSelectCity extends ListActivity {
                 break;
         }
 
-        Intent i = new Intent(this,AddPlaceMaps.class);
-        i.putExtra(selectedCityLat,selectedCityLatLng.getLatitude());
-        System.out.println(selectedCityLatLng.getLatitude());
-        i.putExtra(selectedCityLon,selectedCityLatLng.getLongitude());
-        Toast.makeText(getApplicationContext(),String.valueOf(selectedCityLatLng.getLatitude()),Toast.LENGTH_LONG).show();
-        startActivity(i);
+
+        if(selectedCityLatLng==null)
+        {
+            Toast.makeText(getApplicationContext(),"selectedCityLatLng is null",Toast.LENGTH_LONG).show();
+        }
+        else {
+            Intent i = new Intent(this, AddPlaceMaps.class);
+            i.putExtra(selectedCityLat, selectedCityLatLng.getLatitude());
+            i.putExtra(selectedCityLon, selectedCityLatLng.getLongitude());
+            startActivity(i);
+        }
     }
 }
