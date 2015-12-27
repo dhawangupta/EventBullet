@@ -1,0 +1,36 @@
+﻿Merge remote-tracking branch 'refs/remotes/dhawangupta/master'
+
+# Conflicts:
+#	app/build.gradle
+#	app/src/main/AndroidManifest.xml
+#	app/src/main/java/com/placediscovery/maps/AddPlaceMaps.java
+#	app/src/main/java/com/placediscovery/maps/MapsActivity.java
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   app/build.gradle
+#	modified:   app/src/main/AndroidManifest.xml
+#	modified:   app/src/main/java/com/placediscovery/maps/AddPlaceMaps.java
+#	modified:   app/src/main/java/com/placediscovery/maps/MapsActivity.java
+#	modified:   app/src/main/java/com/placediscovery/ui/activity/HomePage.java
+#	modified:   app/src/main/java/com/placediscovery/ui/activity/SignupActivity.java
+#	modified:   app/src/main/res/layout/activity_maps.xml
+#	modified:   app/src/main/res/layout/activity_signup.xml
+#	modified:   gradle.properties
+#	modified:   library/build.gradle
+#	deleted:    library/src/main/res/drawable/arimit_icon.jpg
+#	new file:   library/src/main/res/drawable/user_image.png
+#
+

@@ -47,7 +47,7 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
                 }
             });
         }
-        this.userPhoto.setImageResource(R.drawable.arimit_icon);
+        this.userPhoto.setImageResource(R.drawable.user_image);
         this.userBackground.setImageResource(R.drawable.ic_user_background_first);
 
         // Creating items navigation
@@ -108,10 +108,6 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
             case 2:
                 mFragment = new ViewPagerFragment();
                 break;
-
-            case 4:
-                startActivity(new Intent(this, AddPlaceContent.class));     //this is only temporary
-                return;
 
             case 6: {
                 this.userName.setText("Please Log In");
