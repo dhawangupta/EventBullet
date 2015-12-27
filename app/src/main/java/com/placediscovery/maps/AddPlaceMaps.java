@@ -20,13 +20,15 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
 
     MapView mapView;
     LatLng selectedCityLatLng;
+    double lat=20,lon=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place_maps);
-
-        selectedCityLatLng = getIntent().getExtras().getParcelable("selectedCityLatLng");
+        lat=getIntent().getDoubleExtra(Constants.selectedCityLat,0);
+        lon=getIntent().getDoubleExtra(Constants.selectedCityLon,0);
+        selectedCityLatLng=new LatLng(lat,lon);
         setUpMapIfNeeded(savedInstanceState);
     }
 
