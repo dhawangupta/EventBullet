@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="app_name">Place Discovery</string>
+    <string name="sign_in">Sign in</string>
+    <string name="home">Home</string>
+    <string name="choose_city">Choose City</string>
+    <string name="add_place">Add a Place</string>
+    <string name="saved_place">My Saved Places </string>
+    <string name="settings">Settings</string>
+    <string name="add">Login</string>
+    <string name="search">Search</string>
+    <string name="send">First</string>
+    <string name="important">Second</string>
+    <string name="documents">Third</string>
+
+    <!-- Toast -->
+    <string name="hello_world">Hello world!</string>
+    <!-- Settings. -->
+
+    <string name="action_settings">Settings</string>
+
+    <string name="title_activity_maps">Map</string>
+
+    <!-- Content Strings -->
+    <string name="place_holder">Place holder</string>
+    <string name="title_activity_user_test">UserTestActivity</string>
+
+    <!-- Facebook app ID -->
+    <string name="facebook_app_id">138984996466634</string>
+    <string name="title_activity_add_place">Map</string>
+    <string name="title_activity_form">Form</string>
+    <string name="title_activity_flickr_main">FlickrMain</string>
+    <string name="title_activity_facebook_base">FacebookBase</string>
+
+    <!--Mapbox -->
+    <string name="access_token">pk.eyJ1IjoienViZXIiLCJhIjoiY2lpaGVjM3ptMDA3MXU2a25iYnB0dzluYyJ9.z0PcPwFB-Jv2EpJqbJ5Qdw</string>
+
+</resources>

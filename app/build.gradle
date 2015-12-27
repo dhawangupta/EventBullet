@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
+
+    defaultConfig {
+        applicationId "com.placediscovery"
+        minSdkVersion 21
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+repositories { mavenCentral() }
+dependencies {
+    compile project(':library')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('libs/mongo-2.10.1.jar')
+    compile files('libs/aws-android-sdk-cognito-2.2.9.jar')
+    compile files('libs/aws-android-sdk-core-2.2.9.jar')
+    compile files('libs/aws-android-sdk-s3-2.2.9.jar')
+    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.android.support:cardview-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
+    compile('com.mapbox.mapboxsdk:mapbox-android-sdk:3.0.0@aar') {
+        transitive = true
+    }
+
+}
