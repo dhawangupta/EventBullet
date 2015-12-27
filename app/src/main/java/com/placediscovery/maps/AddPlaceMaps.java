@@ -14,7 +14,7 @@ import com.placediscovery.Constants;
 import com.placediscovery.R;
 import com.placediscovery.ui.activity.addingPlace.AddPlaceContent;
 
-public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWindowClickListener {
+public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWindowClickListener, MapView.OnMarkerClickListener {
 
     MapView mapView;
     LatLng selectedCityLatLng;
@@ -42,7 +42,10 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
                         .position(new LatLng(selectedCityLatLng))
                         .snippet("click to add a place")
         );
+        mapView.setTiltEnabled(true);
+        mapView.setOnMarkerClickListener(this);
         mapView.onCreate(savedInstanceState);
+
     }
 
 
