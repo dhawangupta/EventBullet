@@ -37,17 +37,29 @@ public class EdgeGlow {
     private static final int MIN_VELOCITY = 100;
 
     private static final float EPSILON = 0.001f;
-
+    private static final int STATE_IDLE = 0;
+    private static final int STATE_PULL = 1;
+    private static final int STATE_ABSORB = 2;
+    private static final int STATE_RECEDE = 3;
+    private static final int STATE_PULL_DECAY = 4;
+    // How much dragging should effect the height of the edge image.
+    // Number determined by user testing.
+    private static final int PULL_DISTANCE_EDGE_FACTOR = 5;
+    // How much dragging should effect the height of the glow image.
+    // Number determined by user testing.
+    private static final int PULL_DISTANCE_GLOW_FACTOR = 5;
+    private static final float PULL_DISTANCE_ALPHA_GLOW_FACTOR = 0.8f;
+    private static final int VELOCITY_EDGE_FACTOR = 8;
+    private static final int VELOCITY_GLOW_FACTOR = 16;
     private final Drawable mEdge;
     private final Drawable mGlow;
+    private final Interpolator mInterpolator;
     private int mWidth;
     private int mHeight;
-
     private float mEdgeAlpha;
     private float mEdgeScaleY;
     private float mGlowAlpha;
     private float mGlowScaleY;
-
     private float mEdgeAlphaStart;
     private float mEdgeAlphaFinish;
     private float mEdgeScaleYStart;
@@ -56,30 +68,8 @@ public class EdgeGlow {
     private float mGlowAlphaFinish;
     private float mGlowScaleYStart;
     private float mGlowScaleYFinish;
-
     private long mStartTime;
     private float mDuration;
-
-    private final Interpolator mInterpolator;
-
-    private static final int STATE_IDLE = 0;
-    private static final int STATE_PULL = 1;
-    private static final int STATE_ABSORB = 2;
-    private static final int STATE_RECEDE = 3;
-    private static final int STATE_PULL_DECAY = 4;
-
-    // How much dragging should effect the height of the edge image.
-    // Number determined by user testing.
-    private static final int PULL_DISTANCE_EDGE_FACTOR = 5;
-
-    // How much dragging should effect the height of the glow image.
-    // Number determined by user testing.
-    private static final int PULL_DISTANCE_GLOW_FACTOR = 5;
-    private static final float PULL_DISTANCE_ALPHA_GLOW_FACTOR = 0.8f;
-
-    private static final int VELOCITY_EDGE_FACTOR = 8;
-    private static final int VELOCITY_GLOW_FACTOR = 16;
-
     private int mState = STATE_IDLE;
 
     private float mPullDistance;

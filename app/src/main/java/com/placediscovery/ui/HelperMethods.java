@@ -17,6 +17,12 @@ import java.io.ObjectOutputStream;
 public class HelperMethods {
 
     private static final String TAG = HelperMethods.class.getSimpleName();
+    static private Context context;
+
+
+    /*
+   * use this method to save any object to Cache memory
+   * */
 
     /*
     * use to check internet connectivity
@@ -40,12 +46,6 @@ public class HelperMethods {
         return false;
     }
 
-
-    /*
-   * use this method to save any object to Cache memory
-   * */
-
-    static private Context context;
     public static void saveObjectToCache(String filename, Object data) {
         File cacheDir = new File(context.getCacheDir(), "app_directory");
         cacheDir.mkdir();
