@@ -51,81 +51,66 @@ public class HorizontalScrollView extends FrameLayout {
     private static final int ANIMATED_SCROLL_GAP = 250;
 
     private static final float MAX_SCROLL_FACTOR = 0.5f;
-
-
-    private long mLastScroll;
-
+    /**
+     * Sentinel value for no current active pointer.
+     * Used by {@link #mActivePointerId}.
+     */
+    private static final int INVALID_POINTER = -1;
     private final Rect mTempRect = new Rect();
+    private long mLastScroll;
     private OverScroller mScroller;
     private EdgeGlow mEdgeGlowLeft;
     private EdgeGlow mEdgeGlowRight;
-
     /**
      * Flag to indicate that we are moving focus ourselves. This is so the
      * code that watches for focus changes initiated outside this ScrollView
      * knows that it does not have to do anything.
      */
     private boolean mScrollViewMovedFocus;
-
     /**
      * Position of the last motion event.
      */
     private float mLastMotionX;
-
     /**
      * True when the layout has changed but the traversal has not come through yet.
      * Ideally the view hierarchy would keep track of this for us.
      */
     private boolean mIsLayoutDirty = true;
-
     /**
      * The child to give focus to in the event that a child has requested focus while the
      * layout is dirty. This prevents the scroll from being wrong if the child has not been
      * laid out before requesting focus.
      */
     private View mChildToScrollTo = null;
-
     /**
      * True if the user is currently dragging this ScrollView around. This is
      * not the same as 'is being flinged', which can be checked by
      * mScroller.isFinished() (flinging begins when the user lifts his finger).
      */
     private boolean mIsBeingDragged = false;
-
     /**
      * Determines speed during touch scrolling
      */
     private VelocityTracker mVelocityTracker;
-
     /**
      * When set to true, the scroll view measure its child to make it fill the currently
      * visible area.
      */
     private boolean mFillViewport;
-
     /**
      * Whether arrow scrolling is animated.
      */
     private boolean mSmoothScrollingEnabled = true;
-
     private int mTouchSlop;
     private int mMinimumVelocity;
     private int mMaximumVelocity;
-
     private int mOverscrollDistance;
     private int mOverflingDistance;
-
     /**
      * ID of the active pointer. This is used to retain consistency during
      * drags/flings if multiple pointers are used.
      */
     private int mActivePointerId = INVALID_POINTER;
-
-    /**
-     * Sentinel value for no current active pointer.
-     * Used by {@link #mActivePointerId}.
-     */
-    private static final int INVALID_POINTER = -1;
 
     public HorizontalScrollView(Context context) {
         this(context, null);

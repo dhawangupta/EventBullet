@@ -7,5 +7,5 @@
         android:id="@+id/mapview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        mapbox:access_token="pk.eyJ1IjoienViZXIiLCJhIjoiY2lpaGVjM3ptMDA3MXU2a25iYnB0dzluYyJ9.z0PcPwFB-Jv2EpJqbJ5Qdw" />
+        mapbox:access_token="pk.eyJ1IjoienViZXIiLCJhIjoiY2lpbm54aWw0MDFmdHY0bTViNXRlODh6cSJ9.DE2MqIcwDwaPfMRy-yWDbg" />
 </LinearLayout>

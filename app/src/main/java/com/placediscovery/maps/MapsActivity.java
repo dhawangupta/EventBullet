@@ -107,10 +107,18 @@ public class MapsActivity extends FragmentActivity {
         //retrieving places
         try {
 
+<<<<<<< HEAD
+//            try
+//            {
+//                places = (ArrayList<Place>) HelperMethods.readObjectFromFile("saved_" + selectedCity);
+//            } catch (NullPointerException n)
+            {
+=======
             //following is giving error for now hence commented 26/12/2015
 //            try {
 //                places = (ArrayList<Place>) HelperMethods.readObjectFromFile("saved_" + selectedCity);
 //            } catch (NullPointerException n){
+>>>>>>> refs/remotes/dhawangupta/master
                 GetPlacesAsyncTask task = new GetPlacesAsyncTask(selectedCity);
                 try {
                     places = task.execute().get();
