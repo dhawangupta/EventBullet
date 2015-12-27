@@ -36,9 +36,7 @@ dependencies {
     compile('com.mapbox.mapboxsdk:mapbox-android-sdk:3.0.0@aar') {
         transitive = true
     }
-<<<<<<< HEAD
+
     compile 'com.facebook.android:facebook-android-sdk:4.8.2'
-=======
-    //compile 'com.facebook.android:facebook-android-sdk:4.8.2'
->>>>>>> refs/remotes/dhawangupta/master
+
 }
