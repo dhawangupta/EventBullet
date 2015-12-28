@@ -57,6 +57,10 @@ public class AddPlaceSelectCity extends ListActivity {
                 break;
             case 6: selectedCityLatLng = Constants.jaipurLatLng;
                 break;
+            case 7: selectedCityLatLng = Constants.agraLatLng;
+                break;
+            case 8: selectedCityLatLng = Constants.hyderabadLatLng;
+                break;
         }
 
 
