@@ -136,7 +136,7 @@ public class MapsActivity extends FragmentActivity {
 
             for(int j=0; j<places.size(); j++){
                 // Image url
-                String image_url = places.get(j).getImageURL();
+                String image_url = places.get(j).getImageURL().split(",")[0];
 
                 if(image_url.equals("")){
                     continue;
