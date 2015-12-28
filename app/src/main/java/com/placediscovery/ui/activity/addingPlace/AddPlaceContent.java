@@ -9,9 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.placediscovery.AWSClasses.Util;
 import com.placediscovery.R;
+
+import java.util.List;
 
 
 public class AddPlaceContent extends AppCompatActivity
@@ -21,10 +27,22 @@ public class AddPlaceContent extends AppCompatActivity
     protected EditText place_details;
     protected Button submit_button;
 
+    // The TransferUtility is the primary class for managing transfer to S3
+    private TransferUtility transferUtility;
+
+    // The SimpleAdapter adapts the data about transfers to rows in the UI
+    private SimpleAdapter simpleAdapter;
+
+    // A List of all transfers
+    private List<TransferObserver> observers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place_content);
+
+        // Initializes TransferUtility, always do this before using it.
+        transferUtility = Util.getTransferUtility(this);
 
         place_title = (EditText) findViewById(R.id.place_name);
         place_details = (EditText) findViewById(R.id.place_content);
@@ -46,6 +64,7 @@ public class AddPlaceContent extends AppCompatActivity
         });         //back icon added
 
         ImageView iv = (ImageView)findViewById(R.id.add_image);
+
         iv.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
