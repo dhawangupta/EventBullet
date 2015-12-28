@@ -79,7 +79,7 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
             case 3 : intent.putExtra("selectedCity",Constants.Chennai.toLowerCase());
                 startActivity(intent);
                 break;
-            case 4 : intent.putExtra("selectedCity",Constants.Bangaluru.toLowerCase());
+            case 4 : intent.putExtra("selectedCity",Constants.Bengaluru.toLowerCase());
                 startActivity(intent);
                 break;
             case 5 : intent.putExtra("selectedCity", Constants.Varanasi.toLowerCase());
