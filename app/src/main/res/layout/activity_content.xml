@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
 
@@ -30,17 +31,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/contentPageImage"
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/contentPageImageSlider"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"/>     <!-- Height of image on content page -->
+                    custom:pager_animation="Accordion"
+                    custom:auto_cycle="true"
+                    custom:indicator_visibility="visible"
+                    custom:pager_animation_span="1100"
+                    android:layout_height="200dp"/>     <!-- Height of image on content page -->
 
                 <br.liveo.navigationliveo.FloatingActionButton
                     android:id="@+id/fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/contentPageImage"
+                    android:layout_below="@+id/contentPageImageSlider"
                     android:layout_marginTop="-35dp"
                     android:layout_marginBottom="0dp"
                     android:layout_marginRight="10dp"
