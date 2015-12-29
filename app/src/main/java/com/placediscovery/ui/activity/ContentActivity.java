@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.Place;
+import com.placediscovery.MongoLabPlace.PlaceQueryBuilder;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.MongoLabUser.UserQueryBuilder;
 import com.placediscovery.MongoLabUser.UserStatus;
@@ -35,7 +37,8 @@ public class ContentActivity extends AppCompatActivity implements
         BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     private SliderLayout mDemoSlider;   //this is imageslider used
-
+    private RatingBar ratingBar;
+    String selectedCity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +57,14 @@ public class ContentActivity extends AppCompatActivity implements
         final int imageviewId = intent.getExtras().getInt("imageviewId");
         final ArrayList<Place> places = (ArrayList<Place>) intent.getExtras()
                 .getSerializable("placesObject");
+        selectedCity = intent.getExtras().getString("selectedCity");
 
-        String place_name = places.get(imageviewId).getName();
-        String place_content = places.get(imageviewId).getContent();
-        String image_url = places.get(imageviewId).getImageURL();
+        final Place selectedPlace = places.get(imageviewId);
+        String place_name = selectedPlace.getName();
+        String place_content = selectedPlace.getContent();
+        String image_url = selectedPlace.getImageURL();
+        final double currentRating = Double.parseDouble(selectedPlace.getAverageRating());
+        final int currentCount = Integer.parseInt(selectedPlace.getCount());
 
         TextView t1 = (TextView)findViewById(R.id.place_name);
         TextView t2 = (TextView)findViewById(R.id.place_content);
@@ -110,10 +117,34 @@ public class ContentActivity extends AppCompatActivity implements
         setSupportActionBar(topToolBar);
         */
 
+        ratingBar = (RatingBar) findViewById(R.id.ratingbar);
+
+        /*
+        * This is the listener for rating bar, edit it to change functionality
+        * */
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+
+                //if (UserStatus.isLoginStatus()) {
+                    int newCount = currentCount+1;
+                    double newRating = (currentRating*currentCount+rating)/newCount;
+                    selectedPlace.setCount(String.valueOf(newCount));
+                    selectedPlace.setAverageRating(String.valueOf(newRating));
+
+                    UpdatePlace tsk = new UpdatePlace();
+                    tsk.execute(selectedPlace);
+                //}
+
+                Toast.makeText(ContentActivity.this, "New Rating: " + rating,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(UserStatus.isLoginStatus()){
+                if (UserStatus.isLoginStatus()) {
                     UserStatus userStatus = new UserStatus();
                     User loggedInUser = new User(userStatus);
 
@@ -127,8 +158,7 @@ public class ContentActivity extends AppCompatActivity implements
                     tsk.execute(loggedInUser);
 
                     Toast.makeText(ContentActivity.this, "Added to List", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     Toast.makeText(ContentActivity.this, "Please login first", Toast.LENGTH_LONG).show();
                 }
             }
@@ -137,26 +167,52 @@ public class ContentActivity extends AppCompatActivity implements
 
     }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    /**
+     * AsyncTask to update a given place
+     * @author KYAZZE MICHAEL
+     * @edited Dhawan Gupta
+     *
+     */
+    final class UpdatePlace extends AsyncTask<Object, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Object... params) {
+            Place place = (Place) params[0];
+
+            try {
+
+                PlaceQueryBuilder qb = new PlaceQueryBuilder(selectedCity);
+                URL url = new URL(qb.buildPlacesUpdateURL(place.getPlace_id()));
+                HttpURLConnection connection = (HttpURLConnection) url
+                        .openConnection();
+                connection.setRequestMethod("PUT");
+                connection.setDoOutput(true);
+                connection.setRequestProperty("Content-Type",
+                        "application/json");
+                connection.setRequestProperty("Accept", "application/json");
+
+                OutputStreamWriter osw = new OutputStreamWriter(
+                        connection.getOutputStream());
+
+                osw.write(qb.setPlaceData(place));
+                osw.flush();
+                osw.close();
+                if(connection.getResponseCode() <205)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            } catch (Exception e) {
+                e.getMessage();
+                return false;
+            }
+
+        }
 
     }
-
-    @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
-
-    }
-
 
     /**
      * AsyncTask to update a given user
@@ -190,22 +246,36 @@ public class ContentActivity extends AppCompatActivity implements
                 osw.close();
                 if(connection.getResponseCode() <205)
                 {
-
                     return true;
                 }
                 else
                 {
                     return false;
-
                 }
-
             } catch (Exception e) {
                 e.getMessage();
                 return false;
-
             }
 
         }
 
     }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+
+    }
+
 }
