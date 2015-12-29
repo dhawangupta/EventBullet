@@ -38,7 +38,7 @@
                     custom:auto_cycle="true"
                     custom:indicator_visibility="visible"
                     custom:pager_animation_span="1100"
-                    android:layout_height="200dp"/>     <!-- Height of image on content page -->
+                    android:layout_height="230dp"/>     <!-- Height of image on content page -->
 
                 <br.liveo.navigationliveo.FloatingActionButton
                     android:id="@+id/fab"

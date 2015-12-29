@@ -31,7 +31,8 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 
-public class ContentActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
+public class ContentActivity extends AppCompatActivity implements
+        BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     private SliderLayout mDemoSlider;   //this is imageslider used
 
@@ -51,7 +52,8 @@ public class ContentActivity extends AppCompatActivity implements BaseSliderView
 
         Intent intent = getIntent();
         final int imageviewId = intent.getExtras().getInt("imageviewId");
-        final ArrayList<Place> places = (ArrayList<Place>) intent.getExtras().getSerializable("placesObject");
+        final ArrayList<Place> places = (ArrayList<Place>) intent.getExtras()
+                .getSerializable("placesObject");
 
         String place_name = places.get(imageviewId).getName();
         String place_content = places.get(imageviewId).getContent();
@@ -90,7 +92,7 @@ public class ContentActivity extends AppCompatActivity implements BaseSliderView
             DefaultSliderView textSliderView = new DefaultSliderView(this);
             // initialize a SliderLayout
             textSliderView
-                    .image(url)
+                    .image(url.substring(0,url.length()-6)+".jpg")      //for higher quality '_n' was removed from url
                     .setScaleType(BaseSliderView.ScaleType.Fit)
                     .setOnSliderClickListener(this);
 
