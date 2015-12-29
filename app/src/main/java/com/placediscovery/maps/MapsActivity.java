@@ -165,6 +165,7 @@ public class MapsActivity extends FragmentActivity {
 
                         intents[finalJ].putExtra("imageviewId", finalJ);
                         intents[finalJ].putExtra("placesObject", places);
+                        intents[finalJ].putExtra("selectedCity", selectedCity);
                         startActivity(intents[finalJ]);
                     }
                 });
