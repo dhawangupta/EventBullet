@@ -64,53 +64,51 @@ public class ContentActivity extends AppCompatActivity implements
         t1.setText(place_name);
         t2.setText(place_content);
 
-        /**
-         * following is old imageloader code
+        String[] image_urls = image_url.split(",");
 
-        int loader = R.drawable.loader;         //loader image
-        // Image url
-        String image_url = places.get(imageviewId).getImageURL();
-        String hd_url = image_url.substring(0,image_url.length()-6)+".jpg";
-        // ImageLoader class instance
-        ImageLoader imgLoader = new ImageLoader(getApplicationContext());
-        // whenever you want to load an image from url
-        // call DisplayImage function
-        // url - image url to load
-        // loader - loader image, will be displayed before getting image
-        // image - ImageView
-        imgLoader.DisplayImage(hd_url, loader, (ImageView)findViewById(R.id.contentPageImage));
-        */
+        if(image_urls.length<=1) {
+            // following is old imageloader code
+            int loader = R.drawable.loader;         //loader image
+            String hd_url = image_url.substring(0, image_url.length() - 6) + ".jpg";
+            // ImageLoader class instance
+            ImageLoader imgLoader = new ImageLoader(getApplicationContext());
+            // whenever you want to load an image from url
+            // call DisplayImage function
+            // url - image url to load
+            // loader - loader image, will be displayed before getting image
+            // image - ImageView
+            imgLoader.DisplayImage(hd_url, loader, (ImageView) findViewById(R.id.contentPageImage));
+
+        } else {
+
+
+            for (String url : image_urls) {
+                DefaultSliderView textSliderView = new DefaultSliderView(this);
+                // initialize a SliderLayout
+                textSliderView
+                        .image(url.substring(0, url.length() - 6) + ".jpg")      //for higher quality '_n' was removed from url
+                        .setScaleType(BaseSliderView.ScaleType.Fit)
+                        .setOnSliderClickListener(this);
+
+                //when you want to add your extra information
+//            textSliderView.bundle(new Bundle());
+//            textSliderView.getBundle()
+//                    .putString("extra",name);
+
+                mDemoSlider.addSlider(textSliderView);
+            }
+            mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Stack);       //replace "Stack" by other transformers to implement different kind of slider animations
+            mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+            mDemoSlider.setDuration(4000);
+            mDemoSlider.addOnPageChangeListener(this);
+        }
 
         //some toolbar code
         /*
         Toolbar topToolBar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(topToolBar);
         */
-
-        String[] image_urls = image_url.split(",");
-        for(String url : image_urls){
-            DefaultSliderView textSliderView = new DefaultSliderView(this);
-            // initialize a SliderLayout
-            textSliderView
-                    .image(url.substring(0,url.length()-6)+".jpg")      //for higher quality '_n' was removed from url
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
-
-            //when you want to add your extra information
-//            textSliderView.bundle(new Bundle());
-//            textSliderView.getBundle()
-//                    .putString("extra",name);
-
-            mDemoSlider.addSlider(textSliderView);
-        }
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Stack);       //replace "Stack" by other transformers to implement different kind of slider animations
-        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.setDuration(4000);
-        mDemoSlider.addOnPageChangeListener(this);
-
-
-
 
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override

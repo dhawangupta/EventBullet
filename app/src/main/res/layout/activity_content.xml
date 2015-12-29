@@ -31,6 +31,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:id="@+id/contentPageImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"/>     <!-- Height of image on content page -->
+
                 <com.daimajia.slider.library.SliderLayout
                     android:id="@+id/contentPageImageSlider"
                     android:layout_width="match_parent"
