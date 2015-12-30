@@ -16,8 +16,7 @@ import android.widget.Toast;
 
 import com.placediscovery.R;
 import com.placediscovery.Constants;
-import com.placediscovery.maps.MapsActivity;
-import com.placediscovery.ui.HelperMethods;
+import com.placediscovery.HelperMethods;
 import com.placediscovery.ui.activity.adapter.CityAdapter;
 import com.placediscovery.ui.activity.adapter.CityManager;
 

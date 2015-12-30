@@ -58,7 +58,7 @@
             android:launchMode="singleTask"
             android:windowSoftInputMode="stateUnchanged"/>
         <activity
-            android:name=".maps.MapsActivity"
+            android:name=".ui.activity.MapsActivity"
             android:label="@string/title_activity_maps"/>
         <activity
             android:name=".ui.activity.UserTestActivity"
@@ -82,7 +82,7 @@
             android:name=".ui.activity.addingPlace.AddPlaceSelectCity"
             android:label="@string/title_activity_add_place"/>
         <activity
-            android:name=".maps.AddPlaceMaps"
+            android:name=".ui.activity.addingPlace.AddPlaceMaps"
 
             android:label="@string/title_activity_add_place"/>
         <activity

@@ -1,4 +1,4 @@
-package com.placediscovery.maps;
+package com.placediscovery.ui.activity.addingPlace;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
 import com.placediscovery.Constants;
 import com.placediscovery.R;
-import com.placediscovery.ui.activity.addingPlace.AddPlaceContent;
 
 public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWindowClickListener {
 

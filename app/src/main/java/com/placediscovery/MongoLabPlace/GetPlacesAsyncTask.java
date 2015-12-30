@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
-import com.placediscovery.ui.HelperMethods;
+import com.placediscovery.HelperMethods;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
