@@ -126,6 +126,7 @@ public class ContentActivity extends AppCompatActivity implements
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
+                //TODO: add for rating by user and also change to suitable UI for Rating
                 //if (UserStatus.isLoginStatus()) {
                     int newCount = currentCount+1;
                     double newRating = (currentRating*currentCount+rating)/newCount;
