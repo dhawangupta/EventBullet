@@ -1,4 +1,4 @@
-package com.placediscovery.maps;
+package com.placediscovery.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,6 @@ import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.GetPlacesAsyncTask;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
-import com.placediscovery.ui.activity.ContentActivity;
 
 import java.util.ArrayList;
 

@@ -18,7 +18,7 @@ import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.MongoLabUser.UserQueryBuilder;
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
-import com.placediscovery.ui.HelperMethods;
+import com.placediscovery.HelperMethods;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
