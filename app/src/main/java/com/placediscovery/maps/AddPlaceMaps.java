@@ -1,10 +1,14 @@
 package com.placediscovery.maps;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import com.mapbox.mapboxsdk.annotations.Icon;
+import com.mapbox.mapboxsdk.annotations.IconFactory;
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.constants.Style;
@@ -13,6 +17,8 @@ import com.mapbox.mapboxsdk.views.MapView;
 import com.placediscovery.Constants;
 import com.placediscovery.R;
 import com.placediscovery.ui.activity.addingPlace.AddPlaceContent;
+
+import static com.placediscovery.R.drawable.ic_add_location_black_24dp;
 
 public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWindowClickListener, MapView.OnMarkerClickListener {
 
@@ -38,12 +44,6 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
         mapView.setZoomLevel(11);
         mapView.setTiltEnabled(true);
         mapView.setMyLocationEnabled(true);
-        mapView.addMarker(new MarkerOptions()
-                        .position(new LatLng(selectedCityLatLng))
-                        .snippet("click to add a place")
-        );
-        mapView.setTiltEnabled(true);
-        mapView.setOnMarkerClickListener(this);
         mapView.onCreate(savedInstanceState);
 
     }
@@ -85,7 +85,16 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
     @Override
     protected void onStart() {
         super.onStart();
+        IconFactory iconFactory = IconFactory.getInstance(this);
+        Drawable mDrawable= ContextCompat.getDrawable(this, ic_add_location_black_24dp);
+        Icon mIcon = iconFactory.fromDrawable(mDrawable);
+        mapView.addMarker(new MarkerOptions()
+                        .position(new LatLng(selectedCityLatLng))
+                        .snippet("click to add a place")
+                        .icon(mIcon)
+        );
         mapView.onStart();
+
     }
 
     @Override

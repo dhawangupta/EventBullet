@@ -1231,11 +1231,7 @@ public class HorizontalScrollView extends FrameLayout {
                 FocusFinder.getInstance().findNextFocusFromRect(this,
                         previouslyFocusedRect, direction);
 
-        if (nextFocus == null) {
-            return false;
-        }
-
-        return !isOffScreen(nextFocus) && nextFocus.requestFocus(direction, previouslyFocusedRect);
+        return nextFocus != null && !isOffScreen(nextFocus) && nextFocus.requestFocus(direction, previouslyFocusedRect);
 
     }
 

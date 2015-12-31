@@ -3,6 +3,8 @@ package com.placediscovery.ui.activity.adapter;
 /**
  * Created by ARIMIT on 18-Sep-15.
  */
+import com.placediscovery.Constants;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ import java.util.List;
  */
 public class CityManager {
 
-    private static String[] cityArray = {"Kolkata", "Mumbai", "New Delhi", "Chennai", "Bangalore", "Varanasi", "Jaipur","Agra"};
+
     private static String loremIpsum = "Description";
 
     private static CityManager mInstance;
@@ -27,9 +29,9 @@ public class CityManager {
 
     public List<City> getCities() {
         if (cities == null) {
-            cities = new ArrayList<City>();
+            cities = new ArrayList<>();
 
-            for (String cityName : cityArray) {
+            for (String cityName : Constants.cityArray) {
                 City city = new City();
                 city.name = cityName;
                 city.description = loremIpsum;
