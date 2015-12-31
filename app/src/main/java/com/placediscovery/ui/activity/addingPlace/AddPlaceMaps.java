@@ -2,6 +2,7 @@ package com.placediscovery.ui.activity.addingPlace;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
@@ -12,10 +13,13 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
 import com.placediscovery.Constants;
 import com.placediscovery.R;
+import android.support.v7.widget.AppCompatButton;
+import android.view.View;
 
 public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWindowClickListener {
 
     MapView mapView;
+    AppCompatButton btnAddPlaceMaps;
     LatLng selectedCityLatLng;
     double lat=20,lon=0;
 
@@ -23,15 +27,26 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place_maps);
+
+        btnAddPlaceMaps = (AppCompatButton) findViewById(R.id.btn_addPlaceMaps);
+        btnAddPlaceMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddPlaceMaps.this, AddPlaceContent.class);
+                intent.putExtra("selectedCityLatLng", (Parcelable) selectedCityLatLng);
+                startActivity(intent);
+            }
+        });
         lat=getIntent().getDoubleExtra(Constants.selectedCityLat,0);
         lon=getIntent().getDoubleExtra(Constants.selectedCityLon,0);
         selectedCityLatLng=new LatLng(lat,lon);
         setUpMapIfNeeded(savedInstanceState);
+
     }
 
 
     private void setUpMapIfNeeded(Bundle savedInstanceState) {
-        mapView = (MapView) findViewById(R.id.mapview);
+        mapView = (MapView) findViewById(R.id.mapviewAddingPlace);
         mapView.setStyleUrl(Style.MAPBOX_STREETS);
         mapView.setCenterCoordinate(new LatLng(selectedCityLatLng));
         mapView.setZoomLevel(11);
