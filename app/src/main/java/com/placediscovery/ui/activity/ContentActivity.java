@@ -125,16 +125,7 @@ public class ContentActivity extends AppCompatActivity {
                 osw.write(qb.setUserData(user));
                 osw.flush();
                 osw.close();
-                if(connection.getResponseCode() <205)
-                {
-
-                    return true;
-                }
-                else
-                {
-                    return false;
-
-                }
+                return connection.getResponseCode() < 205;
 
             } catch (Exception e) {
                 e.getMessage();
