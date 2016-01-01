@@ -164,11 +164,12 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
      */
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
-        Toast.makeText(this,"Hi",Toast.LENGTH_LONG).show();
         Intent i = new Intent(AddPlaceMaps.this, AddPlaceContent.class);
         i.putExtra(Constants.Latitutude, marker.getPosition().getLatitude()).putExtra(Constants.Longitude, marker.getPosition().getLongitude());
         marker.remove();
         startActivity(i);
         return false;
     }
+
+
 }
