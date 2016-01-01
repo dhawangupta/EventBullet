@@ -66,6 +66,15 @@ public class PlaceQueryBuilder {
 	 * Builds a complete URL using the methods specified above
 	 * @return
 	 */
+	public String buildPlacesSaveURL()
+	{
+		return getBaseUrl()+documentRequest()+docApiKeyUrl();
+	}
+
+	/**
+	 * This method is identical to the one above.
+	 * @return
+	 */
 	public String buildPlacesGetURL()
 	{
 		return getBaseUrl()+documentRequest()+docApiKeyUrl();
@@ -81,6 +90,24 @@ public class PlaceQueryBuilder {
 		return getBaseUrl()+documentRequest()+docApiKeyUrl(doc_id);
 	}
 
+	/**
+	 * Formats the place details for MongoHLab Posting
+	 * @param place: Details of the place
+	 * @return
+	 */
+	public String createPlace(Place place)
+	{
+		return String.format("{\"name\": \"%s\", "
+                            + "\"latitude\": \"%s\", \"longitude\": \"%s\", "
+                            + "\"filter\" : \"%s\", "
+                            + "\"imageURL\" : \"%s\", "
+                            + "\"content\" : \"%s\", "
+                            + "\"averageRating\" : \"%s\", "
+                            + "\"count\" : \"%s\" }" + "}",
+                place.getName(),
+                place.getLatitude(), place.getLongitude(), place.getFilter(), place.getImageURL(),
+                place.getContent(), place.getAverageRating(), place.getCount());
+	}
 
     /**
      * Update a given place record

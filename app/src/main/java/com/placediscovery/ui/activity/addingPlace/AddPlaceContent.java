@@ -27,8 +27,10 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.placediscovery.AWSClasses.Constants;
 import com.placediscovery.AWSClasses.Util;
+import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
 
 import java.io.File;
@@ -46,6 +48,10 @@ public class AddPlaceContent extends AppCompatActivity
     protected EditText place_details;
     protected Button submit_button;
 
+    private LatLng userPlaceLatLng;
+    public Place userAddedPlace;
+    private String imageURLfromAWS="";     //TODO:we have to find its value from AWS
+
     // The TransferUtility is the primary class for managing transfer to S3
     private TransferUtility transferUtility;
 
@@ -54,12 +60,15 @@ public class AddPlaceContent extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place_content);
 
+        Intent intent = getIntent();
+
         // Initializes TransferUtility, always do this before using it.
         transferUtility = Util.getTransferUtility(this);
 
         place_title = (EditText) findViewById(R.id.place_name);
         place_details = (EditText) findViewById(R.id.place_content);
         submit_button = (Button) findViewById(R.id.btn_submit);
+        ImageView iv = (ImageView)findViewById(R.id.add_image);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -68,6 +77,16 @@ public class AddPlaceContent extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        userPlaceLatLng = intent.getExtras().getParcelable("userPlaceLatLng");
+
+        //Creting place added by user
+        userAddedPlace = new Place();
+        userAddedPlace.setLatitude(String.valueOf(userPlaceLatLng.getLatitude()));
+        userAddedPlace.setLongitude(String.valueOf(userPlaceLatLng.getLongitude()));
+        userAddedPlace.setName(String.valueOf(place_title.getText()));
+        userAddedPlace.setContent(String.valueOf(place_details.getText()));
+        userAddedPlace.setImageURL(imageURLfromAWS);
+
         mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,8 +94,6 @@ public class AddPlaceContent extends AppCompatActivity
                 onBackPressed();
             }
         });         //back icon added
-
-        ImageView iv = (ImageView)findViewById(R.id.add_image);
 
         iv.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -105,6 +122,7 @@ public class AddPlaceContent extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
+
                 // submit place details to database
             }
         });

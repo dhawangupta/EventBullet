@@ -65,7 +65,7 @@ public class AddPlaceSelectCity extends ListActivity {
 
         if(selectedCityLatLng==null)
         {
-            Toast.makeText(getApplicationContext(),"selectedCityLatLng is null",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"userPlaceLatLng is null",Toast.LENGTH_LONG).show();
         }
         else {
             Intent i = new Intent(this, AddPlaceMaps.class);

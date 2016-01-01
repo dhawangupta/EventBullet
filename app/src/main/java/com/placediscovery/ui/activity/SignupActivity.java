@@ -1,7 +1,6 @@
 package com.placediscovery.ui.activity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,7 +17,7 @@ import android.widget.Toast;
 //import com.facebook.Profile;
 //import com.facebook.login.LoginResult;
 //import com.facebook.login.widget.LoginButton;
-import com.placediscovery.MongoLabUser.SaveUserAsyncTask;
+import com.placediscovery.MongoLabUser.CreateUserAsyncTask;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.R;
 
@@ -124,7 +123,7 @@ public class SignupActivity extends AppCompatActivity {
         user.password = _passwordText.getText().toString();
         user.savedplaces = "";
 
-        SaveUserAsyncTask tsk = new SaveUserAsyncTask();
+        CreateUserAsyncTask tsk = new CreateUserAsyncTask();
         tsk.execute(user);
 
 

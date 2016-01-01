@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class SaveUserAsyncTask extends AsyncTask<User, Void, Boolean> {
+public class CreateUserAsyncTask extends AsyncTask<User, Void, Boolean> {
 
 	@Override
 	protected Boolean doInBackground(User... arg0) {
