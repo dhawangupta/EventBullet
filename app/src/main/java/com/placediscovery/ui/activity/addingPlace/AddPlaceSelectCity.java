@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.placediscovery.Constants;
 import com.placediscovery.R;
-import com.placediscovery.maps.AddPlaceMaps;
 
 import static com.placediscovery.Constants.cityArray;
 import static com.placediscovery.Constants.selectedCityLat;

@@ -1,4 +1,4 @@
-package com.placediscovery.maps;
+package com.placediscovery.ui.activity.addingPlace;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.annotations.Icon;
 import com.mapbox.mapboxsdk.annotations.IconFactory;
@@ -16,18 +17,15 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
 import com.placediscovery.Constants;
 import com.placediscovery.R;
-import com.placediscovery.ui.activity.addingPlace.AddPlaceContent;
 
 import static com.placediscovery.R.drawable.ic_add_location_black_24dp;
 
-public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWindowClickListener, MapView.OnMarkerClickListener
-,MapView.OnScrollListener
-{
+public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollListener, MapView.OnInfoWindowClickListener {
 
-    Marker marker;
+    Marker dragMarker;
     MapView mapView;
     LatLng selectedCityLatLng;
-    double lat=20,lon=0;
+    double lat,lon;
     Icon mIcon;
 
     @Override
@@ -50,6 +48,7 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
         mapView.setMyLocationEnabled(true);
         mapView.setScrollEnabled(true);
         mapView.setOnScrollListener(this);
+        mapView.setOnInfoWindowClickListener(this);
         mapView.onCreate(savedInstanceState);
 
     }
@@ -96,7 +95,7 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
         mDrawable = ContextCompat.getDrawable(this, ic_add_location_black_24dp);
 
         mIcon = iconFactory.fromDrawable(mDrawable);
-        marker=mapView.addMarker(new MarkerOptions()
+        dragMarker=mapView.addMarker(new MarkerOptions()
                         .position(new LatLng(selectedCityLatLng))
                         .snippet("click to add a place")
                         .icon(mIcon)
@@ -136,6 +135,27 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
         mapView.onSaveInstanceState(outState);
     }
 
+
+
+
+    /**
+     * Called when the map is scrolled.
+     */
+    @Override
+    public void onScroll() {
+        if(dragMarker!=null)
+        {
+            mapView.removeMarker(dragMarker);
+            dragMarker=null;
+        }
+        LatLng latLng=mapView.getCenterCoordinate();
+        dragMarker=mapView.addMarker(new MarkerOptions()
+                        .position(new LatLng(latLng))
+                        .snippet("click to add a place")
+                        .icon(mIcon)
+        );
+    }
+
     /**
      * Called when the user clicks on an info window.
      *
@@ -144,32 +164,11 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
      */
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
+        Toast.makeText(this,"Hi",Toast.LENGTH_LONG).show();
         Intent i = new Intent(AddPlaceMaps.this, AddPlaceContent.class);
-        i.putExtra(Constants.Latitutude, marker.getPosition().getLatitude());
-        i.putExtra(Constants.Longitude, marker.getPosition().getLongitude());
+        i.putExtra(Constants.Latitutude, marker.getPosition().getLatitude()).putExtra(Constants.Longitude, marker.getPosition().getLongitude());
         marker.remove();
         startActivity(i);
         return false;
-    }
-
-    /**
-     * Called when the map is scrolled.
-     */
-    @Override
-    public void onScroll() {
-       // Toast.makeText(this,"Hiya",Toast.LENGTH_LONG).show();
-
-        if(marker!=null)
-        {
-            mapView.removeMarker(marker);
-            marker=null;
-        }
-        LatLng latLng=mapView.getCenterCoordinate();
-        marker=mapView.addMarker(new MarkerOptions()
-                        .position(new LatLng(latLng))
-                        .snippet("click to add a place")
-                        .icon(mIcon)
-        );
-
     }
 }
