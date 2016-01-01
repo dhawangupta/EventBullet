@@ -20,11 +20,15 @@ import com.placediscovery.ui.activity.addingPlace.AddPlaceContent;
 
 import static com.placediscovery.R.drawable.ic_add_location_black_24dp;
 
-public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWindowClickListener, MapView.OnMarkerClickListener {
+public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWindowClickListener, MapView.OnMarkerClickListener
+,MapView.OnScrollListener
+{
 
+    Marker marker;
     MapView mapView;
     LatLng selectedCityLatLng;
     double lat=20,lon=0;
+    Icon mIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,8 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
         mapView.setZoomLevel(11);
         mapView.setTiltEnabled(true);
         mapView.setMyLocationEnabled(true);
+        mapView.setScrollEnabled(true);
+        mapView.setOnScrollListener(this);
         mapView.onCreate(savedInstanceState);
 
     }
@@ -86,9 +92,11 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
     protected void onStart() {
         super.onStart();
         IconFactory iconFactory = IconFactory.getInstance(this);
-        Drawable mDrawable= ContextCompat.getDrawable(this, ic_add_location_black_24dp);
-        Icon mIcon = iconFactory.fromDrawable(mDrawable);
-        mapView.addMarker(new MarkerOptions()
+        Drawable mDrawable;
+        mDrawable = ContextCompat.getDrawable(this, ic_add_location_black_24dp);
+
+        mIcon = iconFactory.fromDrawable(mDrawable);
+        marker=mapView.addMarker(new MarkerOptions()
                         .position(new LatLng(selectedCityLatLng))
                         .snippet("click to add a place")
                         .icon(mIcon)
@@ -142,5 +150,26 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
         marker.remove();
         startActivity(i);
         return false;
+    }
+
+    /**
+     * Called when the map is scrolled.
+     */
+    @Override
+    public void onScroll() {
+       // Toast.makeText(this,"Hiya",Toast.LENGTH_LONG).show();
+
+        if(marker!=null)
+        {
+            mapView.removeMarker(marker);
+            marker=null;
+        }
+        LatLng latLng=mapView.getCenterCoordinate();
+        marker=mapView.addMarker(new MarkerOptions()
+                        .position(new LatLng(latLng))
+                        .snippet("click to add a place")
+                        .icon(mIcon)
+        );
+
     }
 }
