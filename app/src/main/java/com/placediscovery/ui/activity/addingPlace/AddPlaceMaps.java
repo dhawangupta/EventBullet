@@ -20,7 +20,7 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
 
     MapView mapView;
     AppCompatButton btnAddPlaceMaps;
-    LatLng selectedCityLatLng;
+    LatLng userPlaceLatLng;
     double lat=20,lon=0;
 
     @Override
@@ -33,13 +33,13 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddPlaceMaps.this, AddPlaceContent.class);
-                intent.putExtra("selectedCityLatLng", (Parcelable) selectedCityLatLng);
+                intent.putExtra("userPlaceLatLng", (Parcelable) userPlaceLatLng);
                 startActivity(intent);
             }
         });
         lat=getIntent().getDoubleExtra(Constants.selectedCityLat,0);
         lon=getIntent().getDoubleExtra(Constants.selectedCityLon,0);
-        selectedCityLatLng=new LatLng(lat,lon);
+        userPlaceLatLng =new LatLng(lat,lon);
         setUpMapIfNeeded(savedInstanceState);
 
     }
@@ -48,12 +48,12 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
     private void setUpMapIfNeeded(Bundle savedInstanceState) {
         mapView = (MapView) findViewById(R.id.mapviewAddingPlace);
         mapView.setStyleUrl(Style.MAPBOX_STREETS);
-        mapView.setCenterCoordinate(new LatLng(selectedCityLatLng));
+        mapView.setCenterCoordinate(new LatLng(userPlaceLatLng));
         mapView.setZoomLevel(11);
         mapView.setTiltEnabled(true);
         mapView.setMyLocationEnabled(true);
         mapView.addMarker(new MarkerOptions()
-                        .position(new LatLng(selectedCityLatLng))
+                        .position(new LatLng(userPlaceLatLng))
                         .snippet("click to add a place")
         );
         mapView.onCreate(savedInstanceState);
