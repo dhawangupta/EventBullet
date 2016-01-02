@@ -1,11 +1,16 @@
 package com.placediscovery.ui.activity.addingPlace;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import com.mapbox.mapboxsdk.annotations.Icon;
+import com.mapbox.mapboxsdk.annotations.IconFactory;
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.constants.Style;
@@ -13,15 +18,27 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
 import com.placediscovery.Constants;
 import com.placediscovery.R;
+<<<<<<< HEAD:app/src/main/java/com/placediscovery/ui/activity/addingPlace/AddPlaceMaps.java
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
+=======
+>>>>>>> pr/15:app/src/main/java/com/placediscovery/ui/activity/addingPlace/AddPlaceMaps.java
 
-public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWindowClickListener {
+import static com.placediscovery.R.drawable.ic_add_location_black_24dp;
 
+public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollListener, MapView.OnInfoWindowClickListener {
+
+    Marker dragMarker;
     MapView mapView;
+<<<<<<< HEAD:app/src/main/java/com/placediscovery/ui/activity/addingPlace/AddPlaceMaps.java
     AppCompatButton btnAddPlaceMaps;
     LatLng userPlaceLatLng;
     double lat=20,lon=0;
+=======
+    LatLng selectedCityLatLng;
+    double lat,lon;
+    Icon mIcon;
+>>>>>>> pr/15:app/src/main/java/com/placediscovery/ui/activity/addingPlace/AddPlaceMaps.java
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +69,18 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
         mapView.setZoomLevel(11);
         mapView.setTiltEnabled(true);
         mapView.setMyLocationEnabled(true);
+<<<<<<< HEAD:app/src/main/java/com/placediscovery/ui/activity/addingPlace/AddPlaceMaps.java
         mapView.addMarker(new MarkerOptions()
                         .position(new LatLng(userPlaceLatLng))
                         .snippet("click to add a place")
         );
+=======
+        mapView.setScrollEnabled(true);
+        mapView.setOnScrollListener(this);
+        mapView.setOnInfoWindowClickListener(this);
+>>>>>>> pr/15:app/src/main/java/com/placediscovery/ui/activity/addingPlace/AddPlaceMaps.java
         mapView.onCreate(savedInstanceState);
+
     }
 
 
@@ -96,7 +120,18 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
     @Override
     protected void onStart() {
         super.onStart();
+        IconFactory iconFactory = IconFactory.getInstance(this);
+        Drawable mDrawable;
+        mDrawable = ContextCompat.getDrawable(this, ic_add_location_black_24dp);
+
+        mIcon = iconFactory.fromDrawable(mDrawable);
+        dragMarker=mapView.addMarker(new MarkerOptions()
+                        .position(new LatLng(selectedCityLatLng))
+                        .snippet("click to add a place")
+                        .icon(mIcon)
+        );
         mapView.onStart();
+
     }
 
     @Override
@@ -130,6 +165,27 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
         mapView.onSaveInstanceState(outState);
     }
 
+
+
+
+    /**
+     * Called when the map is scrolled.
+     */
+    @Override
+    public void onScroll() {
+        if(dragMarker!=null)
+        {
+            mapView.removeMarker(dragMarker);
+            dragMarker=null;
+        }
+        LatLng latLng=mapView.getCenterCoordinate();
+        dragMarker=mapView.addMarker(new MarkerOptions()
+                        .position(new LatLng(latLng))
+                        .snippet("click to add a place")
+                        .icon(mIcon)
+        );
+    }
+
     /**
      * Called when the user clicks on an info window.
      *
@@ -138,9 +194,9 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnInfoWin
      */
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
+        Toast.makeText(this,"Hi",Toast.LENGTH_LONG).show();
         Intent i = new Intent(AddPlaceMaps.this, AddPlaceContent.class);
-        i.putExtra(Constants.Latitutude, marker.getPosition().getLatitude());
-        i.putExtra(Constants.Longitude, marker.getPosition().getLongitude());
+        i.putExtra(Constants.Latitutude, marker.getPosition().getLatitude()).putExtra(Constants.Longitude, marker.getPosition().getLongitude());
         marker.remove();
         startActivity(i);
         return false;

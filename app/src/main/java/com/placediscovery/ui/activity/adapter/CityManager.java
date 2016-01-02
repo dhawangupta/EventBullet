@@ -10,7 +10,11 @@ import java.util.List;
 
 public class CityManager {
 
+<<<<<<< HEAD
     private static String[] cityArray = Constants.cityArray;
+=======
+
+>>>>>>> pr/15
     private static String loremIpsum = "Description";
 
     private static CityManager mInstance;
@@ -26,9 +30,9 @@ public class CityManager {
 
     public List<City> getCities() {
         if (cities == null) {
-            cities = new ArrayList<City>();
+            cities = new ArrayList<>();
 
-            for (String cityName : cityArray) {
+            for (String cityName : Constants.cityArray) {
                 City city = new City();
                 city.name = cityName;
                 city.description = loremIpsum;

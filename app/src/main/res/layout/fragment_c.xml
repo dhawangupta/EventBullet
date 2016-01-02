@@ -2,16 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="#E0F2F1">
+    android:background="#E0F2F1"
+    android:orientation="vertical">
 
     <TextView android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:gravity="center"
-        android:textColor="#212121"
         android:text="Third Tab"
-        android:textSize="20dp"
-        android:layout_centerInParent="true"/>
+        android:textColor="#212121"
+        android:textSize="20sp"/>
 
 
 </RelativeLayout>

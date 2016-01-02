@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
-import com.placediscovery.ui.activity.addingPlace.AddPlaceContent;
 import com.placediscovery.ui.activity.addingPlace.AddPlaceSelectCity;
 import com.placediscovery.ui.fragment.MainFragment;
 import com.placediscovery.ui.fragment.ViewPagerFragment;
@@ -24,6 +23,18 @@ import br.liveo.navigationliveo.NavigationLiveo;
 public class HomePage extends NavigationLiveo implements OnItemClickListener {
 
     private HelpLiveo mHelpLiveo;
+    private OnPrepareOptionsMenuLiveo onPrepare = new OnPrepareOptionsMenuLiveo() {
+        @Override
+        public void onPrepareOptionsMenu(Menu menu, int position, boolean visible) {
+        }
+    };
+    private View.OnClickListener onClickPhoto = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getApplicationContext(), "Add photo", Toast.LENGTH_SHORT).show();
+            closeDrawer();
+        }
+    };
 
     @Override
     public void onInt(Bundle savedInstanceState) {
@@ -140,20 +151,6 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
 
         setElevationToolBar(position != 2 ? 15 : 0);
     }
-
-    private OnPrepareOptionsMenuLiveo onPrepare = new OnPrepareOptionsMenuLiveo() {
-        @Override
-        public void onPrepareOptionsMenu(Menu menu, int position, boolean visible) {
-        }
-    };
-
-    private View.OnClickListener onClickPhoto = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(getApplicationContext(), "Add photo", Toast.LENGTH_SHORT).show();
-            closeDrawer();
-        }
-    };
 
 
 

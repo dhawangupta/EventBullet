@@ -10,6 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.placediscovery.MongoLabUser.SaveUserAsyncTask;
+import com.placediscovery.MongoLabUser.User;
+import com.placediscovery.R;
+
 //import com.facebook.CallbackManager;
 //import com.facebook.FacebookCallback;
 //import com.facebook.FacebookException;
@@ -17,9 +21,12 @@ import android.widget.Toast;
 //import com.facebook.Profile;
 //import com.facebook.login.LoginResult;
 //import com.facebook.login.widget.LoginButton;
+<<<<<<< HEAD
 import com.placediscovery.MongoLabUser.CreateUserAsyncTask;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.R;
+=======
+>>>>>>> pr/15
 
 //import butterknife.ButterKnife;
 //import butterknife.InjectView;
@@ -32,11 +39,11 @@ public class SignupActivity extends AppCompatActivity {
     protected EditText _passwordText;
     protected Button _signupButton;
     protected TextView _loginLink;
-    private TextView info;
     //    private LoginButton loginButton;
 //    private CallbackManager callbackManager;
 //    Profile profile;
     User user;
+    private TextView info;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
