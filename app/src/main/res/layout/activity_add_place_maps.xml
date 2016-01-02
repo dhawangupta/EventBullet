@@ -1,11 +1,27 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:mapbox="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.mapbox.mapboxsdk.views.MapView
-        android:id="@+id/mapview"
+        android:id="@+id/mapviewAddingPlace"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         mapbox:access_token="pk.eyJ1IjoienViZXIiLCJhIjoiY2lpbm54aWw0MDFmdHY0bTViNXRlODh6cSJ9.DE2MqIcwDwaPfMRy-yWDbg" />
-</LinearLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_addPlaceMaps"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Add this place"
+        android:textSize="18sp"
+        android:background="@color/color_primary" />
+</RelativeLayout>

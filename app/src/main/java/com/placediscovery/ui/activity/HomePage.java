@@ -120,6 +120,10 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
                 mFragment = new ViewPagerFragment();
                 break;
 
+            case 4:
+                startActivity(new Intent(this, AddPlaceContent.class));
+                return;
+
             case 6: {
                 this.userName.setText("Please Log In");
                 this.userEmail.setText("");

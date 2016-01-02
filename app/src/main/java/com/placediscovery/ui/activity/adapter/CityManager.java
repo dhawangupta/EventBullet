@@ -8,12 +8,9 @@ import com.placediscovery.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Arimit Sarkar 18/09/15.
- */
 public class CityManager {
 
-
+    private static String[] cityArray = Constants.cityArray;
     private static String loremIpsum = "Description";
 
     private static CityManager mInstance;
@@ -31,7 +28,7 @@ public class CityManager {
         if (cities == null) {
             cities = new ArrayList<>();
 
-            for (String cityName : Constants.cityArray) {
+            for (String cityName : cityArray) {
                 City city = new City();
                 city.name = cityName;
                 city.description = loremIpsum;

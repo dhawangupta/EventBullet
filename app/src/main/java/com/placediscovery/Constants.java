@@ -9,15 +9,16 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 public final  class Constants
 {
     public static final String Varanasi="Varanasi";
-    public static final String Bangalore="Bangalore";
+    public static final String Bengaluru ="Bengaluru";
     public static final String Jaipur="Jaipur";
     public static final String Kolkata="Kolkata";
     public static final String Mumbai="Mumbai";
     public static final String NewDelhi="NewDelhi";
     public static final String Chennai="Chennai";
+    public static final String Agra="Agra";
+    public static final String Hyderabad="Hyderabad";
 
-    public final static String[] cityArray = {"Kolkata", "Mumbai", "New Delhi", "Chennai", "Bangalore", "Varanasi", "Jaipur"};
-
+    public final static String[] cityArray = {Kolkata, Mumbai, NewDelhi, Chennai, Bengaluru, Varanasi, Jaipur, Agra, Hyderabad};
 
     public static final String selectedCityLat="selectedCityLat";
     public static final String selectedCityLon="selectedCityLon";
@@ -33,4 +34,7 @@ public final  class Constants
     public static LatLng mumbaiLatLng = new LatLng(18.98,72.83);
     public static LatLng newdelhiLatLng = new LatLng(28.61,77.21);
     public static LatLng chennaiLatLng = new LatLng(13.08,80.27);
+    //TODO:update Agra and Hyderabad lat long
+    public static LatLng agraLatLng = new LatLng(13.08,80.27);
+    public static LatLng hyderabadLatLng = new LatLng(13.08,80.27);
 }

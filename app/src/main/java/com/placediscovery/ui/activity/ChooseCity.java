@@ -15,12 +15,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.placediscovery.R;
-import com.placediscovery.maps.MapsActivity;
-import com.placediscovery.ui.HelperMethods;
+import com.placediscovery.Constants;
+import com.placediscovery.HelperMethods;
 import com.placediscovery.ui.activity.adapter.CityAdapter;
 import com.placediscovery.ui.activity.adapter.CityManager;
 
 import java.lang.ref.WeakReference;
+
 public class ChooseCity extends AppCompatActivity implements ViewHolderResponser {
 
     private RecyclerView mRecyclerView;
@@ -65,28 +66,31 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
 
         //Add here for selecting city from card layout. "cityname" should be same as that in db.
         switch (position) {
-            case 0 : intent.putExtra("selectedCity","kolkata");
+            case 0 : intent.putExtra("selectedCity",Constants.Kolkata.toLowerCase());
                 startActivity(intent);
                 break;
-            case 1 : intent.putExtra("selectedCity","mumbai");
+            case 1 : intent.putExtra("selectedCity",Constants.Mumbai.toLowerCase());
                 startActivity(intent);
                 break;
-            case 2 : intent.putExtra("selectedCity","newdelhi");
+            case 2 : intent.putExtra("selectedCity", Constants.NewDelhi.toLowerCase());
                 startActivity(intent);
                 break;
-            case 3 : intent.putExtra("selectedCity","chennai");
+            case 3 : intent.putExtra("selectedCity",Constants.Chennai.toLowerCase());
                 startActivity(intent);
                 break;
-            case 4 : intent.putExtra("selectedCity","bengaluru");
+            case 4 : intent.putExtra("selectedCity",Constants.Bengaluru.toLowerCase());
                 startActivity(intent);
                 break;
-            case 5 : intent.putExtra("selectedCity", "varanasi");
+            case 5 : intent.putExtra("selectedCity", Constants.Varanasi.toLowerCase());
                 startActivity(intent);
                 break;
-            case 6 : intent.putExtra("selectedCity","jaipur");
+            case 6 : intent.putExtra("selectedCity",Constants.Jaipur.toLowerCase());
                 startActivity(intent);
                 break;
-            case 7 : intent.putExtra("selectedCity","agra");
+            case 7 : intent.putExtra("selectedCity",Constants.Agra.toLowerCase());
+                startActivity(intent);
+                break;
+            case 8 : intent.putExtra("selectedCity",Constants.Hyderabad.toLowerCase());
                 startActivity(intent);
                 break;
 

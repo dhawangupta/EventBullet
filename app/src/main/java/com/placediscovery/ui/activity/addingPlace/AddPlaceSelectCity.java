@@ -56,12 +56,16 @@ public class AddPlaceSelectCity extends ListActivity {
                 break;
             case 6: selectedCityLatLng = Constants.jaipurLatLng;
                 break;
+            case 7: selectedCityLatLng = Constants.agraLatLng;
+                break;
+            case 8: selectedCityLatLng = Constants.hyderabadLatLng;
+                break;
         }
 
 
         if(selectedCityLatLng==null)
         {
-            Toast.makeText(getApplicationContext(),"selectedCityLatLng is null",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"userPlaceLatLng is null",Toast.LENGTH_LONG).show();
         }
         else {
             Intent i = new Intent(this, AddPlaceMaps.class);
