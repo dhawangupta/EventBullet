@@ -83,7 +83,10 @@
             android:label="@string/title_activity_add_place"/>
         <activity
             android:name=".ui.activity.addingPlace.AddPlaceMaps"
+<<<<<<< HEAD
 
+=======
+>>>>>>> pr/15
             android:label="@string/title_activity_add_place"/>
         <activity
             android:name=".ui.activity.addingPlace.AddPlaceContent"
