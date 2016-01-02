@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.placediscovery.MongoLabUser.SaveUserAsyncTask;
+import com.placediscovery.MongoLabUser.CreateUserAsyncTask;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.R;
 
@@ -21,12 +21,6 @@ import com.placediscovery.R;
 //import com.facebook.Profile;
 //import com.facebook.login.LoginResult;
 //import com.facebook.login.widget.LoginButton;
-<<<<<<< HEAD
-import com.placediscovery.MongoLabUser.CreateUserAsyncTask;
-import com.placediscovery.MongoLabUser.User;
-import com.placediscovery.R;
-=======
->>>>>>> pr/15
 
 //import butterknife.ButterKnife;
 //import butterknife.InjectView;
