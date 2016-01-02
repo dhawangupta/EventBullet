@@ -28,7 +28,7 @@ public final  class Constants
     public static final String Latitutude="LATITUDE";
     public static final String Longitude="LONGITUDE";
     public static LatLng varanasiLatLng = new LatLng(25.28,82.96);
-    public static LatLng bangaloreLatLng = new LatLng(12.96,77.56);
+    public static LatLng bengaluruLatLng = new LatLng(12.96,77.56);
     public static LatLng kolkataLatLng = new LatLng(22.56,88.36);
     public static LatLng jaipurLatLng = new LatLng(26.9,75.8);
     public static LatLng mumbaiLatLng = new LatLng(18.98,72.83);

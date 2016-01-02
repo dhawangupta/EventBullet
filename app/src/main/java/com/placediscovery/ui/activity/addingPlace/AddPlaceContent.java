@@ -30,6 +30,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.placediscovery.AWSClasses.Constants;
 import com.placediscovery.AWSClasses.Util;
+import com.placediscovery.MongoLabPlace.CreatePlaceAsyncTask;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
 
@@ -48,6 +49,7 @@ public class AddPlaceContent extends AppCompatActivity
     protected EditText place_details;
     protected Button submit_button;
 
+    String selected_city_for_user_places;
     private LatLng userPlaceLatLng;
     public Place userAddedPlace;
     private String imageURLfromAWS="";     //TODO:we have to find its value from AWS
@@ -78,14 +80,10 @@ public class AddPlaceContent extends AppCompatActivity
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         userPlaceLatLng = intent.getExtras().getParcelable("userPlaceLatLng");
+        selected_city_for_user_places = intent.getExtras().getString("selectedCity")+"_users";
 
         //Creting place added by user
         userAddedPlace = new Place();
-        userAddedPlace.setLatitude(String.valueOf(userPlaceLatLng.getLatitude()));
-        userAddedPlace.setLongitude(String.valueOf(userPlaceLatLng.getLongitude()));
-        userAddedPlace.setName(String.valueOf(place_title.getText()));
-        userAddedPlace.setContent(String.valueOf(place_details.getText()));
-        userAddedPlace.setImageURL(imageURLfromAWS);
 
         mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -122,7 +120,13 @@ public class AddPlaceContent extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
-
+                userAddedPlace.setLatitude(String.valueOf(userPlaceLatLng.getLatitude()));
+                userAddedPlace.setLongitude(String.valueOf(userPlaceLatLng.getLongitude()));
+                userAddedPlace.setName(String.valueOf(place_title.getText()));
+                userAddedPlace.setContent(String.valueOf(place_details.getText()));
+                userAddedPlace.setImageURL(imageURLfromAWS);
+                CreatePlaceAsyncTask tsk = new CreatePlaceAsyncTask(selected_city_for_user_places);
+                tsk.execute(userAddedPlace);
                 // submit place details to database
             }
         });

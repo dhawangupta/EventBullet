@@ -31,13 +31,15 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
     AppCompatButton btnAddPlaceMaps;
     LatLng userPlaceLatLng;
     LatLng selectedCityLatLng;
+    String selectedCity;
     double lat,lon;
     Icon mIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place_maps);
-        selectedCityLatLng = getIntent().getParcelableExtra("selectedCityLatLng");
+        selectedCityLatLng = getIntent().getExtras().getParcelable("selectedCityLatLng");
+        selectedCity = getIntent().getExtras().getString("selectedCity");
 
         btnAddPlaceMaps = (AppCompatButton) findViewById(R.id.btn_addPlaceMaps);
         btnAddPlaceMaps.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +47,7 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
             public void onClick(View v) {
                 Intent intent = new Intent(AddPlaceMaps.this, AddPlaceContent.class);
                 intent.putExtra("userPlaceLatLng", (Parcelable) userPlaceLatLng);
+                intent.putExtra("selectedCity", selectedCity);
                 startActivity(intent);
             }
         });
