@@ -18,11 +18,9 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
 import com.placediscovery.Constants;
 import com.placediscovery.R;
-<<<<<<< HEAD:app/src/main/java/com/placediscovery/ui/activity/addingPlace/AddPlaceMaps.java
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
-=======
->>>>>>> pr/15:app/src/main/java/com/placediscovery/ui/activity/addingPlace/AddPlaceMaps.java
+
 
 import static com.placediscovery.R.drawable.ic_add_location_black_24dp;
 
@@ -30,16 +28,11 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
 
     Marker dragMarker;
     MapView mapView;
-<<<<<<< HEAD:app/src/main/java/com/placediscovery/ui/activity/addingPlace/AddPlaceMaps.java
     AppCompatButton btnAddPlaceMaps;
     LatLng userPlaceLatLng;
-    double lat=20,lon=0;
-=======
     LatLng selectedCityLatLng;
     double lat,lon;
     Icon mIcon;
->>>>>>> pr/15:app/src/main/java/com/placediscovery/ui/activity/addingPlace/AddPlaceMaps.java
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,16 +62,13 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
         mapView.setZoomLevel(11);
         mapView.setTiltEnabled(true);
         mapView.setMyLocationEnabled(true);
-<<<<<<< HEAD:app/src/main/java/com/placediscovery/ui/activity/addingPlace/AddPlaceMaps.java
         mapView.addMarker(new MarkerOptions()
                         .position(new LatLng(userPlaceLatLng))
                         .snippet("click to add a place")
         );
-=======
         mapView.setScrollEnabled(true);
         mapView.setOnScrollListener(this);
         mapView.setOnInfoWindowClickListener(this);
->>>>>>> pr/15:app/src/main/java/com/placediscovery/ui/activity/addingPlace/AddPlaceMaps.java
         mapView.onCreate(savedInstanceState);
 
     }
