@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- this is the image of card but not the heigt of ViewHolder holding it-->
         <ImageView
             android:id="@+id/cityImage"
             android:layout_width="match_parent"

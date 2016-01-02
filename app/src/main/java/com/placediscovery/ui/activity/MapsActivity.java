@@ -1,4 +1,4 @@
-package com.placediscovery.maps;
+package com.placediscovery.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,6 @@ import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.GetPlacesAsyncTask;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
-import com.placediscovery.ui.activity.ContentActivity;
 
 import java.util.ArrayList;
 
@@ -136,7 +135,7 @@ public class MapsActivity extends FragmentActivity {
 
             for(int j=0; j<places.size(); j++){
                 // Image url
-                String image_url = places.get(j).getImageURL();
+                String image_url = places.get(j).getImageURL().split(",")[0];
 
                 if(image_url.equals("")){
                     continue;
@@ -165,6 +164,7 @@ public class MapsActivity extends FragmentActivity {
 
                         intents[finalJ].putExtra("imageviewId", finalJ);
                         intents[finalJ].putExtra("placesObject", places);
+                        intents[finalJ].putExtra("selectedCity", selectedCity);
                         startActivity(intents[finalJ]);
                     }
                 });

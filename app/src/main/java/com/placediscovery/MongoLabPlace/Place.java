@@ -5,13 +5,14 @@ import java.io.Serializable;
 public class Place implements Serializable{
 
 	public String place_id;
-	public String name;
-	public String latitude;
-	public String longitude;
-	public String filter;
-	public String imageURL;
-	public String content;
-
+	public String name="";
+	public String latitude="";
+	public String longitude="";
+	public String filter="";
+	public String imageURL="";
+	public String content="";
+	public String averageRating="";
+	public String count="";			//this is count of ratings given by user
 
 	public String getPlace_id() {
 		return place_id;
@@ -68,4 +69,20 @@ public class Place implements Serializable{
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+    public String getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(String averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
 }
