@@ -22,7 +22,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 
 
-import static com.placediscovery.R.drawable.ic_add_location_black_24dp;
+import static com.placediscovery.R.drawable.ic_star;
 
 public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollListener, MapView.OnInfoWindowClickListener {
 
@@ -31,12 +31,15 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
     AppCompatButton btnAddPlaceMaps;
     LatLng userPlaceLatLng;
     LatLng selectedCityLatLng;
+    String selectedCity;
     double lat,lon;
     Icon mIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place_maps);
+        selectedCityLatLng = getIntent().getExtras().getParcelable("selectedCityLatLng");
+        selectedCity = getIntent().getExtras().getString("selectedCity");
 
         btnAddPlaceMaps = (AppCompatButton) findViewById(R.id.btn_addPlaceMaps);
         btnAddPlaceMaps.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +47,7 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
             public void onClick(View v) {
                 Intent intent = new Intent(AddPlaceMaps.this, AddPlaceContent.class);
                 intent.putExtra("userPlaceLatLng", (Parcelable) userPlaceLatLng);
+                intent.putExtra("selectedCity", selectedCity);
                 startActivity(intent);
             }
         });
@@ -112,7 +116,7 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
         super.onStart();
         IconFactory iconFactory = IconFactory.getInstance(this);
         Drawable mDrawable;
-        mDrawable = ContextCompat.getDrawable(this, ic_add_location_black_24dp);
+        mDrawable = ContextCompat.getDrawable(this, ic_star);
 
         mIcon = iconFactory.fromDrawable(mDrawable);
         dragMarker=mapView.addMarker(new MarkerOptions()

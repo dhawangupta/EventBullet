@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
+import com.placediscovery.ui.activity.addingPlace.AddPlaceContent;
 import com.placediscovery.ui.activity.addingPlace.AddPlaceSelectCity;
 import com.placediscovery.ui.fragment.MainFragment;
 import com.placediscovery.ui.fragment.ViewPagerFragment;
