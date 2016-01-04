@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -71,7 +72,7 @@ public class ContentActivity extends AppCompatActivity implements
         TextView t1 = (TextView)findViewById(R.id.place_name);
         TextView t2 = (TextView)findViewById(R.id.place_content);
         t1.setText(place_name);
-        t2.setText(place_content);
+        t2.setText(Html.fromHtml(place_content));
 
         String[] image_urls = image_url.split(",");
 
