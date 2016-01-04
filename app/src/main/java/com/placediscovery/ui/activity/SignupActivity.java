@@ -122,7 +122,6 @@ public class SignupActivity extends AppCompatActivity {
         user.name = _nameText.getText().toString();
         user.email = _emailText.getText().toString();
         user.password = _passwordText.getText().toString();
-        user.savedplaces = "";
 
         CreateUserAsyncTask tsk = new CreateUserAsyncTask();
         tsk.execute(user);
@@ -137,7 +136,7 @@ public class SignupActivity extends AppCompatActivity {
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 20000);
     }
 
 
