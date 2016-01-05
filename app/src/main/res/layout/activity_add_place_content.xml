@@ -70,10 +70,10 @@
 
                 <EditText android:id="@+id/place_content"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="120dp"
                     android:inputType="textMultiLine"
                     android:enabled="true"
-                    android:minLines="4"
+                    android:minLines="1"
                     android:maxLines="10"
                     android:isScrollContainer="true"
                     android:focusable="true"
