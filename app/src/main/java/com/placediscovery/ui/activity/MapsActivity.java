@@ -15,7 +15,6 @@ import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
 import com.placediscovery.ImageLoader.ImageLoader;
-import com.placediscovery.MongoLabPlace.GetPlacesAsyncTask;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
 
@@ -31,7 +30,9 @@ public class MapsActivity extends FragmentActivity {
     String []arr = {"Filter","Gaming","Drugs","Sex","Partying","Religious","Others"};
     // An adapter to show data
     ArrayAdapter<String> adapter;
+
     ArrayList<Place> places = new ArrayList<>();
+
 //    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     MapView mapView=null;
     String selectedCity;
@@ -107,15 +108,7 @@ public class MapsActivity extends FragmentActivity {
 //                places = (ArrayList<Place>) HelperMethods.readObjectFromFile("saved_" + selectedCity);
 //            } catch (NullPointerException n)
 
-
-                GetPlacesAsyncTask task = new GetPlacesAsyncTask(selectedCity);
-                try {
-                    places = task.execute().get();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+            places = (ArrayList<Place>)getIntent().getExtras().getSerializable("places");
 
             int loader = R.drawable.loader;         //loader image
             final Intent[] intents = new Intent[places.size()];
