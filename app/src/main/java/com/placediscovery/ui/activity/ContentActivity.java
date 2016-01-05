@@ -1,14 +1,11 @@
 package com.placediscovery.ui.activity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,17 +15,12 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.Place;
-import com.placediscovery.MongoLabPlace.PlaceQueryBuilder;
 import com.placediscovery.MongoLabPlace.UpdatePlaceAsyncTask;
 import com.placediscovery.MongoLabUser.UpdateUserAsyncTask;
 import com.placediscovery.MongoLabUser.User;
-import com.placediscovery.MongoLabUser.UserQueryBuilder;
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
 
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
