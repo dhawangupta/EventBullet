@@ -4,7 +4,7 @@ public class PlaceQueryBuilder {
 
 	String selectedCity;
 
-	PlaceQueryBuilder(String selectedCity){
+	public PlaceQueryBuilder(String selectedCity){
 		this.selectedCity = selectedCity;
 	}
 
@@ -44,6 +44,16 @@ public class PlaceQueryBuilder {
 	}
 
 	/**
+	 * Get a specified document
+	 * @param docid
+	 * @return
+	 */
+	public String docApiKeyUrl(String docid)
+	{
+		return "/"+docid+"?apiKey="+getApiKey();
+	}
+
+	/**
 	 * Returns the places collection
 	 * @return
 	 */
@@ -56,10 +66,66 @@ public class PlaceQueryBuilder {
 	 * Builds a complete URL using the methods specified above
 	 * @return
 	 */
-	public String buildContactsGetURL()
+	public String buildPlacesSaveURL()
 	{
 		return getBaseUrl()+documentRequest()+docApiKeyUrl();
 	}
 
+	/**
+	 * This method is identical to the one above.
+	 * @return
+	 */
+	public String buildPlacesGetURL()
+	{
+		return getBaseUrl()+documentRequest()+docApiKeyUrl();
+	}
 
+	/**
+	 * Get a Mongodb document that corresponds to the given object id
+	 * @param doc_id
+	 * @return
+	 */
+	public String buildPlacesUpdateURL(String doc_id)
+	{
+		return getBaseUrl()+documentRequest()+docApiKeyUrl(doc_id);
+	}
+
+	/**
+	 * Formats the place details for MongoHLab Posting
+	 * @param place: Details of the place
+	 * @return
+	 */
+	public String createPlace(Place place)
+	{
+		return String.format("{\"name\": \"%s\", "
+                            + "\"latitude\": \"%s\", \"longitude\": \"%s\", "
+                            + "\"filter\" : \"%s\", "
+                            + "\"imageURL\" : \"%s\", "
+                            + "\"content\" : \"%s\", "
+                            + "\"averageRating\" : \"%s\", "
+                            + "\"count\" : \"%s\" }" + "}",
+                place.getName(),
+                place.getLatitude(), place.getLongitude(), place.getFilter(), place.getImageURL(),
+                place.getContent(), place.getAverageRating(), place.getCount());
+	}
+
+    /**
+     * Update a given place record
+     * @param place
+     * @return
+     */
+    public String setPlaceData(Place place) {
+        return String.format("{ \"$set\" : "
+                        + "{\"name\" : \"%s\", "
+                        + "\"latitude\" : \"%s\", "
+                        + "\"longitude\" : \"%s\", "
+                        + "\"filter\" : \"%s\", "
+                        + "\"imageURL\" : \"%s\", "
+                        + "\"content\" : \"%s\", "
+                        + "\"averageRating\" : \"%s\", "
+                        + "\"count\" : \"%s\" }" + "}",
+                place.getName(),
+                place.getLatitude(), place.getLongitude(), place.getFilter(), place.getImageURL(),
+                place.getContent(), place.getAverageRating(), place.getCount());
+    }
 }

@@ -4,7 +4,9 @@ package com.placediscovery.ui.activity;
  * Created by ARIMIT on 14-Oct-15.
  */
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,22 +16,41 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.mongodb.BasicDBList;
+import com.mongodb.DBObject;
+import com.placediscovery.MongoLabPlace.Place;
+import com.placediscovery.MongoLabPlace.PlaceQueryBuilder;
 import com.placediscovery.R;
-import com.placediscovery.maps.MapsActivity;
-import com.placediscovery.ui.HelperMethods;
+import com.placediscovery.Constants;
+import com.placediscovery.HelperMethods;
 import com.placediscovery.ui.activity.adapter.CityAdapter;
 import com.placediscovery.ui.activity.adapter.CityManager;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
 public class ChooseCity extends AppCompatActivity implements ViewHolderResponser {
 
     private RecyclerView mRecyclerView;
     private CityAdapter mAdapter;
+    private ProgressDialog progressDialog;
+    Intent intent;
+
+    static String server_output = null;
+    static String temp_output = null;
+
+    String selectedCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choosecity);
+
+        intent = new Intent(ChooseCity.this, MapsActivity.class);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -61,39 +82,123 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
             Toast.makeText(ChooseCity.this, "Check your internet!!", Toast.LENGTH_LONG).show();
         }
 
-        Intent intent = new Intent(ChooseCity.this, MapsActivity.class);
-
         //Add here for selecting city from card layout. "cityname" should be same as that in db.
         switch (position) {
-            case 0 : intent.putExtra("selectedCity","kolkata");
-                startActivity(intent);
+            case 0 : selectedCity = Constants.Kolkata.toLowerCase();
                 break;
-            case 1 : intent.putExtra("selectedCity","mumbai");
-                startActivity(intent);
+            case 1 : selectedCity = Constants.Mumbai.toLowerCase();
                 break;
-            case 2 : intent.putExtra("selectedCity","newdelhi");
-                startActivity(intent);
+            case 2 : selectedCity = Constants.NewDelhi.toLowerCase();
                 break;
-            case 3 : intent.putExtra("selectedCity","chennai");
-                startActivity(intent);
+            case 3 : selectedCity = Constants.Chennai.toLowerCase();
                 break;
-            case 4 : intent.putExtra("selectedCity","bengaluru");
-                startActivity(intent);
+            case 4 : selectedCity = Constants.Bengaluru.toLowerCase();
                 break;
-            case 5 : intent.putExtra("selectedCity", "varanasi");
-                startActivity(intent);
+            case 5 : selectedCity = Constants.Varanasi.toLowerCase();
                 break;
-            case 6 : intent.putExtra("selectedCity","jaipur");
-                startActivity(intent);
+            case 6 : selectedCity = Constants.Jaipur.toLowerCase();
                 break;
-            case 7 : intent.putExtra("selectedCity","agra");
-                startActivity(intent);
+            case 7 : selectedCity = Constants.Agra.toLowerCase();
+                break;
+            case 8 : selectedCity = Constants.Hyderabad.toLowerCase();
                 break;
 
         }
 
+        GetPlacesAsyncTaskProgressDialog task = new GetPlacesAsyncTaskProgressDialog();
+        try {
+            task.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
+    private class GetPlacesAsyncTaskProgressDialog extends AsyncTask<Place, Void, ArrayList<Place>> {
+
+        //String selectedCity;
+
+        /*public GetPlacesAsyncTaskProgressDialog(String selectedCity) {
+            this.selectedCity = selectedCity;
+        }*/
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(ChooseCity.this, "",
+                    "loading places...", false, true);
+        }
+
+        @Override
+        protected ArrayList<Place> doInBackground(Place... arg0) {
+
+            ArrayList<Place> places = new ArrayList<>();
+            try
+            {
+
+                PlaceQueryBuilder qb = new PlaceQueryBuilder(selectedCity);
+                URL url = new URL(qb.buildPlacesGetURL());
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
+
+                if (conn.getResponseCode() != 200) {
+                    throw new RuntimeException("Failed : HTTP error code : "
+                            + conn.getResponseCode());
+                }
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        (conn.getInputStream())));
+
+                while ((temp_output = br.readLine()) != null) {
+                    server_output = temp_output;
+                }
+
+                // create a basic db list
+                String mongoarray = "{ artificial_basicdb_list: "+server_output+"}";
+                Object o = com.mongodb.util.JSON.parse(mongoarray);
+
+
+                DBObject dbObj = (DBObject) o;
+                BasicDBList places_list = (BasicDBList) dbObj.get("artificial_basicdb_list");
+
+                for (Object obj : places_list) {
+                    DBObject userObj = (DBObject) obj;
+
+                    Place temp = new Place();
+                    temp.setPlace_id(userObj.get("_id").toString());
+                    temp.setName(userObj.get("name").toString());
+                    temp.setLatitude(userObj.get("latitude").toString());
+                    temp.setLongitude(userObj.get("longitude").toString());
+                    temp.setFilter(userObj.get("filter").toString());
+                    temp.setImageURL(userObj.get("imageURL").toString());
+                    temp.setContent(userObj.get("content").toString());
+                    temp.setAverageRating(userObj.get("averageRating").toString());
+                    temp.setCount(userObj.get("count").toString());
+                    places.add(temp);
+
+                }
+                HelperMethods.saveObjectToCache("saved_"+selectedCity, places);
+            }catch (Exception e) {
+                e.getMessage();
+            }
+
+            return places;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Place> places) {
+            if(progressDialog!=null && progressDialog.isShowing()){
+                progressDialog.dismiss();}
+
+            intent.putExtra("places",places);
+            intent.putExtra("selectedCity",selectedCity);
+            startActivity(intent);
+        }
+    }
 
 }
+
+
+

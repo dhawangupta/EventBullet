@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.placediscovery.MongoLabUser.SaveUserAsyncTask;
+import com.placediscovery.MongoLabUser.CreateUserAsyncTask;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.R;
 
@@ -122,9 +122,8 @@ public class SignupActivity extends AppCompatActivity {
         user.name = _nameText.getText().toString();
         user.email = _emailText.getText().toString();
         user.password = _passwordText.getText().toString();
-        user.savedplaces = "";
 
-        SaveUserAsyncTask tsk = new SaveUserAsyncTask();
+        CreateUserAsyncTask tsk = new CreateUserAsyncTask();
         tsk.execute(user);
 
 
@@ -137,7 +136,7 @@ public class SignupActivity extends AppCompatActivity {
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 20000);
     }
 
 

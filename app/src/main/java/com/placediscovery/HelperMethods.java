@@ -1,4 +1,4 @@
-package com.placediscovery.ui;
+package com.placediscovery;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

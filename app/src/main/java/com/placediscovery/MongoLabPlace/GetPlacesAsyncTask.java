@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
-import com.placediscovery.ui.HelperMethods;
+import com.placediscovery.HelperMethods;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -35,7 +35,7 @@ public class GetPlacesAsyncTask extends AsyncTask<Place, Void, ArrayList<Place>>
 		{
 
 			PlaceQueryBuilder qb = new PlaceQueryBuilder(selectedCity);
-			URL url = new URL(qb.buildContactsGetURL());
+			URL url = new URL(qb.buildPlacesGetURL());
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
@@ -71,6 +71,8 @@ public class GetPlacesAsyncTask extends AsyncTask<Place, Void, ArrayList<Place>>
 				temp.setFilter(userObj.get("filter").toString());
 				temp.setImageURL(userObj.get("imageURL").toString());
 				temp.setContent(userObj.get("content").toString());
+				temp.setAverageRating(userObj.get("averageRating").toString());
+				temp.setCount(userObj.get("count").toString());
 				places.add(temp);
 
 			}
