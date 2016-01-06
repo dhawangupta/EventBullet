@@ -11,7 +11,7 @@
         android:layout_height="64dp"
         android:background="@color/color_primary"
         android:minHeight="?attr/actionBarSize"
-        android:elevation="6dp"></android.support.v7.widget.Toolbar>
+        android:elevation="6dp"/>
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -35,7 +35,7 @@
             <ImageView
                 android:id="@+id/add_image"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="240dp"
                 android:layout_marginTop="64dp"
                 android:background="@drawable/add_image"
                 android:contentDescription="@string/place_holder"
@@ -73,10 +73,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
-                    android:editable="true"
                     android:enabled="true"
-                    android:minLines="1"
-                    android:maxLines="6"
+                    android:minLines="4"
+                    android:maxLines="10"
                     android:isScrollContainer="true"
                     android:focusable="true"
                     android:textColor="@color/aluminum"

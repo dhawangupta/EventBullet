@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
 
@@ -33,14 +34,23 @@
                 <ImageView
                     android:id="@+id/contentPageImage"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"/>     <!-- Height of image on content page -->
+                    android:layout_height="230dp"/>     <!-- Height of image on content page -->
+
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/contentPageImageSlider"
+                    android:layout_width="match_parent"
+                    custom:pager_animation="Accordion"
+                    custom:auto_cycle="true"
+                    custom:indicator_visibility="visible"
+                    custom:pager_animation_span="1100"
+                    android:layout_height="230dp"/>     <!-- Height of image slider on content page -->
 
                 <br.liveo.navigationliveo.FloatingActionButton
                     android:id="@+id/fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/contentPageImage"
+                    android:layout_below="@+id/contentPageImageSlider"
                     android:layout_marginTop="-35dp"
                     android:layout_marginBottom="0dp"
                     android:layout_marginRight="10dp"
@@ -62,18 +72,26 @@
                     android:id="@+id/place_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/color_primary"
                     android:textSize="25sp"
                     android:textStyle="bold" />
+
+                <!-- TODO: styling of rating bar need to be done-->
+                <RatingBar
+                    android:id="@+id/ratingbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:numStars="5"
+                    android:stepSize="1"/>
 
                 <ScrollView
                     android:id="@+id/scroller1"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="vertical"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="80dp"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
                     android:fillViewport="true">
@@ -82,7 +100,6 @@
                         android:id="@+id/place_content"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/header_text"
                         android:paddingLeft="2dp"
                         android:paddingRight="2dp"
                         android:textColor="@color/text_color"
