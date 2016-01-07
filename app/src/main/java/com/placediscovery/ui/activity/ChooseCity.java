@@ -40,8 +40,6 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
     private ProgressDialog progressDialog;
     Intent intent;
 
-    static String server_output = null;
-    static String temp_output = null;
 
     String selectedCity;
 
@@ -116,12 +114,8 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
     }
 
     private class GetPlacesAsyncTaskProgressDialog extends AsyncTask<Place, Void, ArrayList<Place>> {
-
-        //String selectedCity;
-
-        /*public GetPlacesAsyncTaskProgressDialog(String selectedCity) {
-            this.selectedCity = selectedCity;
-        }*/
+        String server_output = null;
+        String temp_output = null;
 
         @Override
         protected void onPreExecute() {
