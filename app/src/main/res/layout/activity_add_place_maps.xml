@@ -7,21 +7,21 @@
         android:id="@+id/mapviewAddingPlace"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        mapbox:access_token="pk.eyJ1IjoienViZXIiLCJhIjoiY2lpbm54aWw0MDFmdHY0bTViNXRlODh6cSJ9.DE2MqIcwDwaPfMRy-yWDbg" />
+        mapbox:access_token="pk.eyJ1IjoienViZXIiLCJhIjoiY2lqMzRrOHF1MDAxOXc4a2x6bmt6MnJ6aSJ9.3xE6UONybpETyJgRPk4FmA" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_addPlaceMaps"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/color_primary"
+        android:paddingBottom="10dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:text="Add this place"
-        android:textSize="18sp"
-        android:background="@color/color_primary" />
+        android:textSize="18sp" />
 </RelativeLayout>

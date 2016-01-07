@@ -16,11 +16,11 @@ public class User implements Serializable{
     public User(){}
 
     public User(UserStatus userStatus){
-        user_id = userStatus.getUser_Id();
-        name = userStatus.getName();
-        email = userStatus.getEmail();
-        password = userStatus.getPassword();
-        savedplaces = userStatus.getSavedPlaces();
+        user_id = UserStatus.getUser_Id();
+        name = UserStatus.getName();
+        email = UserStatus.getEmail();
+        password = UserStatus.getPassword();
+        savedplaces = UserStatus.getSavedPlaces();
     }
     public String getSavedplaces() {
         return savedplaces;

@@ -2,11 +2,6 @@ package com.placediscovery.MongoLabUser;
 
 import android.os.AsyncTask;
 
-import com.placediscovery.MongoLabPlace.Place;
-import com.placediscovery.MongoLabPlace.PlaceQueryBuilder;
-
-import java.io.BufferedOutputStream;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -38,15 +33,7 @@ public class CreateUserAsyncTask extends AsyncTask<User, Void, Boolean> {
             osw.write(qb.createUser(user));
             osw.flush();
             osw.close();
-            if(connection.getResponseCode() <205)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-
-            }
+            return connection.getResponseCode() < 205;
 
         } catch (Exception e) {
             //e.getCause();

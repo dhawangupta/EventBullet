@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
-import com.placediscovery.ui.activity.addingPlace.AddPlaceContent;
 import com.placediscovery.ui.activity.addingPlace.AddPlaceSelectCity;
 import com.placediscovery.ui.fragment.MainFragment;
 import com.placediscovery.ui.fragment.ViewPagerFragment;
@@ -43,8 +42,8 @@ public class HomePage extends NavigationLiveo implements OnItemClickListener {
         // User Information
         if(UserStatus.LoginStatus){
             UserStatus userStatus = new UserStatus();
-            this.userName.setText(userStatus.getName());
-            this.userEmail.setText(userStatus.getEmail());}
+            this.userName.setText(UserStatus.getName());
+            this.userEmail.setText(UserStatus.getEmail());}
         else{
             this.userName.setText("Please Log In");
             this.userEmail.setText("");

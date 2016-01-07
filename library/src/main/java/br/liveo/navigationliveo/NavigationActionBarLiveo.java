@@ -49,50 +49,40 @@ import br.liveo.interfaces.OnPrepareOptionsMenuLiveo;
 
 public abstract class NavigationActionBarLiveo extends AppCompatActivity {
 
+    public static final int THEME_DARK = 0;
+    public static final int THEME_LIGHT = 1;
+    public static final String CURRENT_POSITION = "CURRENT_POSITION";
     public TextView userName;
     public TextView userEmail;
     public ImageView userPhoto;
     public ImageView userBackground;
-
     private View mHeader;
-
     private ListView mList;
     private TextView mTitleFooter;
     private ImageView mIconFooter;
     private int mColorName = 0;
-
     private int mColorIcon = 0;
     private int mNewSelector = 0;
     private int mColorCounter = 0;
     private int mColorSeparator = 0;
     private int mColorSubHeader = 0;
-
     private int mColorDefault = 0;
     private int mCurrentPosition = 1;
     private int mSelectorDefault = 0;
     private boolean mRemoveAlpha = false;
     private boolean mRemoveHeader = false;
-
     private Toolbar mToolbar;
     private float mElevationToolBar = 15;
-
     private DrawerLayout mDrawerLayout;
     private ScrimInsetsFrameLayout mRelativeDrawer;
     private RelativeLayout mFooterDrawer;
     private boolean isSaveInstance = false;
-
     private List<HelpItem> mHelpItem;
     private Navigation mNavigation = new Navigation();
-
     private NavigationLiveoAdapter mNavigationAdapter;
     private ActionBarDrawerToggleCompat mDrawerToggle;
-
     private OnItemClickListener mOnItemClickLiveo;
     private OnPrepareOptionsMenuLiveo mOnPrepareOptionsMenu;
-
-    public static final int THEME_DARK = 0;
-    public static final int THEME_LIGHT = 1;
-    public static final String CURRENT_POSITION = "CURRENT_POSITION";
 
     /**
      * onCreate(Bundle savedInstanceState).
@@ -192,28 +182,6 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
         }
 	 }
 
-	private class ActionBarDrawerToggleCompat extends ActionBarDrawerToggle {
-
-        public ActionBarDrawerToggleCompat(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar){
-            super(
-                    activity,
-                    drawerLayout,
-                    toolbar,
-                    R.string.drawer_open,
-                    R.string.drawer_close);
-        }
-
-		@Override
-		public void onDrawerClosed(View view) {
-			supportInvalidateOptionsMenu();
-		}
-
-		@Override
-		public void onDrawerOpened(View drawerView) {
-			supportInvalidateOptionsMenu();
-		}
-	}
-
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		// TODO Auto-generated method stub
@@ -223,22 +191,6 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
             mDrawerToggle.onConfigurationChanged(newConfig);
         }
 	}
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            int mPosition = (!mRemoveHeader ? position - 1 : position);
-
-            if (position != 0 || mRemoveHeader) {
-                mOnItemClickLiveo.onItemClick(mPosition);
-                setCurrentPosition(mPosition);
-                setCheckedItemNavigation(mPosition, true);
-            }
-
-	    	mDrawerLayout.closeDrawer(mRelativeDrawer);
-        }
-    }
 
     private void mountListNavigation(Bundle savedInstanceState){
         if (mOnItemClickLiveo == null){
@@ -357,7 +309,7 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
         this.mOnItemClickLiveo = listener;
         configureFindView();
         return this;
-    };
+    }
 
     /**
      * Starting listener navigation
@@ -369,7 +321,7 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
         this.mOnItemClickLiveo = listener;
         configureFindView();
         return this;
-    };
+    }
 
     /**
      * @param listHelpItem list HelpItem.
@@ -466,7 +418,7 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
      */
     public void setNavigationListener(OnItemClickListener onItemClick){
         this.mOnItemClickLiveo = onItemClick;
-    };
+    }
 
     /**
      * First item of the position selected from the list, use method startingPosition
@@ -492,21 +444,19 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
     }
 
     /**
-     * Position in the last clicked item list
-     * @param position ...
-     */
-    private void setCurrentPosition(int position){
-        this.mCurrentPosition = position;
-    }
-
-    /**
      * get position in the last clicked item list
      */
     public int getCurrentPosition(){
         return this.mCurrentPosition;
     }
 
-    /*{  }*/
+    /**
+     * Position in the last clicked item list
+     * @param position ...
+     */
+    private void setCurrentPosition(int position){
+        this.mCurrentPosition = position;
+    }
 
     /**
      * Select item clicked
@@ -546,7 +496,9 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
         }else{
             mIconFooter.setImageResource(icon);
         }
-    };
+    }
+
+    /*{  }*/
 
     /**
      * Information footer list item
@@ -572,7 +524,7 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
         }
 
         return this;
-    };
+    }
 
     /**
      * Information footer list item
@@ -607,7 +559,7 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
                 mIconFooter.setColorFilter(getResources().getColor(colorIcon));
             }
         }
-    };
+    }
 
     /**
      * Information footer list item
@@ -642,7 +594,7 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
             }
         }
         return this;
-    };
+    }
 
     /**
      * Information footer list item
@@ -670,7 +622,7 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
         }
 
         return this;
-    };
+    }
 
     /**
      * Information footer list item
@@ -697,7 +649,7 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
         }
 
         return this;
-    };
+    }
 
     /**
      * Information footer list item
@@ -728,7 +680,7 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
                 mIconFooter.setColorFilter(getResources().getColor(colorIcon));
             }
         }
-    };
+    }
 
     /**
      * Information footer list item
@@ -759,7 +711,7 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
             }
         }
         return this;
-    };
+    }
 
     /**
      * Information footer list item
@@ -789,7 +741,7 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
             }
         }
         return this;
-    };
+    }
 
     /**
      * Information footer list item
@@ -823,7 +775,7 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
             }
         }
         return this;
-    };
+    }
 
     /**
      * If not want to use the footer item just put false
@@ -885,6 +837,7 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
         this.mIconFooter.setColorFilter(getResources().getColor(colorId));
         return this;
     }
+
     /**
      * Footer icon color
      * @param colorId color id.
@@ -1278,6 +1231,44 @@ public abstract class NavigationActionBarLiveo extends AppCompatActivity {
             mDrawerLayout.closeDrawer(mRelativeDrawer);
         } else {
             super.onBackPressed();
+        }
+    }
+
+	private class ActionBarDrawerToggleCompat extends ActionBarDrawerToggle {
+
+        public ActionBarDrawerToggleCompat(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar){
+            super(
+                    activity,
+                    drawerLayout,
+                    toolbar,
+                    R.string.drawer_open,
+                    R.string.drawer_close);
+        }
+
+		@Override
+		public void onDrawerClosed(View view) {
+			supportInvalidateOptionsMenu();
+		}
+
+		@Override
+		public void onDrawerOpened(View drawerView) {
+			supportInvalidateOptionsMenu();
+		}
+	}
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            int mPosition = (!mRemoveHeader ? position - 1 : position);
+
+            if (position != 0 || mRemoveHeader) {
+                mOnItemClickLiveo.onItemClick(mPosition);
+                setCurrentPosition(mPosition);
+                setCheckedItemNavigation(mPosition, true);
+            }
+
+	    	mDrawerLayout.closeDrawer(mRelativeDrawer);
         }
     }
 }

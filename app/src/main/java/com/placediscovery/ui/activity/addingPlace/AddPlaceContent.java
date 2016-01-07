@@ -20,16 +20,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.mapbox.mapboxsdk.geometry.LatLng;
-import com.placediscovery.AWSClasses.Constants;
 import com.placediscovery.AWSClasses.Util;
+import com.placediscovery.Constants;
 import com.placediscovery.MongoLabPlace.CreatePlaceAsyncTask;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
@@ -37,25 +37,53 @@ import com.placediscovery.R;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Objects;
+
+import static com.placediscovery.AWSClasses.Constants.BUCKET_NAME;
 
 
-public class AddPlaceContent extends AppCompatActivity
-{
+public class AddPlaceContent extends AppCompatActivity {
     // TAG for logging;
     private static final String TAG = "UploadActivity";
-
+    public Place userAddedPlace;
     protected EditText place_title;
     protected EditText place_details;
     protected Button submit_button;
-
     String selected_city_for_user_places;
     private LatLng userPlaceLatLng;
-    public Place userAddedPlace;
-    private String imageURLfromAWS="";     //TODO:we have to find its value from AWS
+    private String imageURLfromAWS = "";     //TODO:we have to find its value from AWS
+
+
+    private double lat, lon;
 
     // The TransferUtility is the primary class for managing transfer to S3
     private TransferUtility transferUtility;
+
+    private GoogleApiClient client;
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is ExternalStorageProvider.
+     */
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is DownloadsProvider.
+     */
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is MediaProvider.
+     */
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +92,17 @@ public class AddPlaceContent extends AppCompatActivity
 
         Intent intent = getIntent();
 
+        lat = intent.getDoubleExtra(Constants.Latitutude, 0);
+        lon = intent.getDoubleExtra(Constants.Longitude, 0);
+        userPlaceLatLng=new LatLng(lat,lon);
+        Toast.makeText(this,String.valueOf(lat),Toast.LENGTH_LONG).show();
         // Initializes TransferUtility, always do this before using it.
         transferUtility = Util.getTransferUtility(this);
 
         place_title = (EditText) findViewById(R.id.place_name);
         place_details = (EditText) findViewById(R.id.place_content);
         submit_button = (Button) findViewById(R.id.btn_submit);
-        ImageView iv = (ImageView)findViewById(R.id.add_image);
+        ImageView iv = (ImageView) findViewById(R.id.add_image);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -79,8 +111,8 @@ public class AddPlaceContent extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        userPlaceLatLng = intent.getExtras().getParcelable("userPlaceLatLng");
-        selected_city_for_user_places = intent.getExtras().getString("selectedCity")+"_users";
+
+        selected_city_for_user_places = intent.getExtras().getString("selectedCity") + "_users";
 
         //Creting place added by user
         userAddedPlace = new Place();
@@ -132,6 +164,7 @@ public class AddPlaceContent extends AppCompatActivity
         });
 
 
+
     }
 
     @Override
@@ -161,10 +194,10 @@ public class AddPlaceContent extends AppCompatActivity
             return;
         }
         File file = new File(filePath);
-        TransferObserver observer = transferUtility.upload(Constants.BUCKET_NAME, file.getName(),
+        TransferObserver observer = transferUtility.upload(BUCKET_NAME, file.getName(),
                 file);
 
-        HashMap<String, Object> map = new HashMap<String, Object>();
+        HashMap<String, Object> map = new HashMap<>();
         Util.fillMap(map, observer, false);
         observer.setTransferListener(new UploadListener());
     }
@@ -200,7 +233,7 @@ public class AddPlaceContent extends AppCompatActivity
                     uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 }
                 selection = "_id=?";
-                selectionArgs = new String[] {
+                selectionArgs = new String[]{
                         split[1]
                 };
             }
@@ -209,11 +242,11 @@ public class AddPlaceContent extends AppCompatActivity
             String[] projection = {
                     MediaStore.Images.Media.DATA
             };
-            Cursor cursor = null;
+            Cursor cursor;
             try {
                 cursor = getContentResolver()
                         .query(uri, projection, selection, selectionArgs, null);
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                int column_index = Objects.requireNonNull(cursor).getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                 if (cursor.moveToFirst()) {
                     return cursor.getString(column_index);
                 }
@@ -224,28 +257,18 @@ public class AddPlaceContent extends AppCompatActivity
         }
         return null;
     }
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is ExternalStorageProvider.
-     */
-    public static boolean isExternalStorageDocument(Uri uri) {
-        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is DownloadsProvider.
-     */
-    public static boolean isDownloadsDocument(Uri uri) {
-        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
-    }
+    @Override
+    public void onStop() {
+        super.onStop();
 
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is MediaProvider.
-     */
-    public static boolean isMediaDocument(Uri uri) {
-        return "com.android.providers.media.documents".equals(uri.getAuthority());
+
     }
 
     /*
@@ -263,12 +286,10 @@ public class AddPlaceContent extends AppCompatActivity
 
         @Override
         public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
-            ;
         }
 
         @Override
         public void onStateChanged(int id, TransferState newState) {
-            ;
         }
     }
 }
