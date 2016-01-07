@@ -2,8 +2,6 @@ package com.placediscovery.MongoLabPlace;
 
 import android.os.AsyncTask;
 
-import com.mongodb.QueryBuilder;
-
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -44,15 +42,7 @@ public class CreatePlaceAsyncTask extends AsyncTask<Place, Void, Boolean>{
             osw.write(qb.createPlace(place));
             osw.flush();
             osw.close();
-            if(connection.getResponseCode() <205)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-
-            }
+            return connection.getResponseCode() < 205;
 
         } catch (Exception e) {
             //e.getCause();
