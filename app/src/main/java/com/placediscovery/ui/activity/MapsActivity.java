@@ -1,6 +1,8 @@
 package com.placediscovery.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -10,31 +12,44 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
+import com.mongodb.BasicDBList;
+import com.mongodb.DBObject;
+import com.placediscovery.HelperMethods;
 import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.Place;
+import com.placediscovery.MongoLabPlace.PlaceQueryBuilder;
 import com.placediscovery.R;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity {
+    //AppCompatActivity extends FragmentActivity
 
     protected Button travel;
     protected Button explore;
-    //AppCompatActivity extends FragmentActivity
-//    Spinner spinner;
-    // Create a Data Source it may be an Array of String or ArrayList<String>
+    ProgressDialog progressDialog;
+    //    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    MapView mapView=null;
+
+    /*Spinner spinner;
+    //Create a Data Source it may be an Array of String or ArrayList<String>
     String []arr = {"Filter","Gaming","Drugs","Sex","Partying","Religious","Others"};
     // An adapter to show data
-    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> adapter;*/
 
     ArrayList<Place> places = new ArrayList<>();
-
-//    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    MapView mapView=null;
+    ArrayList<Marker> places_marker = new ArrayList<>();
+    /*ArrayList<Place> users_places = new ArrayList<>();
+    ArrayList<Marker> users_places_marker = new ArrayList<>();*/
     String selectedCity;
 
     @Override
@@ -45,68 +60,71 @@ public class MapsActivity extends FragmentActivity {
 
         travel = (Button) findViewById(R.id.btn_travel);
         explore = (Button) findViewById(R.id.btn_explore);
-//        spinner = (Spinner) findViewById(R.id.spinnerCountry);
+/*
+        spinner = (Spinner) findViewById(R.id.spinnerCountry);
         adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, arr);
-//        spinner.setAdapter(adapter);
-// Used OnItemSelected Listener for Spinner item click, here i am showing a toast
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                String selectedItem = spinner.getSelectedItem().toString();
-//                Toast.makeText(getApplicationContext(), "Clicked" + selectedItem, Toast.LENGTH_LONG).show();
-//// Filter option chosen
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//
-//        travel.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(MapsActivity.this, "Travel Places", Toast.LENGTH_SHORT).show();
-//                //change map places to travel places
-//            }
-//        });
-//
-//        explore.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(MapsActivity.this, "Explore Places", Toast.LENGTH_SHORT).show();
-//                //change map places to explore places
-//            }
-//        });
-//
+        spinner.setAdapter(adapter);
+ //Used OnItemSelected Listener for Spinner item click, here i am showing a toast
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = spinner.getSelectedItem().toString();
+                Toast.makeText(getApplicationContext(), "Clicked" + selectedItem, Toast.LENGTH_LONG).show();
+// Filter option chosen
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        travel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MapsActivity.this, "Travel Places", Toast.LENGTH_SHORT).show();
+                //change map places to travel places
+            }
+        });*/
+
+       /* explore.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                GetUserPlacesAsyncTask tsk = new GetUserPlacesAsyncTask();
+                tsk.execute();
+
+            }
+        });*/
 
 
-//        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(mToolbar);
-//        getSupportActionBar().setTitle("Add Place");  //title for the toolbar
-//
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//
-//        mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onBackPressed();
-//            }
-//        });         //back icon added
+/*
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Add Place");  //title for the toolbar
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });         //back icon added*/
 
 
         selectedCity = getIntent().getExtras().getString("selectedCity");
         //retrieving places
         try {
-//            try
-//            {
-//                places = (ArrayList<Place>) HelperMethods.readObjectFromFile("saved_" + selectedCity);
-//            } catch (NullPointerException n)
+/*            try
+            {
+                places = (ArrayList<Place>) HelperMethods.readObjectFromFile("saved_" + selectedCity);
+            } catch (NullPointerException n)*/
 
             places = (ArrayList<Place>)getIntent().getExtras().getSerializable("places");
 
@@ -165,15 +183,11 @@ public class MapsActivity extends FragmentActivity {
             }
 
 
-
-
-
-
             //following lines of code can be used for retrieving ids when used in a loop
-//        String idImageView = "imageview" + i;
-//        iv[i] = (ImageView) findViewById(MapsActivity.this.getResources().getIdentifier(i+"", "id", getPackageName()));
-
-
+/*
+        String idImageView = "imageview" + i;
+        iv[i] = (ImageView) findViewById(MapsActivity.this.getResources().getIdentifier(i+"", "id", getPackageName()));
+*/
 
 
         } catch (IndexOutOfBoundsException e){
@@ -210,9 +224,9 @@ public class MapsActivity extends FragmentActivity {
                 mapView.setCenterCoordinate(flatlang);
                 for (Place x : places)
                 {
-                    mapView.addMarker(new MarkerOptions().position(
+                    places_marker.add(mapView.addMarker(new MarkerOptions().position(
                             new LatLng(Double.parseDouble(x.getLatitude()),
-                                    Double.parseDouble(x.getLongitude()))).title(x.getName()));
+                                    Double.parseDouble(x.getLongitude()))).title(x.getName())));
                 }
             }
         } catch (IndexOutOfBoundsException e){
@@ -257,5 +271,95 @@ public class MapsActivity extends FragmentActivity {
         mapView.onSaveInstanceState(outState);
     }
 
+    /*private class GetUserPlacesAsyncTask extends AsyncTask<Place, Void, ArrayList<Place>> {
 
+        String server_output = null;
+        String temp_output = null;
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(MapsActivity.this, "",
+                    "loading places...", false, true);
+        }
+
+        @Override
+        protected ArrayList<Place> doInBackground(Place... arg0) {
+
+            ArrayList<Place> places = new ArrayList<>();
+            try
+            {
+
+                PlaceQueryBuilder qb = new PlaceQueryBuilder(selectedCity+"_users");
+                URL url = new URL(qb.buildPlacesGetURL());
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
+
+                if (conn.getResponseCode() != 200) {
+                    throw new RuntimeException("Failed : HTTP error code : "
+                            + conn.getResponseCode());
+                }
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        (conn.getInputStream())));
+
+                while ((temp_output = br.readLine()) != null) {
+                    server_output = temp_output;
+                }
+
+                // create a basic db list
+                String mongoarray = "{ artificial_basicdb_list: "+server_output+"}";
+                Object o = com.mongodb.util.JSON.parse(mongoarray);
+
+
+                DBObject dbObj = (DBObject) o;
+                BasicDBList places_list = (BasicDBList) dbObj.get("artificial_basicdb_list");
+
+                for (Object obj : places_list) {
+                    DBObject userObj = (DBObject) obj;
+
+                    Place temp = new Place();
+                    temp.setPlace_id(userObj.get("_id").toString());
+                    temp.setName(userObj.get("name").toString());
+                    temp.setLatitude(userObj.get("latitude").toString());
+                    temp.setLongitude(userObj.get("longitude").toString());
+                    temp.setFilter(userObj.get("filter").toString());
+                    temp.setImageURL(userObj.get("imageURL").toString());
+                    temp.setContent(userObj.get("content").toString());
+                    temp.setAverageRating(userObj.get("averageRating").toString());
+                    temp.setCount(userObj.get("count").toString());
+                    places.add(temp);
+
+                }
+                HelperMethods.saveObjectToCache("saved_" + selectedCity, places);
+            }catch (Exception e) {
+                e.getMessage();
+            }
+
+            return places;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Place> places) {
+            if(progressDialog!=null && progressDialog.isShowing()){
+                progressDialog.dismiss();}
+            users_places = places;
+
+            for(Marker m:places_marker)
+                mapView.removeMarker(m);
+
+            for (Place x : users_places)
+            {
+                users_places_marker.add(mapView.addMarker(new MarkerOptions().position(
+                        new LatLng(Double.parseDouble(x.getLatitude()),
+                                Double.parseDouble(x.getLongitude()))).title(x.getName())));
+            }
+
+            Toast.makeText(MapsActivity.this, "Explore Places", Toast.LENGTH_SHORT).show();
+            //change map places to explore places
+        }
+    }
+*/
 }
