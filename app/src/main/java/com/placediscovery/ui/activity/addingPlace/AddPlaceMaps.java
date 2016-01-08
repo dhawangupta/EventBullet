@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.annotations.Icon;
 import com.mapbox.mapboxsdk.annotations.IconFactory;
@@ -17,10 +18,12 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
 import com.placediscovery.Constants;
 import com.placediscovery.R;
+import com.placediscovery.ui.HelperClasses.MapInfoWindowAdapter;
 
 import static com.placediscovery.R.drawable.ic_add_location_black_24dp;
 
 public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollListener, View.OnClickListener {
+
 
     Marker dragMarker;
     AppCompatButton btnAddPlaceMaps;
@@ -34,6 +37,7 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place_maps);
         getPreIntents();
+
         btnAddPlaceMaps = (AppCompatButton) findViewById(R.id.btn_addPlaceMaps);
         btnAddPlaceMaps.setOnClickListener(this);
 
@@ -50,7 +54,7 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
         mapView.setZoomLevel(11);
         mapView.setTiltEnabled(true);
         mapView.setMyLocationEnabled(true);
-        mapView.setScrollEnabled(true);
+        mapView.setInfoWindowAdapter(new MapInfoWindowAdapter(AddPlaceMaps.this));
         mapView.setOnScrollListener(this);
         mapView.onCreate(savedInstanceState);
 
@@ -98,14 +102,18 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
         mDrawable = ContextCompat.getDrawable(this, ic_add_location_black_24dp);
 
         mIcon = iconFactory.fromDrawable(mDrawable);
+        Toast.makeText(this,"Hiya",Toast.LENGTH_LONG).show();
         dragMarker=mapView.addMarker(new MarkerOptions()
                         .position(new LatLng(selectedCityLatLng))
-                        .snippet("click to add a place")
-                        .icon(mIcon)
+                .icon(mIcon)
+
         );
+
         mapView.onStart();
 
     }
+
+
 
     @Override
     public void onResume() {
@@ -139,7 +147,11 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
     }
 
 
-
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
 
     /**
      * Called when the map is scrolled.
