@@ -3,10 +3,10 @@ package com.placediscovery.ui.activity.addingPlace;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
+import android.view.View;
 import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.annotations.Icon;
@@ -18,42 +18,30 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
 import com.placediscovery.Constants;
 import com.placediscovery.R;
-import android.support.v7.widget.AppCompatButton;
-import android.view.View;
+import com.placediscovery.ui.HelperClasses.MapInfoWindowAdapter;
 
+import static com.placediscovery.R.drawable.ic_add_location_black_24dp;
 
-import static com.placediscovery.R.drawable.ic_star;
+public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollListener, View.OnClickListener {
 
-public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollListener, MapView.OnInfoWindowClickListener {
 
     Marker dragMarker;
-    MapView mapView;
     AppCompatButton btnAddPlaceMaps;
-    LatLng userPlaceLatLng;
-    LatLng selectedCityLatLng;
     String selectedCity;
-    double lat,lon;
     Icon mIcon;
+    private MapView mapView;
+    private LatLng selectedCityLatLng;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place_maps);
-        selectedCityLatLng = getIntent().getExtras().getParcelable("selectedCityLatLng");
-        selectedCity = getIntent().getExtras().getString("selectedCity");
+        getPreIntents();
 
         btnAddPlaceMaps = (AppCompatButton) findViewById(R.id.btn_addPlaceMaps);
-        btnAddPlaceMaps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AddPlaceMaps.this, AddPlaceContent.class);
-                intent.putExtra("userPlaceLatLng", (Parcelable) userPlaceLatLng);
-                intent.putExtra("selectedCity", selectedCity);
-                startActivity(intent);
-            }
-        });
-        lat=getIntent().getDoubleExtra(Constants.selectedCityLat,0);
-        lon=getIntent().getDoubleExtra(Constants.selectedCityLon,0);
-        userPlaceLatLng =new LatLng(lat,lon);
+        btnAddPlaceMaps.setOnClickListener(this);
+
+
         setUpMapIfNeeded(savedInstanceState);
 
     }
@@ -62,17 +50,12 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
     private void setUpMapIfNeeded(Bundle savedInstanceState) {
         mapView = (MapView) findViewById(R.id.mapviewAddingPlace);
         mapView.setStyleUrl(Style.MAPBOX_STREETS);
-        mapView.setCenterCoordinate(new LatLng(userPlaceLatLng));
+        mapView.setCenterCoordinate(selectedCityLatLng);
         mapView.setZoomLevel(11);
         mapView.setTiltEnabled(true);
         mapView.setMyLocationEnabled(true);
-        mapView.addMarker(new MarkerOptions()
-                        .position(new LatLng(userPlaceLatLng))
-                        .snippet("click to add a place")
-        );
-        mapView.setScrollEnabled(true);
+        mapView.setInfoWindowAdapter(new MapInfoWindowAdapter(AddPlaceMaps.this));
         mapView.setOnScrollListener(this);
-        mapView.setOnInfoWindowClickListener(this);
         mapView.onCreate(savedInstanceState);
 
     }
@@ -116,17 +99,21 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
         super.onStart();
         IconFactory iconFactory = IconFactory.getInstance(this);
         Drawable mDrawable;
-        mDrawable = ContextCompat.getDrawable(this, ic_star);
+        mDrawable = ContextCompat.getDrawable(this, ic_add_location_black_24dp);
 
         mIcon = iconFactory.fromDrawable(mDrawable);
+        Toast.makeText(this,"Hiya",Toast.LENGTH_LONG).show();
         dragMarker=mapView.addMarker(new MarkerOptions()
                         .position(new LatLng(selectedCityLatLng))
-                        .snippet("click to add a place")
-                        .icon(mIcon)
+                .icon(mIcon)
+
         );
+
         mapView.onStart();
 
     }
+
+
 
     @Override
     public void onResume() {
@@ -160,7 +147,11 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
     }
 
 
-
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
 
     /**
      * Called when the map is scrolled.
@@ -169,6 +160,7 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
     public void onScroll() {
         if(dragMarker!=null)
         {
+
             mapView.removeMarker(dragMarker);
             dragMarker=null;
         }
@@ -178,21 +170,27 @@ public class AddPlaceMaps extends AppCompatActivity implements MapView.OnScrollL
                         .snippet("click to add a place")
                         .icon(mIcon)
         );
+
     }
 
+    private void getPreIntents()
+    {
+        selectedCityLatLng=new LatLng(getIntent().getDoubleExtra(Constants.Latitutude,0),getIntent().getDoubleExtra(Constants.Longitude,0));
+        selectedCity = getIntent().getExtras().getString("selectedCity");
+    }
+
+
     /**
-     * Called when the user clicks on an info window.
+     * Called when a view has been clicked.
      *
-     * @param marker The marker of the info window the user clicked on.
-     * @return If true the listener has consumed the event and the info window will not be closed.
+     * @param v The view that was clicked.
      */
     @Override
-    public boolean onMarkerClick(@NonNull Marker marker) {
-        Toast.makeText(this,"Hi",Toast.LENGTH_LONG).show();
-        Intent i = new Intent(AddPlaceMaps.this, AddPlaceContent.class);
-        i.putExtra(Constants.Latitutude, marker.getPosition().getLatitude()).putExtra(Constants.Longitude, marker.getPosition().getLongitude());
-        marker.remove();
-        startActivity(i);
-        return false;
+    public void onClick(View v) {
+        LatLng userPlaceLatLng =new LatLng(mapView.getCenterCoordinate());
+        Intent intent = new Intent(AddPlaceMaps.this, AddPlaceContent.class);
+        intent.putExtra(Constants.Latitutude,userPlaceLatLng.getLatitude()).putExtra(Constants.Longitude,userPlaceLatLng.getLongitude());
+        intent.putExtra("selectedCity", selectedCity);
+        startActivity(intent);
     }
 }

@@ -38,4 +38,5 @@ dependencies {
     }
     compile 'com.facebook.android:facebook-android-sdk:4.8.2'
     compile project(':library_imageslider')
+    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
 }

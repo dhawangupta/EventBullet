@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.MongoLabPlace.UpdatePlaceAsyncTask;
@@ -22,18 +24,15 @@ import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 
 public class ContentActivity extends AppCompatActivity implements
         BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
+    String selectedCity;
     private SliderLayout mDemoSlider;   //this is imageslider used
     private RatingBar ratingBar;
-    String selectedCity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

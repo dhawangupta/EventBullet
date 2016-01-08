@@ -12,6 +12,6 @@ public interface OnPrepareOptionsMenuLiveo {
      * @param position last position of the item that was clicked.
      * @param visible use to hide the menu when the navigation is open.
      */
-    public void onPrepareOptionsMenu(Menu menu, int position, boolean visible);
+    void onPrepareOptionsMenu(Menu menu, int position, boolean visible);
 
 }
