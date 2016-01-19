@@ -106,12 +106,20 @@ public class UserQueryBuilder {
 	 */
 	public String setUserData(User user) {
 		return String.format("{ \"$set\" : "
-						+ "{\"name\" : \"%s\", "
-						+ "\"email\" : \"%s\", "
-						+ "\"password\" : \"%s\", "
-						+ "\"savedplaces\" : \"%s\" }" + "}",
-				user.getName(),
-				user.getEmail(), user.getPassword(),
-				user.getSavedplaces());
+                        + "{\"name\" : \"%s\", "
+                        + "\"email\" : \"%s\", "
+                        + "\"password\" : \"%s\", "
+                        + "\"savedplaces\" : \"%s\" }" + "}",
+                user.getName(),
+                user.getEmail(), user.getPassword(),
+                user.getSavedplaces());
 	}
+
+	public String addNewRatingbyUser(String place_id, String rating){
+        return String.format("{\"$push\" : " +
+                        "{\"ratings\":" +
+                        "{\"place_id\":\"%s\",\"rating\":\"%s\"}" +
+                        "}}",
+                place_id, rating);
+    }
 }
