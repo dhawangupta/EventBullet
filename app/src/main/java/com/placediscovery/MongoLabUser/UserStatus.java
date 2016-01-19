@@ -1,5 +1,7 @@
 package com.placediscovery.MongoLabUser;
 
+import com.mongodb.BasicDBObject;
+
 /**
  * Created by MOHIT on 01-12-2015.
  */
@@ -13,6 +15,7 @@ public class UserStatus {
     public static String Email=null;
     public static String Password=null;
     public static String SavedPlaces=null;
+    public static BasicDBObject[] Ratings=null;
 
     public static boolean isLoginStatus() {
         return LoginStatus;
@@ -60,5 +63,13 @@ public class UserStatus {
 
     public static void setSavedPlaces(String savedPlaces) {
         SavedPlaces = savedPlaces;
+    }
+
+    public static BasicDBObject[] getRatings() {
+        return Ratings;
+    }
+
+    public static void setRatings(BasicDBObject[] ratings) {
+        Ratings = ratings;
     }
 }
