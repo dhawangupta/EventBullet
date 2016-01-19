@@ -93,9 +93,11 @@ public class UserQueryBuilder {
 	public String createUser(User user)
 	{
 		return String
-		.format("{\"name\": \"%s\", "
-				+ "\"email\": \"%s\", \"password\": \"%s\" "
-				+ "\"savedplaces\":\"\"}",
+		.format("{\"name\": \"%s\"," +
+                        "\"email\": \"%s\", " +
+                        "\"password\": \"%s\"" +
+                        "\"savedplaces\":\"\", " +
+                        "\"ratings\":[]}",
 				user.name, user.email, user.password);
 	}
 
@@ -105,11 +107,12 @@ public class UserQueryBuilder {
 	 * @return
 	 */
 	public String setUserData(User user) {
-		return String.format("{ \"$set\" : "
-                        + "{\"name\" : \"%s\", "
-                        + "\"email\" : \"%s\", "
-                        + "\"password\" : \"%s\", "
-                        + "\"savedplaces\" : \"%s\" }" + "}",
+		return String.format("{ \"$set\" : " +
+                        "{\"name\" : \"%s\", " +
+                        "\"email\" : \"%s\", " +
+                        "\"password\" : \"%s\", " +
+                        "\"savedplaces\" : \"%s\"}" +
+                        "}",
                 user.getName(),
                 user.getEmail(), user.getPassword(),
                 user.getSavedplaces());
@@ -119,7 +122,8 @@ public class UserQueryBuilder {
         return String.format("{\"$push\" : " +
                         "{\"ratings\":" +
                         "{\"place_id\":\"%s\",\"rating\":\"%s\"}" +
-                        "}}",
+                        "}" +
+                        "}",
                 place_id, rating);
     }
 }

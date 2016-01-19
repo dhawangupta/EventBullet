@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.MongoLabUser.UserQueryBuilder;
@@ -36,9 +37,7 @@ public class
     protected Button _loginButton;
     protected TextView _signupLink;
 
-    protected User loggedInUser;
     private ProgressDialog progressDialog;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -154,7 +153,7 @@ public class
         @Override
         protected ArrayList<User> doInBackground(User... arg0) {
 
-            ArrayList<User> users = new ArrayList<>();
+            ArrayList<User> users = new ArrayList<>();  //list of all the users in db
             try
             {
 
@@ -183,20 +182,24 @@ public class
 
 
                 DBObject dbObj = (DBObject) o;
-                BasicDBList contacts = (BasicDBList) dbObj.get("artificial_basicdb_list");
+                BasicDBList usersList = (BasicDBList) dbObj.get("artificial_basicdb_list");
 
-                for (Object obj : contacts) {
+                for (Object obj : usersList) {
                     DBObject userObj = (DBObject) obj;
 
                     User temp = new User();
+
                     temp.setUser_id(userObj.get("_id").toString());
                     temp.setName(userObj.get("name").toString());
                     temp.setEmail(userObj.get("email").toString());
                     temp.setPassword(userObj.get("password").toString());
                     temp.setSavedplaces(userObj.get("savedplaces").toString());
 
-                    users.add(temp);
+                    BasicDBList ratingsList = (BasicDBList) userObj.get("ratings");
+                    BasicDBObject[] ratingsArr = ratingsList.toArray(new BasicDBObject[0]);
+                    temp.setRatings(ratingsArr);
 
+                    users.add(temp);
                 }
 
             }catch (Exception e) {
@@ -215,14 +218,13 @@ public class
 
                 if(x.email.equals(email) && x.password.equals(password)) {
 
-                    loggedInUser = x;
-                    UserStatus userStatus = new UserStatus();
                     UserStatus.setLoginStatus(true);
-                    UserStatus.setUser_Id(x.user_id);
-                    UserStatus.setName(x.name);
-                    UserStatus.setEmail(x.email);
-                    UserStatus.setPassword(x.password);
-                    UserStatus.setSavedPlaces(x.savedplaces);
+                    UserStatus.setUser_Id(x.getUser_id());
+                    UserStatus.setName(x.getName());
+                    UserStatus.setEmail(x.getEmail());
+                    UserStatus.setPassword(x.getPassword());
+                    UserStatus.setSavedPlaces(x.getSavedplaces());
+                    UserStatus.setRatings(x.getRatings());
                     Intent moreDetailsIntent = new Intent(LoginActivity.this, HomePage.class);
                     Toast.makeText(getApplicationContext(),"Welcome " + x.name+ ", You are now logged in.",Toast.LENGTH_SHORT).show();
                     startActivity(moreDetailsIntent);
@@ -235,4 +237,6 @@ public class
         }
 
 
-    }}
+    }
+
+}

@@ -1,6 +1,11 @@
 package com.placediscovery.MongoLabUser;
 
+
+import com.mongodb.BasicDBObject;
+import com.placediscovery.ui.activity.LoginActivity;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Dhawan Gupta on 04-10-2015.
@@ -12,6 +17,7 @@ public class User implements Serializable{
     public String email;
     public String password;
     public String savedplaces="";
+    public BasicDBObject[] ratings;
 
     public User(){}
 
@@ -61,4 +67,13 @@ public class User implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public BasicDBObject[] getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(BasicDBObject[] ratings) {
+        this.ratings = ratings;
+    }
 }
+
