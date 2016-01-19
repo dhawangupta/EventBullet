@@ -61,18 +61,18 @@ public class GetPlacesAsyncTask extends AsyncTask<Place, Void, ArrayList<Place>>
 			BasicDBList places_list = (BasicDBList) dbObj.get("artificial_basicdb_list");
 
 			for (Object obj : places_list) {
-				DBObject userObj = (DBObject) obj;
+				DBObject placeObj = (DBObject) obj;
 
 				Place temp = new Place();
-				temp.setPlace_id(userObj.get("_id").toString());
-				temp.setName(userObj.get("name").toString());
-				temp.setLatitude(userObj.get("latitude").toString());
-				temp.setLongitude(userObj.get("longitude").toString());
-				temp.setFilter(userObj.get("filter").toString());
-				temp.setImageURL(userObj.get("imageURL").toString());
-				temp.setContent(userObj.get("content").toString());
-				temp.setAverageRating(userObj.get("averageRating").toString());
-				temp.setCount(userObj.get("count").toString());
+				temp.setPlace_id(placeObj.get("_id").toString());
+				temp.setName(placeObj.get("name").toString());
+				temp.setLatitude(placeObj.get("latitude").toString());
+				temp.setLongitude(placeObj.get("longitude").toString());
+				temp.setFilter(placeObj.get("filter").toString());
+				temp.setImageURL(placeObj.get("imageURL").toString());
+				temp.setContent(placeObj.get("content").toString());
+				temp.setAverageRating(placeObj.get("averageRating").toString());
+				temp.setCount(placeObj.get("count").toString());
 				places.add(temp);
 
 			}
