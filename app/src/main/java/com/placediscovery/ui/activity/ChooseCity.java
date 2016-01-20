@@ -5,6 +5,7 @@ package com.placediscovery.ui.activity;
  */
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -121,7 +122,14 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = ProgressDialog.show(ChooseCity.this, "",
-                    "loading places...", false, true);
+                    "loading places...", false, true,               //indeterminate:false, cancelable:true
+                    new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            GetPlacesAsyncTaskProgressDialog.this.cancel(true);
+                        }
+                    });
+            progressDialog.setCanceledOnTouchOutside(false);
         }
 
         @Override
