@@ -79,35 +79,20 @@ public class
 
         _loginButton.setEnabled(false);
 
-
-
-        // TODO: Implement your own authentication logic here.
-
-
         GetUserAsyncTask task = new GetUserAsyncTask();
         task.execute();
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
-            if (resultCode == RESULT_OK) {
-                // TODO: Implement successful signup logic here
-                //  Toast.makeText(getApplicationContext(), "Welcome" + loggedInUser.name, Toast.LENGTH_LONG).show();
-                // By default we just finish the Activity and log them in automatically
-                //this.finish();
-            }
-        }
+    public void onLoginSuccess(User u) {
+        UserStatus.setUserStatus(u);
+        Intent moreDetailsIntent = new Intent(LoginActivity.this, HomePage.class);
+        Toast.makeText(getApplicationContext(), "Welcome " + u.name +
+                ", You are now logged in.", Toast.LENGTH_SHORT).show();
+        startActivity(moreDetailsIntent);
     }
 
-
-
-
-
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
+        Toast.makeText(getBaseContext(), "Login failed, Please try again!!", Toast.LENGTH_LONG).show();
         _loginButton.setEnabled(true);
     }
 
@@ -131,8 +116,6 @@ public class
             _passwordText.setError(null);
         }
 
-
-
         if(!HelperMethods.isInternetAvailable(this))
             valid = false;
         return valid;
@@ -147,8 +130,7 @@ public class
             super.onPreExecute();
 
             progressDialog = ProgressDialog.show(LoginActivity.this, "",
-                    "signing in...", true);
-
+                    "signing in...", false);
         }
         @Override
         protected ArrayList<User> doInBackground(User... arg0) {
@@ -210,33 +192,28 @@ public class
         }
 
         protected void onPostExecute(ArrayList<User> returnValues) {
+            if(progressDialog!=null && progressDialog.isShowing()){
+                progressDialog.dismiss();}
 
-            String email = _emailText.getText().toString();
-            String password = _passwordText.getText().toString();
-            progressDialog.dismiss();
-            for(User x: returnValues){
-
-                if(x.email.equals(email) && x.password.equals(password)) {
-
-                    UserStatus.setLoginStatus(true);
-                    UserStatus.setUser_Id(x.getUser_id());
-                    UserStatus.setName(x.getName());
-                    UserStatus.setEmail(x.getEmail());
-                    UserStatus.setPassword(x.getPassword());
-                    UserStatus.setSavedPlaces(x.getSavedplaces());
-                    UserStatus.setRatings(x.getRatings());
-                    Intent moreDetailsIntent = new Intent(LoginActivity.this, HomePage.class);
-                    Toast.makeText(getApplicationContext(),"Welcome " + x.name+ ", You are now logged in.",Toast.LENGTH_SHORT).show();
-                    startActivity(moreDetailsIntent);
-                    break;
+            if (returnValues.size() != 0) {
+                String email = _emailText.getText().toString();
+                String password = _passwordText.getText().toString();
+                progressDialog.dismiss();
+                for (User x : returnValues) {
+                    if (x.email.equals(email) && x.password.equals(password)) {
+                        onLoginSuccess(x);
+                        break;
+                    }
                 }
-                //  Toast.makeText(getApplicationContext(),"Incorrent Username or Password",Toast.LENGTH_SHORT).show();
+
+                if(!UserStatus.LoginStatus)
+                    Toast.makeText(getApplicationContext(),"Incorrent Username or Password",Toast.LENGTH_SHORT).show();
+
+                _loginButton.setEnabled(true);
+            } else{
+                onLoginFailed();
             }
-
-            _loginButton.setEnabled(true);
         }
-
-
     }
 
 }

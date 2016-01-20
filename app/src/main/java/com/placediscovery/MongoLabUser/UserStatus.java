@@ -72,4 +72,13 @@ public class UserStatus {
     public static void setRatings(BasicDBObject[] ratings) {
         Ratings = ratings;
     }
+
+    public static void setUserStatus(User user) {
+        User_Id = user.getUser_id();
+        Name = user.getName();
+        Email = user.getEmail();
+        Password = user.getPassword();
+        SavedPlaces = user.getSavedplaces();
+        Ratings = user.getRatings();
+    }
 }
