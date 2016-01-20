@@ -194,9 +194,14 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
             if(progressDialog!=null && progressDialog.isShowing()){
                 progressDialog.dismiss();}
 
-            intent.putExtra("places",places);
-            intent.putExtra("selectedCity",selectedCity);
-            startActivity(intent);
+            if(places.size()!=0) {
+                intent.putExtra("places", places);
+                intent.putExtra("selectedCity", selectedCity);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getApplicationContext(),"Something went wrong, please try again!!",
+                        Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
