@@ -13,6 +13,6 @@
         android:id="@+id/menu_add"
         android:icon="@mipmap/ic_user"
         app:showAsAction="ifRoom"
-        android:title="@string/add"/>
+        android:title="@string/login"/>
 
 </menu>

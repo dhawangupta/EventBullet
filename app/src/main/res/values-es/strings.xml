@@ -14,11 +14,11 @@
     <string name="spam">Spam</string>
     <string name="settings">Configuración</string>
 
-    <string name="add">Agregar</string>
+    <string name="login">Agregar</string>
     <string name="search">Buscar</string>
 
-    <string name="important">Importante</string>
-    <string name="documents">Documentos</string>
+    <string name="second">Importante</string>
+    <string name="third">Documentos</string>
 
     <!-- Toast -->
     <string name="open_user_profile">Abrir perfil de usuario</string>
