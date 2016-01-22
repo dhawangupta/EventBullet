@@ -78,6 +78,7 @@ public class ContentActivity extends AppCompatActivity implements
 
         TextView t1 = (TextView)findViewById(R.id.place_name);
         TextView t2 = (TextView)findViewById(R.id.currentratingtext);
+        TextView countText = (TextView)findViewById(R.id.count);
         TextView t3 = (TextView)findViewById(R.id.place_content);
         LinearLayout timingsLayout = (LinearLayout)findViewById(R.id.timings);
         TextView timingsValue = (TextView)findViewById(R.id.timingsValue);
@@ -91,6 +92,8 @@ public class ContentActivity extends AppCompatActivity implements
         t1.setText(place_name);
         t2.setText(currentRating+"/5");
         t3.setText(Html.fromHtml(place_content));
+        countText.setText("("+currentCount+")");
+
         if(timings.equals(""))
             timingsLayout.setVisibility(LinearLayout.GONE);
         else
