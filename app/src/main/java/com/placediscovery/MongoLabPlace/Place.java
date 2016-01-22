@@ -13,6 +13,10 @@ public class Place implements Serializable{
 	public String content="";
 	public String averageRating="";
 	public String count="";			//this is count of ratings given by user
+	public String timings="";
+	public String ticket="";
+	public String bestTime="";
+	public String toDo="";
 
 	public String getPlace_id() {
 		return place_id;
@@ -85,4 +89,36 @@ public class Place implements Serializable{
     public void setCount(String count) {
         this.count = count;
     }
+
+	public String getTimings() {
+		return timings;
+	}
+
+	public void setTimings(String timings) {
+		this.timings = timings;
+	}
+
+	public String getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
+
+	public String getBestTime() {
+		return bestTime;
+	}
+
+	public void setBestTime(String bestTime) {
+		this.bestTime = bestTime;
+	}
+
+	public String getToDo() {
+		return toDo;
+	}
+
+	public void setToDo(String toDo) {
+		this.toDo = toDo;
+	}
 }
