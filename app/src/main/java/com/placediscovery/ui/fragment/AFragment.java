@@ -62,7 +62,7 @@ public class AFragment extends Fragment {
         switch (item.getItemId()) {
 
             case R.id.menu_add:
-                Toast.makeText(getActivity(), R.string.add, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.login, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 break;
 

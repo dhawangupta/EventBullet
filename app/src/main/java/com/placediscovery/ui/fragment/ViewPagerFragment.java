@@ -28,9 +28,9 @@ public class ViewPagerFragment extends Fragment{
     }
 
     private void createTabPagerItem(){
-        mTabs.add(new TabPagerItem(getString(R.string.send), MainFragment.newInstance(getString(R.string.send))));
-        mTabs.add(new TabPagerItem(getString(R.string.important), MainFragment.newInstance(getString(R.string.important))));
-        mTabs.add(new TabPagerItem(getString(R.string.documents), MainFragment.newInstance(getString(R.string.documents))));
+        mTabs.add(new TabPagerItem(getString(R.string.first), MainFragment.newInstance(getString(R.string.first))));
+        mTabs.add(new TabPagerItem(getString(R.string.second), MainFragment.newInstance(getString(R.string.second))));
+        mTabs.add(new TabPagerItem(getString(R.string.third), MainFragment.newInstance(getString(R.string.third))));
     }
 
     @Override
