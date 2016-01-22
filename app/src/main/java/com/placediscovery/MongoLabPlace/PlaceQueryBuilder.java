@@ -97,16 +97,22 @@ public class PlaceQueryBuilder {
 	 */
 	public String createPlace(Place place)
 	{
-		return String.format("{\"name\": \"%s\", "
-                            + "\"latitude\": \"%s\", \"longitude\": \"%s\", "
-                            + "\"filter\" : \"%s\", "
-                            + "\"imageURL\" : \"%s\", "
-                            + "\"content\" : \"%s\", "
-                            + "\"averageRating\" : \"%s\", "
-                            + "\"count\" : \"%s\" }" + "}",
-                place.getName(),
-                place.getLatitude(), place.getLongitude(), place.getFilter(), place.getImageURL(),
-                place.getContent(), place.getAverageRating(), place.getCount());
+		return String.format("{\"name\": \"%s\", " +
+						"\"latitude\": \"%s\", " +
+						"\"longitude\": \"%s\", " +
+						"\"filter\" : \"%s\", " +
+						"\"imageURL\" : \"%s\", " +
+						"\"content\" : \"%s\", " +
+						"\"averageRating\" : \"%s\", " +
+						"\"count\" : \"%s\"," +
+						"\"timings\":\"%s\"," +
+						"\"ticket\":\"%s\"," +
+						"\"bestTime\":\"%s\"," +
+						"\"toDo\":\"%s\"," +
+						" } }",
+                place.getName(),place.getLatitude(), place.getLongitude(), place.getFilter(),
+				place.getImageURL(), place.getContent(), place.getAverageRating(), place.getCount(),
+				place.getTimings(),place.getTicket(),place.getBestTime(),place.getToDo());
 	}
 
     /**
@@ -115,17 +121,22 @@ public class PlaceQueryBuilder {
      * @return
      */
     public String setPlaceData(Place place) {
-        return String.format("{ \"$set\" : "
-                        + "{\"name\" : \"%s\", "
-                        + "\"latitude\" : \"%s\", "
-                        + "\"longitude\" : \"%s\", "
-                        + "\"filter\" : \"%s\", "
-                        + "\"imageURL\" : \"%s\", "
-                        + "\"content\" : \"%s\", "
-                        + "\"averageRating\" : \"%s\", "
-                        + "\"count\" : \"%s\" }" + "}",
-                place.getName(),
-                place.getLatitude(), place.getLongitude(), place.getFilter(), place.getImageURL(),
-                place.getContent(), place.getAverageRating(), place.getCount());
+        return String.format("{ \"$set\" : " +
+						"{\"name\": \"%s\", " +
+						"\"latitude\": \"%s\", " +
+						"\"longitude\": \"%s\", " +
+						"\"filter\" : \"%s\", " +
+						"\"imageURL\" : \"%s\", " +
+						"\"content\" : \"%s\", " +
+						"\"averageRating\" : \"%s\", " +
+						"\"count\" : \"%s\"," +
+						"\"timings\":\"%s\"," +
+						"\"ticket\":\"%s\"," +
+						"\"bestTime\":\"%s\"," +
+						"\"toDo\":\"%s\"," +
+						" } }",
+                place.getName(),place.getLatitude(), place.getLongitude(), place.getFilter(),
+				place.getImageURL(), place.getContent(), place.getAverageRating(), place.getCount(),
+				place.getTimings(),place.getTicket(),place.getBestTime(),place.getToDo());
     }
 }

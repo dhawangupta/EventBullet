@@ -178,6 +178,10 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
                     temp.setContent(userObj.get("content").toString());
                     temp.setAverageRating(userObj.get("averageRating").toString());
                     temp.setCount(userObj.get("count").toString());
+                    temp.setTimings(userObj.get("timings").toString());
+                    temp.setTicket(userObj.get("ticket").toString());
+                    temp.setBestTime(userObj.get("bestTime").toString());
+                    temp.setToDo(userObj.get("toDo").toString());
                     places.add(temp);
 
                 }

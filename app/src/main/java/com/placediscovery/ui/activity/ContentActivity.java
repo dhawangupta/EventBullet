@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,11 +70,46 @@ public class ContentActivity extends AppCompatActivity implements
         String image_url = selectedPlace.getImageURL();
         final double currentRating = Double.parseDouble(selectedPlace.getAverageRating());
         final int currentCount = Integer.parseInt(selectedPlace.getCount());
+        String timings = selectedPlace.getTimings();
+        String ticket = selectedPlace.getTicket();
+        String bestTime = selectedPlace.getBestTime();
+        String toDo = selectedPlace.getToDo();
+
 
         TextView t1 = (TextView)findViewById(R.id.place_name);
-        TextView t2 = (TextView)findViewById(R.id.place_content);
+        TextView t2 = (TextView)findViewById(R.id.currentratingtext);
+        TextView t3 = (TextView)findViewById(R.id.place_content);
+        LinearLayout timingsLayout = (LinearLayout)findViewById(R.id.timings);
+        TextView timingsValue = (TextView)findViewById(R.id.timingsValue);
+        LinearLayout ticketLayout = (LinearLayout)findViewById(R.id.ticket);
+        TextView ticketValue = (TextView)findViewById(R.id.ticketValue);
+        LinearLayout bestTimeLayout = (LinearLayout)findViewById(R.id.bestTime);
+        TextView bestTimeValue = (TextView)findViewById(R.id.bestTimeValue);
+        LinearLayout toDoLayout = (LinearLayout)findViewById(R.id.toDo);
+        TextView toDoValue = (TextView)findViewById(R.id.toDoValue);
+
         t1.setText(place_name);
-        t2.setText(Html.fromHtml(place_content));
+        t2.setText(currentRating+"/5");
+        t3.setText(Html.fromHtml(place_content));
+        if(timings.equals(""))
+            timingsLayout.setVisibility(LinearLayout.GONE);
+        else
+            timingsValue.setText(" "+timings);
+
+        if(ticket.equals(""))
+            ticketLayout.setVisibility(LinearLayout.GONE);
+        else
+            ticketValue.setText(" "+ticket);
+
+        if(bestTime.equals(""))
+            bestTimeLayout.setVisibility(LinearLayout.GONE);
+        else
+            bestTimeValue.setText(" "+bestTime);
+
+        if(toDo.equals(""))
+            toDoLayout.setVisibility(LinearLayout.GONE);
+        else
+            toDoValue.setText(" "+toDo);
 
         String[] image_urls = image_url.split(",");
 
@@ -121,35 +157,35 @@ public class ContentActivity extends AppCompatActivity implements
         setSupportActionBar(topToolBar);
         */
 
-        ratingBar = (RatingBar) findViewById(R.id.ratingbar);
-
-        /*
-        * This is the listener for rating bar, edit it to change functionality
-        * */
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-
-                //TODO: add for rating by user and also change to suitable UI for Rating
-                if (UserStatus.isLoginStatus()) {
-                    int newCount = currentCount + 1;
-                    double newRating = (currentRating * currentCount + rating) / newCount;
-                    selectedPlace.setCount(String.valueOf(newCount));
-                    selectedPlace.setAverageRating(String.valueOf(newRating));
-
-                    UpdatePlaceAsyncTask tsk = new UpdatePlaceAsyncTask(selectedCity);
-                    tsk.execute(selectedPlace);
-
-                    UpdateUserRatingAsyncTask task = new UpdateUserRatingAsyncTask();
-                    task.execute(loggedInUser,selectedPlace.getPlace_id(),Float.toString(rating));
-
-                    Toast.makeText(ContentActivity.this, "New Rating: " + rating,
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(ContentActivity.this, "Please Login", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        ratingBar = (RatingBar) findViewById(R.id.ratingbar);
+//
+//        /*
+//        * This is the listener for rating bar, edit it to change functionality
+//        * */
+//        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//            @Override
+//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+//
+//                //TODO: add for rating by user and also change to suitable UI for Rating
+//                if (UserStatus.isLoginStatus()) {
+//                    int newCount = currentCount + 1;
+//                    double newRating = (currentRating * currentCount + rating) / newCount;
+//                    selectedPlace.setCount(String.valueOf(newCount));
+//                    selectedPlace.setAverageRating(String.valueOf(newRating));
+//
+//                    UpdatePlaceAsyncTask tsk = new UpdatePlaceAsyncTask(selectedCity);
+//                    tsk.execute(selectedPlace);
+//
+//                    UpdateUserRatingAsyncTask task = new UpdateUserRatingAsyncTask();
+//                    task.execute(loggedInUser,selectedPlace.getPlace_id(),Float.toString(rating));
+//
+//                    Toast.makeText(ContentActivity.this, "New Rating: " + rating,
+//                            Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(ContentActivity.this, "Please Login", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +208,8 @@ public class ContentActivity extends AppCompatActivity implements
             }
 
         });
+
+
 
     }
 
