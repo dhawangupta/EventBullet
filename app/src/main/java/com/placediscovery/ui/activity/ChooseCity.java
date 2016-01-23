@@ -59,7 +59,7 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Add Place");  //title for the toolbar
+        getSupportActionBar().setTitle(R.string.choose_city);  //title for the toolbar
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
