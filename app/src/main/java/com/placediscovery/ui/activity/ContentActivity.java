@@ -1,11 +1,15 @@
 package com.placediscovery.ui.activity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -40,13 +44,14 @@ public class ContentActivity extends AppCompatActivity implements
     private SliderLayout mDemoSlider;   //this is imageslider used
     private RatingBar ratingBar;
     User loggedInUser;
+    float userRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
 
-        UserStatus userStatus = new UserStatus();
+        final UserStatus userStatus = new UserStatus();
         loggedInUser = new User(userStatus);
 
         mDemoSlider = (SliderLayout)findViewById(R.id.contentPageImageSlider);
@@ -79,6 +84,7 @@ public class ContentActivity extends AppCompatActivity implements
         TextView t1 = (TextView)findViewById(R.id.place_name);
         TextView t2 = (TextView)findViewById(R.id.currentratingtext);
         TextView countText = (TextView)findViewById(R.id.count);
+        final TextView rateThis = (TextView)findViewById(R.id.ratethis);
         TextView t3 = (TextView)findViewById(R.id.place_content);
         LinearLayout timingsLayout = (LinearLayout)findViewById(R.id.timings);
         TextView timingsValue = (TextView)findViewById(R.id.timingsValue);
@@ -114,6 +120,58 @@ public class ContentActivity extends AppCompatActivity implements
         else
             toDoValue.setText(" "+toDo);
 
+
+
+        rateThis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (UserStatus.isLoginStatus()) {
+                    Dialog ratingDialog = new Dialog(ContentActivity.this);
+                    ratingDialog.setContentView(R.layout.dialog_ratingplace);
+                    ratingDialog.setCancelable(true);
+
+                    ratingBar = (RatingBar)ratingDialog.findViewById(R.id.ratingbar);
+                    /*
+                    * This is the listener for rating bar, edit it to change functionality
+                    * */
+                    ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                        @Override
+                        public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+
+                            //TODO: add for rating by user and also change to suitable UI for Rating
+                            userRating = rating;
+                            int newCount = currentCount + 1;
+                            double newRating = (currentRating * currentCount + rating) / newCount;
+                            selectedPlace.setCount(String.valueOf(newCount));
+                            selectedPlace.setAverageRating(String.valueOf(newRating));
+
+                            Toast.makeText(ContentActivity.this, "New Rating: " + rating,
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
+                    Button submitBtn = (Button)ratingDialog.findViewById(R.id.rating_dialog_button);
+                    submitBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            UpdatePlaceAsyncTask tsk = new UpdatePlaceAsyncTask(selectedCity);
+                            tsk.execute(selectedPlace);
+
+                            UpdateUserRatingAsyncTask task = new UpdateUserRatingAsyncTask();
+                            task.execute(loggedInUser,selectedPlace.getPlace_id(),Float.toString(userRating));
+                        }
+                    });
+
+                    ratingDialog.show();
+
+                } else {
+                    Toast.makeText(ContentActivity.this, "Please Login", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
         String[] image_urls = image_url.split(",");
 
         if(image_urls.length<=1) {
@@ -159,36 +217,6 @@ public class ContentActivity extends AppCompatActivity implements
         Toolbar topToolBar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(topToolBar);
         */
-
-//        ratingBar = (RatingBar) findViewById(R.id.ratingbar);
-//
-//        /*
-//        * This is the listener for rating bar, edit it to change functionality
-//        * */
-//        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-//            @Override
-//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-//
-//                //TODO: add for rating by user and also change to suitable UI for Rating
-//                if (UserStatus.isLoginStatus()) {
-//                    int newCount = currentCount + 1;
-//                    double newRating = (currentRating * currentCount + rating) / newCount;
-//                    selectedPlace.setCount(String.valueOf(newCount));
-//                    selectedPlace.setAverageRating(String.valueOf(newRating));
-//
-//                    UpdatePlaceAsyncTask tsk = new UpdatePlaceAsyncTask(selectedCity);
-//                    tsk.execute(selectedPlace);
-//
-//                    UpdateUserRatingAsyncTask task = new UpdateUserRatingAsyncTask();
-//                    task.execute(loggedInUser,selectedPlace.getPlace_id(),Float.toString(rating));
-//
-//                    Toast.makeText(ContentActivity.this, "New Rating: " + rating,
-//                            Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(ContentActivity.this, "Please Login", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
 
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override

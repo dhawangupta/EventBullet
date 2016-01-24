@@ -74,6 +74,7 @@ public class UserStatus {
     }
 
     public static void setUserStatus(User user) {
+        LoginStatus=true;
         User_Id = user.getUser_id();
         Name = user.getName();
         Email = user.getEmail();
