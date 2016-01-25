@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.MongoLabPlace.PlaceQueryBuilder;
@@ -166,22 +167,32 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
                 BasicDBList places_list = (BasicDBList) dbObj.get("artificial_basicdb_list");
 
                 for (Object obj : places_list) {
-                    DBObject userObj = (DBObject) obj;
+                    DBObject placeObj = (DBObject) obj;
 
                     Place temp = new Place();
-                    temp.setPlace_id(userObj.get("_id").toString());
-                    temp.setName(userObj.get("name").toString());
-                    temp.setLatitude(userObj.get("latitude").toString());
-                    temp.setLongitude(userObj.get("longitude").toString());
-                    temp.setFilter(userObj.get("filter").toString());
-                    temp.setImageURL(userObj.get("imageURL").toString());
-                    temp.setContent(userObj.get("content").toString());
-                    temp.setAverageRating(userObj.get("averageRating").toString());
-                    temp.setCount(userObj.get("count").toString());
-                    temp.setTimings(userObj.get("timings").toString());
-                    temp.setTicket(userObj.get("ticket").toString());
-                    temp.setBestTime(userObj.get("bestTime").toString());
-                    temp.setToDo(userObj.get("toDo").toString());
+                    temp.setPlace_id(placeObj.get("_id").toString());
+                    temp.setName(placeObj.get("name").toString());
+                    temp.setLatitude(placeObj.get("latitude").toString());
+                    temp.setLongitude(placeObj.get("longitude").toString());
+                    temp.setFilter(placeObj.get("filter").toString());
+                    temp.setImageURL(placeObj.get("imageURL").toString());
+                    temp.setContent(placeObj.get("content").toString());
+                    temp.setAverageRating(placeObj.get("averageRating").toString());
+                    temp.setCount(placeObj.get("count").toString());
+                    temp.setTimings(placeObj.get("timings").toString());
+                    temp.setTicket(placeObj.get("ticket").toString());
+                    temp.setBestTime(placeObj.get("bestTime").toString());
+                    try {
+                        temp.setToDo(placeObj.get("toDo").toString());
+                    }catch (Exception ex){
+                        temp.setToDo(placeObj.get("toDO").toString());
+                    }
+                    try {
+                        BasicDBList reviewsList = (BasicDBList) placeObj.get("reviews");
+                        BasicDBObject[] reviewsArr = reviewsList.toArray(new BasicDBObject[0]);
+                        temp.setReviews(reviewsArr);
+                    } catch (Exception ex){}
+
                     places.add(temp);
 
                 }
