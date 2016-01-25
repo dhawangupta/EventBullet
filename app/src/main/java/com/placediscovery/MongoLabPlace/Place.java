@@ -1,5 +1,8 @@
 package com.placediscovery.MongoLabPlace;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
 import java.io.Serializable;
 
 public class Place implements Serializable{
@@ -17,6 +20,7 @@ public class Place implements Serializable{
 	public String ticket="";
 	public String bestTime="";
 	public String toDo="";
+	public BasicDBObject[] reviews;
 
 	public String getPlace_id() {
 		return place_id;
@@ -121,4 +125,12 @@ public class Place implements Serializable{
 	public void setToDo(String toDo) {
 		this.toDo = toDo;
 	}
+
+    public BasicDBObject[] getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(BasicDBObject[] reviews) {
+        this.reviews = reviews;
+    }
 }

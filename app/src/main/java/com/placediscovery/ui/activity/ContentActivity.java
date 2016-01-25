@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -94,6 +95,8 @@ public class ContentActivity extends AppCompatActivity implements
         TextView bestTimeValue = (TextView)findViewById(R.id.bestTimeValue);
         LinearLayout toDoLayout = (LinearLayout)findViewById(R.id.toDo);
         TextView toDoValue = (TextView)findViewById(R.id.toDoValue);
+        final EditText reviewField = (EditText)findViewById(R.id.reviewTextField);
+        Button reviewSubmitBtn = (Button)findViewById(R.id.reviewBtn);
 
         t1.setText(place_name);
         t2.setText(currentRating+"/5");
@@ -240,11 +243,26 @@ public class ContentActivity extends AppCompatActivity implements
 
         });
 
-
+        reviewSubmitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(UserStatus.LoginStatus) {
+                    String review = reviewField.getText().toString();
+                    UpdatePlaceReviewAsyncTask task = new UpdatePlaceReviewAsyncTask();
+                    task.execute(selectedPlace, loggedInUser.getUser_id(), review);
+                    reviewField.setHint("Leave a one line tip...");
+                } else
+                    Toast.makeText(ContentActivity.this, "Please login first", Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
     class UpdateUserRatingAsyncTask extends AsyncTask<Object, Void, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
 
         @Override
         protected Boolean doInBackground(Object... params) {
@@ -278,8 +296,61 @@ public class ContentActivity extends AppCompatActivity implements
 
         }
 
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if(aBoolean){
+                Toast.makeText(ContentActivity.this, "Rating submitted successfully", Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(ContentActivity.this, "rating failed to submit!!", Toast.LENGTH_LONG).show();
+        }
     }
 
+    class UpdatePlaceReviewAsyncTask extends AsyncTask<Object, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(Object... params) {
+            Place place = (Place) params[0];
+            String user_id = (String) params[1];
+            String review = (String) params[2];
+
+            try {
+
+                PlaceQueryBuilder qb = new PlaceQueryBuilder(selectedCity);
+                URL url = new URL(qb.buildPlacesUpdateURL(place.getPlace_id()));
+                HttpURLConnection connection = (HttpURLConnection) url
+                        .openConnection();
+                connection.setRequestMethod("PUT");
+                connection.setDoOutput(true);
+                connection.setRequestProperty("Content-Type",
+                        "application/json");
+                connection.setRequestProperty("Accept", "application/json");
+
+                OutputStreamWriter osw = new OutputStreamWriter(
+                        connection.getOutputStream());
+
+                osw.write(qb.addReview(user_id,review));
+                osw.flush();
+                osw.close();
+                return connection.getResponseCode() < 205;
+            } catch (Exception e) {
+                e.getMessage();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if(aBoolean){
+                Toast.makeText(ContentActivity.this, "Review submitted successfully", Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(ContentActivity.this, "review failed to submit!!", Toast.LENGTH_LONG).show();
+        }
+    }
 
 
     @Override

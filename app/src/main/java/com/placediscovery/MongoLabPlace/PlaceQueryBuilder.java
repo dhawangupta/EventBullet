@@ -109,7 +109,8 @@ public class PlaceQueryBuilder {
 						"\"ticket\":\"%s\"," +
 						"\"bestTime\":\"%s\"," +
 						"\"toDo\":\"%s\"," +
-						" } }",
+						"\"reviews\":[]"+
+						"}",
                 place.getName(),place.getLatitude(), place.getLongitude(), place.getFilter(),
 				place.getImageURL(), place.getContent(), place.getAverageRating(), place.getCount(),
 				place.getTimings(),place.getTicket(),place.getBestTime(),place.getToDo());
@@ -138,5 +139,14 @@ public class PlaceQueryBuilder {
                 place.getName(),place.getLatitude(), place.getLongitude(), place.getFilter(),
 				place.getImageURL(), place.getContent(), place.getAverageRating(), place.getCount(),
 				place.getTimings(),place.getTicket(),place.getBestTime(),place.getToDo());
+    }
+
+    public String addReview(String user_id, String review){
+        return String.format("{\"$push\" : " +
+                        "{\"reviews\":" +
+                        "{\"user_id\":\"%s\",\"review\":\"%s\"}" +
+                        "}" +
+                        "}",
+                user_id, review);
     }
 }
