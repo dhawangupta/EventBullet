@@ -46,7 +46,7 @@
     <string name="access_token">pk.eyJ1IjoienViZXIiLCJhIjoiY2lpaGVjM3ptMDA3MXU2a25iYnB0dzluYyJ9.z0PcPwFB-Jv2EpJqbJ5Qdw</string>
 
 
-
+    <string name="clear">Clear</string>
 
         <!-- Test Activities -->
         <string name="activity_infowindow_adapter">InfoWindow Adapter</string>
@@ -88,5 +88,9 @@
             <item>Night</item>
         </string-array>
 
+        <!-- TODO: Remove or change this placeholder text -->
+        <string name="hello_blank_fragment">Hello blank fragment</string>
+        <string name="drawer_close">Close</string>
+        <string name="drawer_open">Open</string>
     </resources>
 

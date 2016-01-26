@@ -19,7 +19,7 @@ import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.MongoLabUser.UserQueryBuilder;
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
-import com.placediscovery.HelperMethods;
+import com.placediscovery.HelperClasses.HelperMethods;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -85,7 +85,7 @@ public class
 
     public void onLoginSuccess(User u) {
         UserStatus.setUserStatus(u);
-        Intent moreDetailsIntent = new Intent(LoginActivity.this, HomePage.class);
+        Intent moreDetailsIntent = new Intent(LoginActivity.this, HomePageActivity.class);
         Toast.makeText(getApplicationContext(), "Welcome " + u.name +
                 ", You are now logged in.", Toast.LENGTH_SHORT).show();
         startActivity(moreDetailsIntent);

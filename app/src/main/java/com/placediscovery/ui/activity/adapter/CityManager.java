@@ -3,7 +3,7 @@ package com.placediscovery.ui.activity.adapter;
 /**
  * Created by ARIMIT on 18-Sep-15.
  */
-import com.placediscovery.Constants;
+import com.placediscovery.HelperClasses.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
