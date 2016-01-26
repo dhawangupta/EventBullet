@@ -66,7 +66,7 @@ public class MainFragment extends Fragment {
         searchView.setQueryHint(this.getString(R.string.search));
 
         ((EditText) searchView.findViewById(R.id.search_src_text))
-                .setHintTextColor(getResources().getColor(R.color.nliveo_white));
+                .setHintTextColor(getResources().getColor(R.color.white));
         searchView.setOnQueryTextListener(onQuerySearchView);
 
 		menu.findItem(R.id.menu_add).setVisible(true);

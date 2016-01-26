@@ -22,6 +22,9 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.MongoLabPlace.PlaceQueryBuilder;
@@ -46,6 +49,7 @@ public class ContentActivity extends AppCompatActivity implements
     private RatingBar ratingBar;
     User loggedInUser;
     float userRating;
+    EditText reviewField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +84,7 @@ public class ContentActivity extends AppCompatActivity implements
         String ticket = selectedPlace.getTicket();
         String bestTime = selectedPlace.getBestTime();
         String toDo = selectedPlace.getToDo();
-
+        BasicDBObject[] reviewsObject = selectedPlace.getReviews();
 
         TextView t1 = (TextView)findViewById(R.id.place_name);
         TextView t2 = (TextView)findViewById(R.id.currentratingtext);
@@ -95,8 +99,21 @@ public class ContentActivity extends AppCompatActivity implements
         TextView bestTimeValue = (TextView)findViewById(R.id.bestTimeValue);
         LinearLayout toDoLayout = (LinearLayout)findViewById(R.id.toDo);
         TextView toDoValue = (TextView)findViewById(R.id.toDoValue);
-        final EditText reviewField = (EditText)findViewById(R.id.reviewTextField);
+        reviewField = (EditText)findViewById(R.id.reviewTextField);
         Button reviewSubmitBtn = (Button)findViewById(R.id.reviewBtn);
+
+        //dynamically creating textviews for reviews
+        LinearLayout reviewsLayout = (LinearLayout)findViewById(R.id.reviewsLayout);
+        TextView[] reviews = new TextView[reviewsObject.length];
+        for(int j=0; j<reviewsObject.length; j++){
+            DBObject reviewObj = reviewsObject[j];
+            String user_id = reviewObj.get("user_id").toString();
+            String review = reviewObj.get("review").toString();
+
+
+            reviews[j] = new TextView(this);
+            reviewsLayout.addView(reviews[j]);
+        }
 
         t1.setText(place_name);
         t2.setText(currentRating+"/5");
@@ -221,36 +238,35 @@ public class ContentActivity extends AppCompatActivity implements
         setSupportActionBar(topToolBar);
         */
 
-        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (UserStatus.isLoginStatus()) {
+//        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (UserStatus.isLoginStatus()) {
+//
+//                    /*TODO: place_id or name of place (we have to devise a method to display saved places in SavedPlaces.java
+//                    * TODO: check for adding same place multiple items
+//                    *
+//                    * */
+//                    loggedInUser.setSavedplaces(loggedInUser.getSavedplaces() + "," + places.get(imageviewId).getPlace_id());
+//
+//                    UpdateUserAsyncTask tsk = new UpdateUserAsyncTask();
+//                    tsk.execute(loggedInUser);
+//
+//                    Toast.makeText(ContentActivity.this, "Added to List", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(ContentActivity.this, "Please login first", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//
+//        });
 
-                    /*TODO: place_id or name of place (we have to devise a method to display saved places in SavedPlaces.java
-                    * TODO: check for adding same place multiple items
-                    *
-                    * */
-                    loggedInUser.setSavedplaces(loggedInUser.getSavedplaces() + "," + places.get(imageviewId).getPlace_id());
-
-                    UpdateUserAsyncTask tsk = new UpdateUserAsyncTask();
-                    tsk.execute(loggedInUser);
-
-                    Toast.makeText(ContentActivity.this, "Added to List", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(ContentActivity.this, "Please login first", Toast.LENGTH_LONG).show();
-                }
-            }
-
-        });
-
+        final String review = reviewField.getText().toString();
         reviewSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(UserStatus.LoginStatus) {
-                    String review = reviewField.getText().toString();
                     UpdatePlaceReviewAsyncTask task = new UpdatePlaceReviewAsyncTask();
                     task.execute(selectedPlace, loggedInUser.getUser_id(), review);
-                    reviewField.setHint("Leave a one line tip...");
                 } else
                     Toast.makeText(ContentActivity.this, "Please login first", Toast.LENGTH_LONG).show();
             }
@@ -300,6 +316,7 @@ public class ContentActivity extends AppCompatActivity implements
         protected void onPostExecute(Boolean aBoolean) {
             if(aBoolean){
                 Toast.makeText(ContentActivity.this, "Rating submitted successfully", Toast.LENGTH_SHORT).show();
+
             } else
                 Toast.makeText(ContentActivity.this, "rating failed to submit!!", Toast.LENGTH_LONG).show();
         }
@@ -347,6 +364,7 @@ public class ContentActivity extends AppCompatActivity implements
         protected void onPostExecute(Boolean aBoolean) {
             if(aBoolean){
                 Toast.makeText(ContentActivity.this, "Review submitted successfully", Toast.LENGTH_SHORT).show();
+                reviewField.setText("");
             } else
                 Toast.makeText(ContentActivity.this, "review failed to submit!!", Toast.LENGTH_LONG).show();
         }

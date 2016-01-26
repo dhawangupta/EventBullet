@@ -2,11 +2,10 @@ package com.placediscovery.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,28 +13,27 @@ import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
-import com.mongodb.BasicDBList;
-import com.mongodb.DBObject;
-import com.placediscovery.HelperMethods;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
+import com.placediscovery.HelperClasses.Constants;
 import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.Place;
-import com.placediscovery.MongoLabPlace.PlaceQueryBuilder;
 import com.placediscovery.R;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity {
+public class MapsActivity extends FragmentActivity implements View.OnClickListener {
     //AppCompatActivity extends FragmentActivity
 
     protected Button travel;
     protected Button explore;
+    private FloatingActionButton actionButton;
     ProgressDialog progressDialog;
     //    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     MapView mapView=null;
@@ -57,6 +55,9 @@ public class MapsActivity extends FragmentActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        setFAB(initFAB(R.drawable.ic_star));
+        createMenuItems();
 
         travel = (Button) findViewById(R.id.btn_travel);
         explore = (Button) findViewById(R.id.btn_explore);
@@ -197,7 +198,47 @@ public class MapsActivity extends FragmentActivity {
 
     }
 
+    private void setFAB(ImageView imageView) {
+        actionButton = new FloatingActionButton.Builder(this)
+                .setContentView(imageView)
+                .setBackgroundDrawable(R.drawable.button_action_red_selector)
+                .build();
+    }
 
+    private ImageView initFAB(int drawable) {
+        ImageView imageView = new ImageView(this);
+        imageView.setImageResource(drawable);
+        return imageView;
+
+    }
+
+    private void createMenuItems() {
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+        itemBuilder.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_action_blue_selector));
+//        Creating Menu  items
+        SubActionButton button1 = itemBuilder.setContentView(initFAB(R.drawable.ic_my_location_white_48dp))
+
+                .build();
+        SubActionButton button2 = itemBuilder.setContentView(initFAB(R.drawable.ic_close)).build();
+        SubActionButton button3 = itemBuilder.setContentView(initFAB(R.drawable.ic_menu)).build();
+        button1.setOnClickListener(this);
+        button2.setOnClickListener(this);
+        button3.setOnClickListener(this);
+        button3.setTag(Constants.TAG_LOCATION);
+        button2.setTag(Constants.TAG_FILTER);
+        button1.setTag(Constants.TAG_NOTYETDECIDED);
+
+
+//        Create Menu with Items
+        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+                .addSubActionView(button1)
+                .addSubActionView(button2)
+                .addSubActionView(button3)
+                        //  .addSubActionView(button4)
+                .attachTo(actionButton)
+                .build();
+
+    }
 
     private void setUpMapIfNeeded(Bundle savedInstanceState) {
         // Do a null check to confirm that we have not already instantiated the map.
@@ -269,6 +310,28 @@ public class MapsActivity extends FragmentActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        if (v.getTag().equals(Constants.TAG_LOCATION)) {
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(mapView.getMyLocation()))   // Sets the center of the map to Maracanã
+                    .tilt(20)                                   // Sets the tilt of the camera to 30 degrees
+                    .build();                                   // Creates a CameraPosition from the builder
+
+            mapView.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 25000, null);
+        } else if (v.getTag().equals(Constants.TAG_FILTER)) {
+
+        } else if (v.getTag().equals(Constants.TAG_NOTYETDECIDED)) {
+
+        }
     }
 
     /*private class GetUserPlacesAsyncTask extends AsyncTask<Place, Void, ArrayList<Place>> {

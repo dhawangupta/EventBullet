@@ -9,10 +9,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.geometry.LatLng;
-import com.placediscovery.Constants;
+import com.placediscovery.HelperClasses.Constants;
 import com.placediscovery.R;
 
-import static com.placediscovery.Constants.cityArray;
+import static com.placediscovery.HelperClasses.Constants.cityArray;
 
 
 /**
@@ -76,7 +76,7 @@ public class AddPlaceSelectCity extends ListActivity {
             Toast.makeText(getApplicationContext(),"userPlaceLatLng is null",Toast.LENGTH_LONG).show();
         }
         else {
-            Intent i = new Intent(this, AddPlaceMaps.class);
+            Intent i = new Intent(this, AddPlaceMapsActivity.class);
             i.putExtra("selectedCity", selectedCity);
             i.putExtra(Constants.Latitutude,selectedCityLatLng.getLatitude());
             i.putExtra(Constants.Longitude,selectedCityLatLng.getLongitude());

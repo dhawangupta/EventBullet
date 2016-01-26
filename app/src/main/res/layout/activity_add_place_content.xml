@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="@color/color_primary"
+        android:background="@color/primary"
         android:minHeight="?attr/actionBarSize"
         android:elevation="6dp"/>
 
@@ -96,7 +96,7 @@
                 android:paddingBottom="10dp"
                 android:text="Submit"
                 android:textSize="18sp"
-                android:background="@color/color_primary" />
+                android:background="@color/primary" />
 
 
         </LinearLayout>

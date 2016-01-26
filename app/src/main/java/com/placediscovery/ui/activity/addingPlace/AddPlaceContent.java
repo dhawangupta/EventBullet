@@ -26,10 +26,9 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.placediscovery.AWSClasses.Util;
-import com.placediscovery.Constants;
+import com.placediscovery.HelperClasses.Constants;
 import com.placediscovery.MongoLabPlace.CreatePlaceAsyncTask;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
@@ -58,8 +57,6 @@ public class AddPlaceContent extends AppCompatActivity {
 
     // The TransferUtility is the primary class for managing transfer to S3
     private TransferUtility transferUtility;
-
-    private GoogleApiClient client;
 
     /**
      * @param uri The Uri to check.
