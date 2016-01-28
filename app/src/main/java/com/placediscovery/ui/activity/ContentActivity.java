@@ -1,6 +1,7 @@
 package com.placediscovery.ui.activity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,16 +32,18 @@ import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.MongoLabPlace.PlaceQueryBuilder;
 import com.placediscovery.MongoLabPlace.UpdatePlaceAsyncTask;
-import com.placediscovery.MongoLabUser.UpdateUserAsyncTask;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.MongoLabUser.UserQueryBuilder;
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 
 public class ContentActivity extends AppCompatActivity implements
@@ -50,6 +55,8 @@ public class ContentActivity extends AppCompatActivity implements
     User loggedInUser;
     float userRating;
     EditText reviewField;
+    Place selectedPlace;
+    ProgressBar progressBarFooter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +81,7 @@ public class ContentActivity extends AppCompatActivity implements
                 .getSerializable("placesObject");
         selectedCity = intent.getExtras().getString("selectedCity");
 
-        final Place selectedPlace = places.get(imageviewId);
+        selectedPlace = places.get(imageviewId);
         String place_name = selectedPlace.getName();
         String place_content = selectedPlace.getContent();
         String image_url = selectedPlace.getImageURL();
@@ -84,7 +91,6 @@ public class ContentActivity extends AppCompatActivity implements
         String ticket = selectedPlace.getTicket();
         String bestTime = selectedPlace.getBestTime();
         String toDo = selectedPlace.getToDo();
-        BasicDBObject[] reviewsObject = selectedPlace.getReviews();
 
         TextView t1 = (TextView)findViewById(R.id.place_name);
         TextView t2 = (TextView)findViewById(R.id.currentratingtext);
@@ -102,18 +108,6 @@ public class ContentActivity extends AppCompatActivity implements
         reviewField = (EditText)findViewById(R.id.reviewTextField);
         Button reviewSubmitBtn = (Button)findViewById(R.id.reviewBtn);
 
-        //dynamically creating textviews for reviews
-        LinearLayout reviewsLayout = (LinearLayout)findViewById(R.id.reviewsLayout);
-        TextView[] reviews = new TextView[reviewsObject.length];
-        for(int j=0; j<reviewsObject.length; j++){
-            DBObject reviewObj = reviewsObject[j];
-            String user_id = reviewObj.get("user_id").toString();
-            String review = reviewObj.get("review").toString();
-
-
-            reviews[j] = new TextView(this);
-            reviewsLayout.addView(reviews[j]);
-        }
 
         t1.setText(place_name);
         t2.setText(currentRating+"/5");
@@ -233,10 +227,8 @@ public class ContentActivity extends AppCompatActivity implements
         }
 
         //some toolbar code
-        /*
-        Toolbar topToolBar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(topToolBar);
-        */
+//        Toolbar topToolBar = (Toolbar)findViewById(R.id.toolbar);
+//        setSupportActionBar(topToolBar);
 
 //        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -260,6 +252,10 @@ public class ContentActivity extends AppCompatActivity implements
 //
 //        });
 
+//        try {
+//            setUpReviews();
+//        }catch (Exception e){}
+
         final String review = reviewField.getText().toString();
         reviewSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -271,6 +267,53 @@ public class ContentActivity extends AppCompatActivity implements
                     Toast.makeText(ContentActivity.this, "Please login first", Toast.LENGTH_LONG).show();
             }
         });
+
+    }
+
+    void setUpReviews(){
+
+        BasicDBObject[] reviewsObject = selectedPlace.getReviews();
+        //dynamically creating textviews for reviews
+        // Inflate the footer
+        View footer = getLayoutInflater().inflate(
+                R.layout.footer_progress, null);
+        // Find the progressbar within footer
+        progressBarFooter = (ProgressBar)
+                footer.findViewById(R.id.pbFooterLoading);
+
+        ListView reviewsList = (ListView)findViewById(R.id.reviewsList);
+        reviewsList.addFooterView(progressBarFooter);
+        TextView[] review_user_names = new TextView[reviewsObject.length];
+        TextView[] reviews_values = new TextView[reviewsObject.length];
+        LinearLayout[] reviews = new LinearLayout[reviewsObject.length];
+        for(int j=0; j<reviewsObject.length; j++){
+            DBObject reviewObj = reviewsObject[j];
+            String user_id = reviewObj.get("user_id").toString();
+            String review = reviewObj.get("review").toString();
+
+            GetUserNameAsyncTask task = new GetUserNameAsyncTask();
+            String user_name = null;
+            try {
+                user_name = task.execute(user_id).get().getName();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+            reviews[j] = new LinearLayout(this);
+            reviews[j].setOrientation(LinearLayout.VERTICAL);
+            review_user_names[j] = new TextView(this);
+            reviews_values[j] = new TextView(this);
+
+            review_user_names[j].setText(user_name);
+            reviews_values[j].setText(review);
+            reviews[j].addView(review_user_names[j]);
+            reviews[j].addView(reviews_values[j]);
+
+            reviewsList.addView(reviews[j]);
+
+        }
 
     }
 
@@ -350,7 +393,7 @@ public class ContentActivity extends AppCompatActivity implements
                 OutputStreamWriter osw = new OutputStreamWriter(
                         connection.getOutputStream());
 
-                osw.write(qb.addReview(user_id,review));
+                osw.write(qb.addReview(user_id, review));
                 osw.flush();
                 osw.close();
                 return connection.getResponseCode() < 205;
@@ -370,6 +413,80 @@ public class ContentActivity extends AppCompatActivity implements
         }
     }
 
+    class GetUserNameAsyncTask extends AsyncTask<Object, Void, User> {
+        String server_output = null;
+        String temp_output = null;
+
+        @Override
+        protected void onPreExecute() {
+            progressBarFooter.setVisibility(View.VISIBLE);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected User doInBackground(Object... arg0) {
+
+            String user_id = (String)arg0[0];
+            User user = new User();  //user according to the user_id
+            try
+            {
+
+                UserQueryBuilder qb = new UserQueryBuilder();
+                URL url = new URL(qb.buildUsersGetURL(user_id));
+                HttpURLConnection conn = (HttpURLConnection) url
+                        .openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
+
+                if (conn.getResponseCode() != 200) {
+                    throw new RuntimeException("Failed : HTTP error code : "
+                            + conn.getResponseCode());
+                }
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        (conn.getInputStream())));
+
+                while ((temp_output = br.readLine()) != null) {
+                    server_output = temp_output;
+                }
+
+                // create a basic db list
+                String mongoarray = "{ artificial_basicdb_list: "+server_output+"}";
+                Object o = com.mongodb.util.JSON.parse(mongoarray);
+
+
+                DBObject dbObj = (DBObject) o;
+                BasicDBList usersList = (BasicDBList) dbObj.get("artificial_basicdb_list");
+
+                for (Object obj : usersList) {
+                    DBObject userObj = (DBObject) obj;
+
+                    User temp = new User();
+
+                    temp.setUser_id(userObj.get("_id").toString());
+                    temp.setName(userObj.get("name").toString());
+//                    temp.setEmail(userObj.get("email").toString());
+//                    temp.setPassword(userObj.get("password").toString());
+//                    temp.setSavedplaces(userObj.get("savedplaces").toString());
+//
+//                    BasicDBList ratingsList = (BasicDBList) userObj.get("ratings");
+//                    BasicDBObject[] ratingsArr = ratingsList.toArray(new BasicDBObject[0]);
+//                    temp.setRatings(ratingsArr);
+
+                    user=temp;
+                }
+            }catch (Exception e) {
+                e.getMessage();
+            }
+            return user;
+        }
+
+        @Override
+        protected void onPostExecute(User user) {
+            progressBarFooter.setVisibility(View.GONE);
+            super.onPostExecute(user);
+        }
+    }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
