@@ -5,9 +5,7 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    >
+    android:layout_height="match_parent" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,6 +16,28 @@
         <include
             android:id="@+id/app_bar"
             layout="@layout/app_bar" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/app_bar"
+            android:background="@drawable/home_cover"
+            android:alpha="0.7"
+            android:id="@+id/imageView" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="110dp"
+            android:text="@string/choose_city"
+            android:id="@+id/button"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            android:background="@color/Teal"
+            android:textColor="@color/White"
+            android:onClick="launch_choosecity"/>
+
     </RelativeLayout>
 
     <fragment
