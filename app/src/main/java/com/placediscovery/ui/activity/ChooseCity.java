@@ -56,7 +56,7 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new CityAdapter(CityManager.getInstance().getCities(), R.layout.row_country,new WeakReference<ViewHolderResponser>(this), this);
+        mAdapter = new CityAdapter(CityManager.getInstance().getCities(), R.layout.row_city,new WeakReference<ViewHolderResponser>(this), this);
         mRecyclerView.setAdapter(mAdapter);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
