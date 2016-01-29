@@ -10,7 +10,7 @@
         app:showAsAction="ifRoom|collapseActionView"
         android:title="@string/search"/>
     <item
-        android:id="@+id/menu_add"
+        android:id="@+id/menu_login"
         android:icon="@mipmap/ic_user"
         app:showAsAction="ifRoom"
         android:title="@string/login"/>
