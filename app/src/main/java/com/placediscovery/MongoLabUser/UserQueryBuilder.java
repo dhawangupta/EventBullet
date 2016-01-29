@@ -73,7 +73,17 @@ public class UserQueryBuilder {
 	{
 		return getBaseUrl()+documentRequest()+docApiKeyUrl();
 	}
-	
+
+	/**
+	 * Get a Mongodb document that corresponds to the given object id
+	 * @param doc_id
+	 * @return
+	 */
+	public String buildUsersGetURL(String doc_id)
+	{
+		return getBaseUrl()+documentRequest()+docApiKeyUrl(doc_id);
+	}
+
 	/**
 	 * Get a Mongodb document that corresponds to the given object id
 	 * @param doc_id

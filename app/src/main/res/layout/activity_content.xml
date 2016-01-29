@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:fitsSystemWindows="true" >
 
 
 
@@ -67,8 +68,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginTop="-35dp">
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/place_name"
@@ -106,9 +106,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/Blue"
                         android:text="@string/rate"
-                        android:layout_marginStart="150dp"/>
+                        android:layout_marginStart="150dp"
+                        android:layout_marginLeft="150dp"/>
                 </LinearLayout>
 
                 <!-- Separator-->
@@ -227,12 +228,11 @@
                             android:textSize="16sp"
                             android:lineSpacingMultiplier="1.3"/>
 
-                        <LinearLayout
+                        <ListView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/reviewsLayout"
-                            android:orientation="vertical">
-                        </LinearLayout>
+                            android:id="@+id/reviewsList">
+                        </ListView>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -244,7 +244,8 @@
                                 android:layout_height="wrap_content"
                                 android:inputType="textAutoCorrect"
                                 android:textColor="@color/text_color"
-                                android:hint="Leave a one line tip..."/>
+                                android:hint="Leave a one line tip..."
+                                android:textColorHint="@color/LightSlateGray"/>
                             <Button
                                 android:id="@+id/reviewBtn"
                                 android:layout_width="match_parent"
