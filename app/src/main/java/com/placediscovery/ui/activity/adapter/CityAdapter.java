@@ -5,6 +5,7 @@ package com.placediscovery.ui.activity.adapter;
  */
 
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,9 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder>{
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         City city = cities.get(i);
         viewHolder.cityName.setText(city.name);
-        viewHolder.cityImage.setImageDrawable(mContext.getDrawable(city.getImageResourceId(mContext)));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            viewHolder.cityImage.setImageDrawable(mContext.getDrawable(city.getImageResourceId(mContext)));
+        }
 
     }
 
