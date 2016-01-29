@@ -29,6 +29,7 @@ import com.placediscovery.ui.activity.adapter.CityAdapter;
 import com.placediscovery.ui.activity.adapter.CityManager;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
@@ -42,7 +43,7 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
     private ProgressDialog progressDialog;
     Intent intent;
 
-
+    ArrayList<Place> places = new ArrayList<>();
     String selectedCity;
 
     @Override
@@ -55,7 +56,7 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new CityAdapter(CityManager.getInstance().getCities(), R.layout.row_country,new WeakReference<ViewHolderResponser>(this), this);
+        mAdapter = new CityAdapter(CityManager.getInstance().getCities(), R.layout.row_city,new WeakReference<ViewHolderResponser>(this), this);
         mRecyclerView.setAdapter(mAdapter);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -105,14 +106,25 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
 
         }
 
-        GetPlacesAsyncTaskProgressDialog task = new GetPlacesAsyncTaskProgressDialog();
+        doSomething(selectedCity);
+
+    }
+
+    void doSomething(String selectedCity){
         try {
-            task.execute();
-
+            places = (ArrayList<Place>)HelperMethods.readObject(this, selectedCity);
+            intent.putExtra("places", places);
+            intent.putExtra("selectedCity", selectedCity);
+            startActivity(intent);
         } catch (Exception e) {
-            e.printStackTrace();
-        }
+            GetPlacesAsyncTaskProgressDialog task = new GetPlacesAsyncTaskProgressDialog();
+            try {
+                task.execute();
 
+            } catch (Exception ex) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private class GetPlacesAsyncTaskProgressDialog extends AsyncTask<Place, Void, ArrayList<Place>> {
@@ -196,7 +208,6 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
                     places.add(temp);
 
                 }
-                HelperMethods.saveObjectToCache("saved_"+selectedCity, places);
             }catch (Exception e) {
                 e.getMessage();
             }
@@ -210,6 +221,11 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
                 progressDialog.dismiss();}
 
             if(places.size()!=0) {
+                try {
+                    HelperMethods.writeObject(ChooseCity.this,selectedCity,places);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 intent.putExtra("places", places);
                 intent.putExtra("selectedCity", selectedCity);
                 startActivity(intent);
