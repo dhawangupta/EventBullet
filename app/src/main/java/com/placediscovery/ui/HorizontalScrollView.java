@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.FocusFinder;
 import android.view.KeyEvent;
@@ -33,21 +34,25 @@ import java.util.List;
  * manager with a complex hierarchy of objects.  A child that is often used
  * is a {@link LinearLayout} in a horizontal orientation, presenting a horizontal
  * array of top-level items that the user can scroll through.
- *
+ * <p/>
  * <p>You should never use a HorizontalScrollView with a {@link ListView}, since
  * ListView takes care of its own scrolling.  Most importantly, doing this
  * defeats all of the important optimizations in ListView for dealing with
  * large lists, since it effectively forces the ListView to display its entire
  * list of items to fill up the infinite container supplied by HorizontalScrollView.
- *
+ * <p/>
  * <p>The {@link TextView} class also
  * takes care of its own scrolling, so does not require a ScrollView, but
  * using the two together is possible to achieve the effect of a text view
  * within a larger container.
- *
+ * <p/>
  * <p>HorizontalScrollView only supports horizontal scrolling.
  */
 public class HorizontalScrollView extends FrameLayout {
+
+
+    private Context context;
+
     private static final int ANIMATED_SCROLL_GAP = 250;
 
     private static final float MAX_SCROLL_FACTOR = 0.5f;
@@ -114,6 +119,7 @@ public class HorizontalScrollView extends FrameLayout {
 
     public HorizontalScrollView(Context context) {
         this(context, null);
+        this.context = context;
     }
 
     public HorizontalScrollView(Context context, AttributeSet attrs) {
@@ -158,7 +164,7 @@ public class HorizontalScrollView extends FrameLayout {
 
     /**
      * @return The maximum amount this scroll view will scroll in response to
-     *   an arrow event.
+     * an arrow event.
      */
     public int getMaxScrollAmount() {
         return (int) (MAX_SCROLL_FACTOR * (getRight() - getLeft()));
@@ -221,7 +227,7 @@ public class HorizontalScrollView extends FrameLayout {
         View child = getChildAt(0);
         if (child != null) {
             int childWidth = child.getWidth();
-            return getWidth() < childWidth + getPaddingLeft() + getPaddingRight() ;
+            return getWidth() < childWidth + getPaddingLeft() + getPaddingRight();
         }
         return false;
     }
@@ -240,7 +246,7 @@ public class HorizontalScrollView extends FrameLayout {
      * the viewport or not.
      *
      * @param fillViewport True to stretch the content's width to the viewport's
-     *        boundaries, false otherwise.
+     *                     boundaries, false otherwise.
      */
     public void setFillViewport(boolean fillViewport) {
         if (fillViewport != mFillViewport) {
@@ -258,6 +264,7 @@ public class HorizontalScrollView extends FrameLayout {
 
     /**
      * Set whether arrow scrolling will animate its transition.
+     *
      * @param smoothScrollingEnabled whether arrow scrolling will animate its transition
      */
     public void setSmoothScrollingEnabled(boolean smoothScrollingEnabled) {
@@ -600,10 +607,10 @@ public class HorizontalScrollView extends FrameLayout {
 
     @Override
     protected void onOverScrolled(int scrollX, int scrollY,
-            boolean clampedX, boolean clampedY) {
+                                  boolean clampedX, boolean clampedY) {
         // Treat animating scrolls differently; see #computeScroll() for why.
         if (!mScroller.isFinished()) {
-        	scrollTo(scrollX, scrollY);
+            scrollTo(scrollX, scrollY);
             if (clampedX) {
                 mScroller.springBack(getScrollX(), getScrollY(), 0, getScrollRange(), 0, 0);
             }
@@ -640,7 +647,7 @@ public class HorizontalScrollView extends FrameLayout {
      * @return the next focusable component in the bounds or null if none can be found
      */
     private View findFocusableViewInMyBounds(final boolean leftFocus,
-            final int left, View preferredFocusable) {
+                                             final int left, View preferredFocusable) {
         /*
          * The fading edge's transparent side should be considered for focus
          * since it's mostly visible, so we divide the actual fading edge length
@@ -673,7 +680,7 @@ public class HorizontalScrollView extends FrameLayout {
      * @param right     the right offset of the bounds in which a focusable must
      *                  be found
      * @return the next focusable component in the bounds or null if none can
-     *         be found
+     * be found
      */
     private View findFocusableViewInBounds(boolean leftFocus, int left, int right) {
 
@@ -817,8 +824,8 @@ public class HorizontalScrollView extends FrameLayout {
      *
      * @param direction the scroll direction: {@link View#FOCUS_LEFT}
      *                  to go left {@link View#FOCUS_RIGHT} to right
-     * @param left     the left offset of the new area to be made visible
-     * @param right    the right offset of the new area to be made visible
+     * @param left      the left offset of the new area to be made visible
+     * @param right     the right offset of the new area to be made visible
      * @return true if the key event is consumed by this method, false otherwise
      */
     private boolean scrollAndFocus(int direction, int left, int right) {
@@ -910,7 +917,7 @@ public class HorizontalScrollView extends FrameLayout {
 
     /**
      * @return whether the descendant of this scroll view is scrolled off
-     *  screen.
+     * screen.
      */
     private boolean isOffScreen(View descendant) {
         return !isWithinDeltaOfScreen(descendant, 0);
@@ -918,7 +925,7 @@ public class HorizontalScrollView extends FrameLayout {
 
     /**
      * @return whether the descendant of this scroll view is within delta
-     *  pixels of being on the screen.
+     * pixels of being on the screen.
      */
     private boolean isWithinDeltaOfScreen(View descendant, int delta) {
         descendant.getDrawingRect(mTempRect);
@@ -1029,7 +1036,7 @@ public class HorizontalScrollView extends FrameLayout {
 
     @Override
     protected void measureChildWithMargins(View child, int parentWidthMeasureSpec, int widthUsed,
-            int parentHeightMeasureSpec, int heightUsed) {
+                                           int parentHeightMeasureSpec, int heightUsed) {
         final MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
 
         final int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec,
@@ -1210,13 +1217,13 @@ public class HorizontalScrollView extends FrameLayout {
     /**
      * When looking for focus in children of a scroll view, need to be a little
      * more careful not to give focus to something that is scrolled off screen.
-     *
+     * <p/>
      * This is more expensive than the default {@link ViewGroup}
      * implementation, otherwise this behavior might have been made the default.
      */
     @Override
     protected boolean onRequestFocusInDescendants(int direction,
-            Rect previouslyFocusedRect) {
+                                                  Rect previouslyFocusedRect) {
 
         // convert from forward / backward notation to up / down / left / right
         // (ugh).
@@ -1237,7 +1244,7 @@ public class HorizontalScrollView extends FrameLayout {
 
     @Override
     public boolean requestChildRectangleOnScreen(View child, Rect rectangle,
-            boolean immediate) {
+                                                 boolean immediate) {
         // offset into coordinate space of this scroll view
         rectangle.offset(child.getLeft() - child.getScrollX(),
                 child.getTop() - child.getScrollY());
@@ -1257,7 +1264,7 @@ public class HorizontalScrollView extends FrameLayout {
         mIsLayoutDirty = false;
         // Give a child focus if it needs it
         if (mChildToScrollTo != null && isViewDescendantOf(mChildToScrollTo, this)) {
-                scrollToChild(mChildToScrollTo);
+            scrollToChild(mChildToScrollTo);
         }
         mChildToScrollTo = null;
 
@@ -1308,7 +1315,7 @@ public class HorizontalScrollView extends FrameLayout {
             int right = getChildAt(0).getWidth();
 
             mScroller.fling(getScrollX(), getScrollY(), velocityX, 0, 0,
-                    Math.max(0, right - width), 0, 0, width/2, 0);
+                    Math.max(0, right - width), 0, 0, width / 2, 0);
 
             final boolean movingRight = velocityX > 0;
 
@@ -1331,7 +1338,7 @@ public class HorizontalScrollView extends FrameLayout {
 
     /**
      * {@inheritDoc}
-     *
+     * <p/>
      * <p>This version also clamps the scrolling to the bounds of our child.
      */
     public void scrollTo(int x, int y) {
@@ -1351,8 +1358,8 @@ public class HorizontalScrollView extends FrameLayout {
         if (mode != OVER_SCROLL_NEVER) {
             if (mEdgeGlowLeft == null) {
                 final Resources res = getContext().getResources();
-                final Drawable edge = res.getDrawable(R.drawable.overscroll_edge);
-                final Drawable glow = res.getDrawable(R.drawable.overscroll_glow);
+                final Drawable edge = ContextCompat.getDrawable(context, R.drawable.overscroll_edge);
+                final Drawable glow = ContextCompat.getDrawable(context, R.drawable.overscroll_glow);
                 mEdgeGlowLeft = new EdgeGlow(edge, glow);
                 mEdgeGlowRight = new EdgeGlow(edge, glow);
             }
