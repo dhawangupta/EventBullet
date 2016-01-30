@@ -22,6 +22,10 @@
     <string name="toDo">Things to Do:</string>
     <string name="rate">Rate this</string>
 
+    <!-- About Us activity strings-->
+    <string name="about_us">About Us</string>
+    <string name="about_us_content">We are a bunch of geeks who wish to change the way you find the
+    information about places around you.</string>
 
     <!-- Toast -->
     <string name="hello_world">Hello world!</string>
