@@ -4,11 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.annotations.Marker;
@@ -18,9 +17,9 @@ import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
-import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
+//import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+//import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+//import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.placediscovery.HelperClasses.Constants;
 import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.Place;
@@ -30,24 +29,21 @@ import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements View.OnClickListener {
     //AppCompatActivity extends FragmentActivity
-
-    protected Button travel;
-    protected Button explore;
-    private FloatingActionButton actionButton;
+    //FloatingActionButton actionButton;
     ProgressDialog progressDialog;
     //    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     MapView mapView=null;
 
-    /*Spinner spinner;
-    //Create a Data Source it may be an Array of String or ArrayList<String>
-    String []arr = {"Filter","Gaming","Drugs","Sex","Partying","Religious","Others"};
-    // An adapter to show data
-    ArrayAdapter<String> adapter;*/
+//    Spinner spinner;
+//    //Create a Data Source it may be an Array of String or ArrayList<String>
+//    String []arr = {"Filter","Gaming","Drugs","Sex","Partying","Religious","Others"};
+//    // An adapter to show data
+//    ArrayAdapter<String> adapter;
 
     ArrayList<Place> places = new ArrayList<>();
+    ArrayList<Place> places_filtered = new ArrayList<>();
     ArrayList<Marker> places_marker = new ArrayList<>();
-    /*ArrayList<Place> users_places = new ArrayList<>();
-    ArrayList<Marker> users_places_marker = new ArrayList<>();*/
+
     String selectedCity;
 
     @Override
@@ -55,33 +51,86 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        selectedCity = getIntent().getExtras().getString("selectedCity");
+        //retrieving places
+        places = (ArrayList<Place>)getIntent().getExtras().getSerializable("places");
 
-        setFAB(initFAB(R.drawable.ic_star));
-        createMenuItems();
+        TextView[] filtersTextViews = new TextView[places.size()];
 
-        travel = (Button) findViewById(R.id.btn_travel);
-        explore = (Button) findViewById(R.id.btn_explore);
-/*
-        spinner = (Spinner) findViewById(R.id.spinnerCountry);
-        adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, arr);
-        spinner.setAdapter(adapter);
- //Used OnItemSelected Listener for Spinner item click, here i am showing a toast
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        filtersTextViews[0] = (TextView)findViewById(R.id.filter_all);
+        filtersTextViews[1] = (TextView)findViewById(R.id.filter_attractions);
+        filtersTextViews[2] = (TextView)findViewById(R.id.filter_food);
+        filtersTextViews[3] = (TextView)findViewById(R.id.filter_events);
 
+        filtersTextViews[0].setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = spinner.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), "Clicked" + selectedItem, Toast.LENGTH_LONG).show();
-// Filter option chosen
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onClick(View v) {
+                places_filtered = places;
+                loadMarkers(places_filtered);
             }
         });
 
-        travel.setOnClickListener(new View.OnClickListener() {
+        filtersTextViews[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                places_filtered.clear();
+                for (Place p : places) {
+                    if (p.getFilter().equals("Attractions"))
+                        places_filtered.add(p);
+                }
+                loadMarkers(places_filtered);
+            }
+        });
+
+        filtersTextViews[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                places_filtered.clear();
+                for (Place p:places){
+                    if(p.getFilter().equals("Food & Drinks"))
+                        places_filtered.add(p);
+                }
+                loadMarkers(places_filtered);
+            }
+        });
+
+        filtersTextViews[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                places_filtered.clear();
+                for (Place p : places) {
+                    if (p.getFilter().equals("Live") || p.getFilter().equals("Events"))
+                        places_filtered.add(p);
+                }
+                loadMarkers(places_filtered);
+            }
+        });
+
+//        actionButton = (FloatingActionButton)findViewById(R.id.fab);
+//        setFAB(initFAB(R.drawable.ic_star));
+//        createMenuItems();
+
+
+//        spinner = (Spinner) findViewById(R.id.spinnerCountry);
+//        adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, arr);
+//        spinner.setAdapter(adapter);
+// //Used OnItemSelected Listener for Spinner item click, here i am showing a toast
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String selectedItem = spinner.getSelectedItem().toString();
+//                Toast.makeText(getApplicationContext(), "Clicked" + selectedItem, Toast.LENGTH_LONG).show();
+//// Filter option chosen
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+
+  /*      travel.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -102,144 +151,147 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
         });*/
 
 
-/*
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Add Place");  //title for the toolbar
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });         //back icon added*/
-
-
-        selectedCity = getIntent().getExtras().getString("selectedCity");
-        //retrieving places
-        try {
-/*            try
-            {
-                places = (ArrayList<Place>) HelperMethods.readObjectFromFile("saved_" + selectedCity);
-            } catch (NullPointerException n)*/
-
-            places = (ArrayList<Place>)getIntent().getExtras().getSerializable("places");
-
-            int loader = R.drawable.loader;         //loader image
-            final Intent[] intents = new Intent[places.size()];
-
-            //dyanmically creating imageviews
-            LinearLayout imageviews = (LinearLayout) findViewById(R.id.imageviews);
-            ImageView[] iv = new ImageView[places.size()];
-
-            //converting px to dp
-            final float scale = getResources().getDisplayMetrics().density;
-            int dpWidthInPx  = (int) (150 * scale);
-            int dpHeightInPx = (int) (100 * scale);
-            int dpMarginInPx = (int) (1*scale);
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dpWidthInPx, dpHeightInPx);
-            params.setMargins(dpMarginInPx, dpMarginInPx, dpMarginInPx, dpMarginInPx);
-
-            for(int j=0; j<places.size(); j++){
-                // Image url
-                String image_url = places.get(j).getImageURL().split(",")[0];
-
-                if(image_url.equals("")){
-                    continue;
-                }
-
-                iv[j] = new ImageView(this);
-                iv[j].setId(j+1);
-                iv[j].setLayoutParams(params);
-                imageviews.addView(iv[j]);
-
-                // ImageLoader class instance
-                ImageLoader imgLoader = new ImageLoader(getApplicationContext());
-                // whenever you want to load an image from url
-                // call DisplayImage function
-                // url - image url to load
-                // loader - loader image, will be displayed before getting image
-                // image - ImageView
-                imgLoader.DisplayImage(image_url, loader, iv[j]);
-
-                //on-click action:
-                final int finalJ = j;
-                iv[j].setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        intents[finalJ] = new Intent(MapsActivity.this, ContentActivity.class);
-
-                        intents[finalJ].putExtra("imageviewId", finalJ);
-                        intents[finalJ].putExtra("placesObject", places);
-                        intents[finalJ].putExtra("selectedCity", selectedCity);
-                        startActivity(intents[finalJ]);
-                    }
-                });
-
-            }
+//        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setTitle("Add Place");  //title for the toolbar
+//
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//
+//        mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });         //back icon added
 
 
-            //following lines of code can be used for retrieving ids when used in a loop
-/*
-        String idImageView = "imageview" + i;
-        iv[i] = (ImageView) findViewById(MapsActivity.this.getResources().getIdentifier(i+"", "id", getPackageName()));
-*/
 
-
-        } catch (IndexOutOfBoundsException e){
-            Toast.makeText(this, "Check your internet!!!", Toast.LENGTH_LONG).show();
-        }
+        
+        loadPlacesImages();
+            
         setUpMapIfNeeded(savedInstanceState);
 
     }
 
-    private void setFAB(ImageView imageView) {
-        actionButton = new FloatingActionButton.Builder(this)
-                .setContentView(imageView)
-                .setBackgroundDrawable(R.drawable.button_action_red_selector)
-                .build();
+//    private void setFAB(ImageView imageView) {
+//        actionButton = new FloatingActionButton.Builder(this)
+//                .setContentView(imageView)
+//                .setBackgroundDrawable(R.drawable.button_action_red_selector)
+//                .build();
+//    }
+//
+//    private ImageView initFAB(int drawable) {
+//        ImageView imageView = new ImageView(this);
+//        imageView.setImageResource(drawable);
+//        return imageView;
+//
+//    }
+//
+//    private void createMenuItems() {
+//        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+//        itemBuilder.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_action_blue_selector));
+////        Creating Menu  items
+//        SubActionButton button1 = itemBuilder.setContentView(initFAB(R.drawable.ic_my_location_white_48dp))
+//
+//                .build();
+//        SubActionButton button2 = itemBuilder.setContentView(initFAB(R.drawable.ic_close)).build();
+//        SubActionButton button3 = itemBuilder.setContentView(initFAB(R.drawable.ic_menu)).build();
+//        button1.setOnClickListener(this);
+//        button2.setOnClickListener(this);
+//        button3.setOnClickListener(this);
+//        button3.setTag(Constants.TAG_LOCATION);
+//        button2.setTag(Constants.TAG_FILTER);
+//        button1.setTag(Constants.TAG_NOTYETDECIDED);
+//
+//
+////        Create Menu with Items
+//        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+//                .addSubActionView(button1)
+//                .addSubActionView(button2)
+//                .addSubActionView(button3)
+//                        //  .addSubActionView(button4)
+//                .attachTo(actionButton)
+//                .build();
+//
+//    }
+
+    private void loadMarkers(ArrayList<Place> places_filtered){
+        for(Marker m:places_marker)
+            mapView.removeMarker(m);
+
+        for (Place x : places_filtered )
+        {
+            places_marker.add(mapView.addMarker(new MarkerOptions().position(
+                    new LatLng(Double.parseDouble(x.getLatitude()),
+                            Double.parseDouble(x.getLongitude()))).title(x.getName())));
+        }
+
+        Toast.makeText(MapsActivity.this, "Places Updated for you", Toast.LENGTH_SHORT).show();
+        //change map places to explore places
     }
 
-    private ImageView initFAB(int drawable) {
-        ImageView imageView = new ImageView(this);
-        imageView.setImageResource(drawable);
-        return imageView;
-
+    private void loadFiltersLayout(){
+        
     }
+    
+    private void loadPlacesImages(){
+        int loader = R.drawable.loader;         //loader image
+        final Intent[] intents = new Intent[places.size()];
 
-    private void createMenuItems() {
-        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
-        itemBuilder.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_action_blue_selector));
-//        Creating Menu  items
-        SubActionButton button1 = itemBuilder.setContentView(initFAB(R.drawable.ic_my_location_white_48dp))
+        //dyanmically creating imageviews
+        LinearLayout imageviews = (LinearLayout) findViewById(R.id.imageviews);
+        ImageView[] iv = new ImageView[places.size()];
 
-                .build();
-        SubActionButton button2 = itemBuilder.setContentView(initFAB(R.drawable.ic_close)).build();
-        SubActionButton button3 = itemBuilder.setContentView(initFAB(R.drawable.ic_menu)).build();
-        button1.setOnClickListener(this);
-        button2.setOnClickListener(this);
-        button3.setOnClickListener(this);
-        button3.setTag(Constants.TAG_LOCATION);
-        button2.setTag(Constants.TAG_FILTER);
-        button1.setTag(Constants.TAG_NOTYETDECIDED);
+        //converting px to dp
+        final float scale = getResources().getDisplayMetrics().density;
+        int dpWidthInPx  = (int) (150 * scale);
+        int dpHeightInPx = (int) (100 * scale);
+        int dpMarginInPx = (int) (1*scale);
 
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dpWidthInPx, dpHeightInPx);
+        params.setMargins(dpMarginInPx, dpMarginInPx, dpMarginInPx, dpMarginInPx);
 
-//        Create Menu with Items
-        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
-                .addSubActionView(button1)
-                .addSubActionView(button2)
-                .addSubActionView(button3)
-                        //  .addSubActionView(button4)
-                .attachTo(actionButton)
-                .build();
+        for(int j=0; j<places.size(); j++){
+            // Image url
+            String image_url = places.get(j).getImageURL().split(",")[0];
+            if(image_url.equals("")){
+                continue;
+            }
+            iv[j] = new ImageView(this);
+            iv[j].setId(j+1);
+            iv[j].setLayoutParams(params);
+            imageviews.addView(iv[j]);
 
+            // ImageLoader class instance
+            ImageLoader imgLoader = new ImageLoader(getApplicationContext());
+            // whenever you want to load an image from url
+            // call DisplayImage function
+            // url - image url to load
+            // loader - loader image, will be displayed before getting image
+            // image - ImageView
+            imgLoader.DisplayImage(image_url, loader, iv[j]);
+
+            //on-click action:
+            final int finalJ = j;
+            iv[j].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    intents[finalJ] = new Intent(MapsActivity.this, ContentActivity.class);
+
+                    intents[finalJ].putExtra("imageviewId", finalJ);
+                    intents[finalJ].putExtra("placesObject", places);
+                    intents[finalJ].putExtra("selectedCity", selectedCity);
+                    startActivity(intents[finalJ]);
+                }
+            });
+        }
+        //following lines of code can be used for retrieving ids when used in a loop
+//        String idImageView = "imageview" + i;
+//        iv[i] = (ImageView) findViewById(MapsActivity.this.getResources().getIdentifier(i+"", "id", getPackageName()));
     }
-
+    
     private void setUpMapIfNeeded(Bundle savedInstanceState) {
         // Do a null check to confirm that we have not already instantiated the map.
         mapView=(MapView)findViewById(R.id.mapview);
