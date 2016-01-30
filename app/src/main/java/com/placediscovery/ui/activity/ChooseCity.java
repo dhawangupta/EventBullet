@@ -84,27 +84,7 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
         }
 
         //Add here for selecting city from card layout. "cityname" should be same as that in db.
-        switch (position) {
-            case 0 : selectedCity = Constants.Kolkata.toLowerCase();
-                break;
-            case 1 : selectedCity = Constants.Mumbai.toLowerCase();
-                break;
-            case 2 : selectedCity = Constants.NewDelhi.toLowerCase();
-                break;
-            case 3 : selectedCity = Constants.Chennai.toLowerCase();
-                break;
-            case 4 : selectedCity = Constants.Bengaluru.toLowerCase();
-                break;
-            case 5 : selectedCity = Constants.Varanasi.toLowerCase();
-                break;
-            case 6 : selectedCity = Constants.Jaipur.toLowerCase();
-                break;
-            case 7 : selectedCity = Constants.Agra.toLowerCase();
-                break;
-            case 8 : selectedCity = Constants.Hyderabad.toLowerCase();
-                break;
-
-        }
+        selectedCity = Constants.cityArray[position].toLowerCase();
 
         doSomething(selectedCity);
 
