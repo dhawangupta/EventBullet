@@ -15,49 +15,115 @@
         <!--android:id="@+id/map"-->
         <!--tools:context=".maps.MapsActivity"-->
         <!--android:name="com.google.android.gms.maps.SupportMapFragment" />-->
-    <com.mapbox.mapboxsdk.views.MapView
-        android:id="@+id/mapview"
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        mapbox:access_token="pk.eyJ1IjoienViZXIiLCJhIjoiY2lpaGVjM3ptMDA3MXU2a25iYnB0dzluYyJ9.z0PcPwFB-Jv2EpJqbJ5Qdw"/>
+        android:layout_weight="1">
+
+        <com.mapbox.mapboxsdk.views.MapView
+            android:id="@+id/mapview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            mapbox:access_token="pk.eyJ1IjoienViZXIiLCJhIjoiY2lpaGVjM3ptMDA3MXU2a25iYnB0dzluYyJ9.z0PcPwFB-Jv2EpJqbJ5Qdw" />
+
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:src="@drawable/button_action_blue_selector" />
+    </FrameLayout>
 
     <!-- whenever you want to add new layout, use wrap_content, not fill_parent -->
 
-    <LinearLayout
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="top"-->
+    <!--android:paddingLeft="5dp"-->
+    <!--android:paddingRight="5dp">-->
+
+    <!--<android.support.v7.widget.AppCompatButton-->
+    <!--android:id="@+id/btn_travel"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:text="Travel"/>-->
+
+    <!--<android.support.v7.widget.AppCompatButton-->
+    <!--android:id="@+id/btn_explore"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:text="Explore"/>-->
+
+    <!--&lt;!&ndash; spinner commented on request of Ravin-->
+    <!--<Spinner-->
+    <!--android:id="@+id/spinnerCountry"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="35dp"-->
+    <!--android:layout_marginLeft="5dp"-->
+    <!--android:layout_marginRight="5dp"-->
+    <!--android:layout_marginTop="-8dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@color/monsoon"-->
+    <!--android:spinnerMode="dropdown"/>-->
+    <!--&ndash;&gt;-->
+    <!--</LinearLayout>-->
+
+    <com.placediscovery.ui.HorizontalScrollView
+        android:id="@+id/hsfilters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="top"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+        android:scrollbars="none">
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_travel"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Travel"/>
+        <LinearLayout
+            android:id="@+id/filtertextviews"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_explore"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Explore"/>
-
-        <!-- spinner commented on request of Ravin
-        <Spinner
-            android:id="@+id/spinnerCountry"
-            android:layout_width="fill_parent"
-            android:layout_height="35dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="-8dp"
-            android:layout_weight="1"
-            android:background="@color/monsoon"
-            android:spinnerMode="dropdown"/>
-        -->
-    </LinearLayout>
+            <TextView
+                android:id="@+id/filter_all"
+                android:layout_width="110dp"
+                android:layout_height="45dp"
+                android:text="All"
+                android:textColor="@color/White"
+                android:textSize="15sp"
+                android:background="@color/Teal"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/filter_attractions"
+                android:layout_width="110dp"
+                android:layout_height="45dp"
+                android:text="Attractions"
+                android:textColor="@color/White"
+                android:textSize="15sp"
+                android:background="@color/OrangeRed"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/filter_food"
+                android:layout_width="110dp"
+                android:layout_height="45dp"
+                android:text="Food n Drinks"
+                android:textColor="@color/White"
+                android:textSize="15sp"
+                android:background="@color/ForestGreen"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/filter_events"
+                android:layout_width="110dp"
+                android:layout_height="45dp"
+                android:text="Events"
+                android:textColor="@color/White"
+                android:textSize="15sp"
+                android:background="@color/Brown"
+                android:gravity="center"/>
+        </LinearLayout>
+    </com.placediscovery.ui.HorizontalScrollView>
 
     <com.placediscovery.ui.HorizontalScrollView
         android:id="@+id/hs"
@@ -68,7 +134,7 @@
         <LinearLayout
             android:id="@+id/imageviews"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
