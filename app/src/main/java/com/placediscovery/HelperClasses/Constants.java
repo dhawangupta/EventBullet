@@ -18,7 +18,7 @@ public final  class Constants
     public static final String Agra="Agra";
     public static final String Hyderabad="Hyderabad";
 
-    public final static String[] cityArray = {Kolkata, Mumbai, NewDelhi, Chennai, Bengaluru, Varanasi, Jaipur, Agra, Hyderabad};
+    public final static String[] cityArray = {Varanasi, Agra, Kolkata, Mumbai, NewDelhi, Chennai, Bengaluru, Jaipur, Hyderabad};
 
     public static final String selectedCityLat="selectedCityLat";
     public static final String selectedCityLon="selectedCityLon";
