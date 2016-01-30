@@ -1,12 +1,9 @@
 package com.placediscovery.ui.activity;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
@@ -66,7 +63,7 @@ public class ContentActivity extends AppCompatActivity implements
         final UserStatus userStatus = new UserStatus();
         loggedInUser = new User(userStatus);
 
-        mDemoSlider = (SliderLayout)findViewById(R.id.contentPageImageSlider);
+        mDemoSlider = (SliderLayout) findViewById(R.id.contentPageImageSlider);
 
         //Following is the upper toolbar code which is not needed for now.
         /*
@@ -92,48 +89,47 @@ public class ContentActivity extends AppCompatActivity implements
         String bestTime = selectedPlace.getBestTime();
         String toDo = selectedPlace.getToDo();
 
-        TextView t1 = (TextView)findViewById(R.id.place_name);
-        TextView t2 = (TextView)findViewById(R.id.currentratingtext);
-        TextView countText = (TextView)findViewById(R.id.count);
-        final TextView rateThis = (TextView)findViewById(R.id.ratethis);
-        TextView t3 = (TextView)findViewById(R.id.place_content);
-        LinearLayout timingsLayout = (LinearLayout)findViewById(R.id.timings);
-        TextView timingsValue = (TextView)findViewById(R.id.timingsValue);
-        LinearLayout ticketLayout = (LinearLayout)findViewById(R.id.ticket);
-        TextView ticketValue = (TextView)findViewById(R.id.ticketValue);
-        LinearLayout bestTimeLayout = (LinearLayout)findViewById(R.id.bestTime);
-        TextView bestTimeValue = (TextView)findViewById(R.id.bestTimeValue);
-        LinearLayout toDoLayout = (LinearLayout)findViewById(R.id.toDo);
-        TextView toDoValue = (TextView)findViewById(R.id.toDoValue);
-        reviewField = (EditText)findViewById(R.id.reviewTextField);
-        Button reviewSubmitBtn = (Button)findViewById(R.id.reviewBtn);
+        TextView t1 = (TextView) findViewById(R.id.place_name);
+        TextView t2 = (TextView) findViewById(R.id.currentratingtext);
+        TextView countText = (TextView) findViewById(R.id.count);
+        final TextView rateThis = (TextView) findViewById(R.id.ratethis);
+        TextView t3 = (TextView) findViewById(R.id.place_content);
+        LinearLayout timingsLayout = (LinearLayout) findViewById(R.id.timings);
+        TextView timingsValue = (TextView) findViewById(R.id.timingsValue);
+        LinearLayout ticketLayout = (LinearLayout) findViewById(R.id.ticket);
+        TextView ticketValue = (TextView) findViewById(R.id.ticketValue);
+        LinearLayout bestTimeLayout = (LinearLayout) findViewById(R.id.bestTime);
+        TextView bestTimeValue = (TextView) findViewById(R.id.bestTimeValue);
+        LinearLayout toDoLayout = (LinearLayout) findViewById(R.id.toDo);
+        TextView toDoValue = (TextView) findViewById(R.id.toDoValue);
+        reviewField = (EditText) findViewById(R.id.reviewTextField);
+        Button reviewSubmitBtn = (Button) findViewById(R.id.reviewBtn);
 
 
         t1.setText(place_name);
-        t2.setText(currentRating+"/5");
+        t2.setText(currentRating + "/5");
         t3.setText(Html.fromHtml(place_content));
-        countText.setText("("+currentCount+")");
+        countText.setText("(" + currentCount + ")");
 
-        if(timings.equals(""))
+        if (timings.equals(""))
             timingsLayout.setVisibility(LinearLayout.GONE);
         else
-            timingsValue.setText(" "+timings);
+            timingsValue.setText(" " + timings);
 
-        if(ticket.equals(""))
+        if (ticket.equals(""))
             ticketLayout.setVisibility(LinearLayout.GONE);
         else
-            ticketValue.setText(" "+ticket);
+            ticketValue.setText(" " + ticket);
 
-        if(bestTime.equals(""))
+        if (bestTime.equals(""))
             bestTimeLayout.setVisibility(LinearLayout.GONE);
         else
-            bestTimeValue.setText(" "+bestTime);
+            bestTimeValue.setText(" " + bestTime);
 
-        if(toDo.equals(""))
+        if (toDo.equals(""))
             toDoLayout.setVisibility(LinearLayout.GONE);
         else
-            toDoValue.setText(" "+toDo);
-
+            toDoValue.setText(" " + toDo);
 
 
         rateThis.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +141,7 @@ public class ContentActivity extends AppCompatActivity implements
                     ratingDialog.setContentView(R.layout.dialog_ratingplace);
                     ratingDialog.setCancelable(true);
 
-                    ratingBar = (RatingBar)ratingDialog.findViewById(R.id.ratingbar);
+                    ratingBar = (RatingBar) ratingDialog.findViewById(R.id.ratingbar);
                     /*
                     * This is the listener for rating bar, edit it to change functionality
                     * */
@@ -166,7 +162,7 @@ public class ContentActivity extends AppCompatActivity implements
                         }
                     });
 
-                    Button submitBtn = (Button)ratingDialog.findViewById(R.id.rating_dialog_button);
+                    Button submitBtn = (Button) ratingDialog.findViewById(R.id.rating_dialog_button);
                     submitBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -174,7 +170,7 @@ public class ContentActivity extends AppCompatActivity implements
                             tsk.execute(selectedPlace);
 
                             UpdateUserRatingAsyncTask task = new UpdateUserRatingAsyncTask();
-                            task.execute(loggedInUser,selectedPlace.getPlace_id(),Float.toString(userRating));
+                            task.execute(loggedInUser, selectedPlace.getPlace_id(), Float.toString(userRating));
                         }
                     });
 
@@ -188,7 +184,7 @@ public class ContentActivity extends AppCompatActivity implements
         });
         String[] image_urls = image_url.split(",");
 
-        if(image_urls.length<=1) {
+        if (image_urls.length <= 1) {
             // following is old imageloader code
             int loader = R.drawable.loader;         //loader image
             String hd_url = image_url.substring(0, image_url.length() - 6) + ".jpg";
@@ -260,7 +256,7 @@ public class ContentActivity extends AppCompatActivity implements
         reviewSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(UserStatus.LoginStatus) {
+                if (UserStatus.LoginStatus) {
                     UpdatePlaceReviewAsyncTask task = new UpdatePlaceReviewAsyncTask();
                     task.execute(selectedPlace, loggedInUser.getUser_id(), review);
                 } else
@@ -270,7 +266,7 @@ public class ContentActivity extends AppCompatActivity implements
 
     }
 
-    void setUpReviews(){
+    void setUpReviews() {
 
         BasicDBObject[] reviewsObject = selectedPlace.getReviews();
         //dynamically creating textviews for reviews
@@ -281,12 +277,12 @@ public class ContentActivity extends AppCompatActivity implements
         progressBarFooter = (ProgressBar)
                 footer.findViewById(R.id.pbFooterLoading);
 
-        ListView reviewsList = (ListView)findViewById(R.id.reviewsList);
+        ListView reviewsList = (ListView) findViewById(R.id.reviewsList);
         reviewsList.addFooterView(progressBarFooter);
         TextView[] review_user_names = new TextView[reviewsObject.length];
         TextView[] reviews_values = new TextView[reviewsObject.length];
         LinearLayout[] reviews = new LinearLayout[reviewsObject.length];
-        for(int j=0; j<reviewsObject.length; j++){
+        for (int j = 0; j < reviewsObject.length; j++) {
             DBObject reviewObj = reviewsObject[j];
             String user_id = reviewObj.get("user_id").toString();
             String review = reviewObj.get("review").toString();
@@ -344,7 +340,7 @@ public class ContentActivity extends AppCompatActivity implements
                 OutputStreamWriter osw = new OutputStreamWriter(
                         connection.getOutputStream());
 
-                osw.write(qb.addNewRatingbyUser(place_id,rating));
+                osw.write(qb.addNewRatingbyUser(place_id, rating));
                 osw.flush();
                 osw.close();
                 return connection.getResponseCode() < 205;
@@ -357,7 +353,7 @@ public class ContentActivity extends AppCompatActivity implements
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            if(aBoolean){
+            if (aBoolean) {
                 Toast.makeText(ContentActivity.this, "Rating submitted successfully", Toast.LENGTH_SHORT).show();
 
             } else
@@ -405,7 +401,7 @@ public class ContentActivity extends AppCompatActivity implements
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            if(aBoolean){
+            if (aBoolean) {
                 Toast.makeText(ContentActivity.this, "Review submitted successfully", Toast.LENGTH_SHORT).show();
                 reviewField.setText("");
             } else
@@ -426,10 +422,9 @@ public class ContentActivity extends AppCompatActivity implements
         @Override
         protected User doInBackground(Object... arg0) {
 
-            String user_id = (String)arg0[0];
+            String user_id = (String) arg0[0];
             User user = new User();  //user according to the user_id
-            try
-            {
+            try {
 
                 UserQueryBuilder qb = new UserQueryBuilder();
                 URL url = new URL(qb.buildUsersGetURL(user_id));
@@ -451,7 +446,7 @@ public class ContentActivity extends AppCompatActivity implements
                 }
 
                 // create a basic db list
-                String mongoarray = "{ artificial_basicdb_list: "+server_output+"}";
+                String mongoarray = "{ artificial_basicdb_list: " + server_output + "}";
                 Object o = com.mongodb.util.JSON.parse(mongoarray);
 
 
@@ -473,9 +468,9 @@ public class ContentActivity extends AppCompatActivity implements
 //                    BasicDBObject[] ratingsArr = ratingsList.toArray(new BasicDBObject[0]);
 //                    temp.setRatings(ratingsArr);
 
-                    user=temp;
+                    user = temp;
                 }
-            }catch (Exception e) {
+            } catch (Exception e) {
                 e.getMessage();
             }
             return user;
@@ -492,14 +487,17 @@ public class ContentActivity extends AppCompatActivity implements
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
     }
+
     @Override
     public void onPageSelected(int position) {
 
     }
+
     @Override
     public void onPageScrollStateChanged(int state) {
 
     }
+
     @Override
     public void onSliderClick(BaseSliderView slider) {
 
