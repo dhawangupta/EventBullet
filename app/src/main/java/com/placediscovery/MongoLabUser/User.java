@@ -2,32 +2,32 @@ package com.placediscovery.MongoLabUser;
 
 
 import com.mongodb.BasicDBObject;
-import com.placediscovery.ui.activity.LoginActivity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by Dhawan Gupta on 04-10-2015.
  */
-public class User implements Serializable{
+public class User implements Serializable {
 
     public String user_id;
     public String name;
     public String email;
     public String password;
-    public String savedplaces="";
+    public String savedplaces = "";
     public BasicDBObject[] ratings;
 
-    public User(){}
+    public User() {
+    }
 
-    public User(UserStatus userStatus){
+    public User(UserStatus userStatus) {
         user_id = UserStatus.getUser_Id();
         name = UserStatus.getName();
         email = UserStatus.getEmail();
         password = UserStatus.getPassword();
         savedplaces = UserStatus.getSavedPlaces();
     }
+
     public String getSavedplaces() {
         return savedplaces;
     }
