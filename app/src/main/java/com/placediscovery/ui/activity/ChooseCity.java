@@ -83,10 +83,12 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
             Toast.makeText(ChooseCity.this, "Check your internet!!", Toast.LENGTH_LONG).show();
         }
 
-        //Add here for selecting city from card layout. "cityname" should be same as that in db.
-        selectedCity = Constants.cityArray[position].toLowerCase();
-
-        doSomething(selectedCity);
+        if(position==0) {
+            selectedCity = Constants.cityArray[position].toLowerCase();
+            doSomething(selectedCity);
+        } else{
+            Toast.makeText(ChooseCity.this, "We will be there soon!!!", Toast.LENGTH_LONG).show();
+        }
 
     }
 
