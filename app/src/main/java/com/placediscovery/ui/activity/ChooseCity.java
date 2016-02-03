@@ -164,9 +164,7 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
                     temp.setTimings(placeObj.get("timings").toString());
                     temp.setTicket(placeObj.get("ticket").toString());
                     temp.setBestTime(placeObj.get("bestTime").toString());
-                    try {
-                        temp.setToDo(placeObj.get("toDo").toString());
-                    }catch (Exception ex){}
+
                     try {
                         BasicDBList reviewsList = (BasicDBList) placeObj.get("reviews");
                         BasicDBObject[] reviewsArr = reviewsList.toArray(new BasicDBObject[0]);

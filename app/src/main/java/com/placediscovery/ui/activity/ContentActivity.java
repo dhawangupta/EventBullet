@@ -87,7 +87,6 @@ public class ContentActivity extends AppCompatActivity implements
         String timings = selectedPlace.getTimings();
         String ticket = selectedPlace.getTicket();
         String bestTime = selectedPlace.getBestTime();
-        String toDo = selectedPlace.getToDo();
 
         TextView t1 = (TextView) findViewById(R.id.place_name);
         TextView t2 = (TextView) findViewById(R.id.currentratingtext);
@@ -100,8 +99,6 @@ public class ContentActivity extends AppCompatActivity implements
         TextView ticketValue = (TextView) findViewById(R.id.ticketValue);
         LinearLayout bestTimeLayout = (LinearLayout) findViewById(R.id.bestTime);
         TextView bestTimeValue = (TextView) findViewById(R.id.bestTimeValue);
-        LinearLayout toDoLayout = (LinearLayout) findViewById(R.id.toDo);
-        TextView toDoValue = (TextView) findViewById(R.id.toDoValue);
         reviewField = (EditText) findViewById(R.id.reviewTextField);
         Button reviewSubmitBtn = (Button) findViewById(R.id.reviewBtn);
 
@@ -125,12 +122,6 @@ public class ContentActivity extends AppCompatActivity implements
             bestTimeLayout.setVisibility(LinearLayout.GONE);
         else
             bestTimeValue.setText(" " + bestTime);
-
-        if (toDo.equals(""))
-            toDoLayout.setVisibility(LinearLayout.GONE);
-        else
-            toDoValue.setText(" " + toDo);
-
 
         rateThis.setOnClickListener(new View.OnClickListener() {
             @Override
