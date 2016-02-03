@@ -108,9 +108,10 @@ public class PlaceQueryBuilder {
 						"\"timings\":\"%s\"," +
 						"\"ticket\":\"%s\"," +
 						"\"bestTime\":\"%s\"," +
+						"\"events\":[],"+
 						"\"reviews\":[]"+
 						"}",
-                place.getName(),place.getLatitude(), place.getLongitude(), place.getFilter(),
+				place.getName(),place.getLatitude(), place.getLongitude(), place.getFilter(),
 				place.getImageURL(), place.getContent(), place.getAverageRating(), place.getCount(),
 				place.getTimings(),place.getTicket(),place.getBestTime());
 	}
@@ -134,7 +135,7 @@ public class PlaceQueryBuilder {
 						"\"ticket\":\"%s\"," +
 						"\"bestTime\":\"%s\"," +
 						" } }",
-                place.getName(),place.getLatitude(), place.getLongitude(), place.getFilter(),
+				place.getName(),place.getLatitude(), place.getLongitude(), place.getFilter(),
 				place.getImageURL(), place.getContent(), place.getAverageRating(), place.getCount(),
 				place.getTimings(),place.getTicket(),place.getBestTime());
     }
