@@ -85,28 +85,19 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
 
         if(position==0) {
             selectedCity = Constants.cityArray[position].toLowerCase();
-            doSomething(selectedCity);
-        } else{
-            Toast.makeText(ChooseCity.this, "We will be there soon!!!", Toast.LENGTH_LONG).show();
-        }
 
-    }
-
-    void doSomething(String selectedCity){
-        try {
-            places = (ArrayList<Place>)HelperMethods.readObject(this, selectedCity);
-            intent.putExtra("places", places);
-            intent.putExtra("selectedCity", selectedCity);
-            startActivity(intent);
-        } catch (Exception e) {
             GetPlacesAsyncTaskProgressDialog task = new GetPlacesAsyncTaskProgressDialog();
             try {
                 task.execute();
 
             } catch (Exception ex) {
-                e.printStackTrace();
+                ex.printStackTrace();
             }
+
+        } else{
+            Toast.makeText(ChooseCity.this, "We will be there soon!!!", Toast.LENGTH_LONG).show();
         }
+
     }
 
     private class GetPlacesAsyncTaskProgressDialog extends AsyncTask<Place, Void, ArrayList<Place>> {
@@ -131,9 +122,7 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
         protected ArrayList<Place> doInBackground(Place... arg0) {
 
             ArrayList<Place> places = new ArrayList<>();
-            try
-            {
-
+            try{
                 PlaceQueryBuilder qb = new PlaceQueryBuilder(selectedCity);
                 URL url = new URL(qb.buildPlacesGetURL());
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -156,7 +145,6 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
                 String mongoarray = "{ artificial_basicdb_list: "+server_output+"}";
                 Object o = com.mongodb.util.JSON.parse(mongoarray);
 
-
                 DBObject dbObj = (DBObject) o;
                 BasicDBList places_list = (BasicDBList) dbObj.get("artificial_basicdb_list");
 
@@ -178,9 +166,7 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
                     temp.setBestTime(placeObj.get("bestTime").toString());
                     try {
                         temp.setToDo(placeObj.get("toDo").toString());
-                    }catch (Exception ex){
-                        temp.setToDo(placeObj.get("toDO").toString());
-                    }
+                    }catch (Exception ex){}
                     try {
                         BasicDBList reviewsList = (BasicDBList) placeObj.get("reviews");
                         BasicDBObject[] reviewsArr = reviewsList.toArray(new BasicDBObject[0]);
@@ -212,8 +198,15 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
                 intent.putExtra("selectedCity", selectedCity);
                 startActivity(intent);
             } else {
-                Toast.makeText(getApplicationContext(),"Something went wrong, please try again!!",
-                        Toast.LENGTH_SHORT).show();
+                try {
+                    places = (ArrayList<Place>)HelperMethods.readObject(ChooseCity.this, selectedCity);
+                    intent.putExtra("places", places);
+                    intent.putExtra("selectedCity", selectedCity);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(),"Something went wrong, please try again!!",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
