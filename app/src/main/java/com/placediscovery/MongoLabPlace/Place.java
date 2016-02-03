@@ -19,7 +19,6 @@ public class Place implements Serializable{
 	public String timings="";
 	public String ticket="";
 	public String bestTime="";
-	public String toDo="";
 	public BasicDBObject[] reviews;
 
 	public String getPlace_id() {
@@ -118,15 +117,7 @@ public class Place implements Serializable{
 		this.bestTime = bestTime;
 	}
 
-	public String getToDo() {
-		return toDo;
-	}
-
-	public void setToDo(String toDo) {
-		this.toDo = toDo;
-	}
-
-    public BasicDBObject[] getReviews() {
+	public BasicDBObject[] getReviews() {
         return reviews;
     }
 
