@@ -48,21 +48,6 @@
                     custom:pager_animation_span="1100"
                     android:layout_height="230dp"/>     <!-- Height of image slider on content page -->
 
-                <!--<br.liveo.navigationliveo.FloatingActionButton-->
-                    <!--android:id="@+id/fab"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_below="@+id/contentPageImageSlider"-->
-                    <!--android:layout_marginTop="-35dp"-->
-                    <!--android:layout_marginBottom="0dp"-->
-                    <!--android:layout_marginRight="10dp"-->
-                    <!--android:src="@drawable/ic_star"-->
-                    <!--app:fab_elevationCompat="6dp"-->
-                    <!--app:fab_colorNormal="#1565C0"-->
-                    <!--app:fab_colorPressed="#2272CD"-->
-                    <!--app:fab_colorRipple="#62B2FF"/>-->
-
             </RelativeLayout>
 
             <RelativeLayout
