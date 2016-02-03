@@ -19,6 +19,7 @@ public class Place implements Serializable{
 	public String timings="";
 	public String ticket="";
 	public String bestTime="";
+	public Event[] events;
 	public BasicDBObject[] reviews;
 
 	public String getPlace_id() {
@@ -123,5 +124,13 @@ public class Place implements Serializable{
 
     public void setReviews(BasicDBObject[] reviews) {
         this.reviews = reviews;
+    }
+
+    public Event[] getEvents() {
+        return events;
+    }
+
+    public void setEvents(Event[] events) {
+        this.events = events;
     }
 }
