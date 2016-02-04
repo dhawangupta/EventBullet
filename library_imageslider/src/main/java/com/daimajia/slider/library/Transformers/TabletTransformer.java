@@ -22,7 +22,7 @@ public class TabletTransformer extends BaseTransformer {
         ViewHelper.setRotationY(view,rotation);
 	}
 
-	protected static final float getOffsetXForRotation(float degrees, int width, int height) {
+	protected static float getOffsetXForRotation(float degrees, int width, int height) {
 		OFFSET_MATRIX.reset();
 		OFFSET_CAMERA.save();
 		OFFSET_CAMERA.rotateY(Math.abs(degrees));
