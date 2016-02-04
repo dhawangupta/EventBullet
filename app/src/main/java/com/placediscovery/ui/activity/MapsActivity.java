@@ -1,8 +1,11 @@
 package com.placediscovery.ui.activity;
 
-import android.app.ProgressDialog;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,58 +13,68 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mapbox.mapboxsdk.annotations.Marker;
-import com.mapbox.mapboxsdk.annotations.MarkerOptions;
-import com.mapbox.mapboxsdk.camera.CameraPosition;
-import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
-import com.mapbox.mapboxsdk.constants.Style;
-import com.mapbox.mapboxsdk.geometry.LatLng;
-import com.mapbox.mapboxsdk.views.MapView;
-//import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
-//import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
-//import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
-import com.placediscovery.HelperClasses.Constants;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.melnykov.fab.FloatingActionButton;
 import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
 
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity implements View.OnClickListener {
-    //AppCompatActivity extends FragmentActivity
-    //FloatingActionButton actionButton;
-    ProgressDialog progressDialog;
-    //    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    MapView mapView=null;
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-//    Spinner spinner;
-//    //Create a Data Source it may be an Array of String or ArrayList<String>
-//    String []arr = {"Filter","Gaming","Drugs","Sex","Partying","Religious","Others"};
-//    // An adapter to show data
-//    ArrayAdapter<String> adapter;
+    FloatingActionButton fab;
 
     ArrayList<Place> places = new ArrayList<>();
     ArrayList<Place> places_filtered = new ArrayList<>();
     ArrayList<Marker> places_marker = new ArrayList<>();
-
     String selectedCity;
+    TextView[] filtersTextViews;
+    private GoogleMap mMap;
+    private GoogleApiClient mGoogleApiClient;
+    private Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+
         selectedCity = getIntent().getExtras().getString("selectedCity");
         //retrieving places
-        places = (ArrayList<Place>)getIntent().getExtras().getSerializable("places");
+        places = (ArrayList<Place>) getIntent().getExtras().getSerializable("places");
+        filtersTextViews = new TextView[places.size()];
+        initTextViews();
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+    }
 
-        TextView[] filtersTextViews = new TextView[places.size()];
 
-        filtersTextViews[0] = (TextView)findViewById(R.id.filter_all);
-        filtersTextViews[1] = (TextView)findViewById(R.id.filter_attractions);
-        filtersTextViews[2] = (TextView)findViewById(R.id.filter_food);
-        filtersTextViews[3] = (TextView)findViewById(R.id.filter_events);
-
+    private void initTextViews() {
+        filtersTextViews[0] = (TextView) findViewById(R.id.filter_all);
+        filtersTextViews[1] = (TextView) findViewById(R.id.filter_attractions);
+        filtersTextViews[2] = (TextView) findViewById(R.id.filter_food);
+        filtersTextViews[3] = (TextView) findViewById(R.id.filter_events);
         filtersTextViews[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,174 +82,94 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
                 loadMarkers(places_filtered);
             }
         });
+        setFilters(filtersTextViews[1]);
+        setFilters(filtersTextViews[2]);
+        setFilters(filtersTextViews[3]);
+    }
 
-        filtersTextViews[1].setOnClickListener(new View.OnClickListener() {
+    private void setFilters(TextView textView) {
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView tv = (TextView) v;
+                String filter = (String) tv.getText();
                 places_filtered.clear();
                 for (Place p : places) {
-                    if (p.getFilter().equals("Attractions"))
+                    if (p.getFilter().equals(filter))
                         places_filtered.add(p);
                 }
                 loadMarkers(places_filtered);
             }
         });
-
-        filtersTextViews[2].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                places_filtered.clear();
-                for (Place p:places){
-                    if(p.getFilter().equals("Food & Drinks"))
-                        places_filtered.add(p);
-                }
-                loadMarkers(places_filtered);
-            }
-        });
-
-        filtersTextViews[3].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                places_filtered.clear();
-                for (Place p : places) {
-                    if (p.getFilter().equals("Live") || p.getFilter().equals("Events"))
-                        places_filtered.add(p);
-                }
-                loadMarkers(places_filtered);
-            }
-        });
-
-//        actionButton = (FloatingActionButton)findViewById(R.id.fab);
-//        setFAB(initFAB(R.drawable.ic_star));
-//        createMenuItems();
-
-
-//        spinner = (Spinner) findViewById(R.id.spinnerCountry);
-//        adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, arr);
-//        spinner.setAdapter(adapter);
-// //Used OnItemSelected Listener for Spinner item click, here i am showing a toast
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                String selectedItem = spinner.getSelectedItem().toString();
-//                Toast.makeText(getApplicationContext(), "Clicked" + selectedItem, Toast.LENGTH_LONG).show();
-//// Filter option chosen
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-
-  /*      travel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MapsActivity.this, "Travel Places", Toast.LENGTH_SHORT).show();
-                //change map places to travel places
-            }
-        });*/
-
-       /* explore.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                GetUserPlacesAsyncTask tsk = new GetUserPlacesAsyncTask();
-                tsk.execute();
-
-            }
-        });*/
-
-
-//        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(mToolbar);
-//        getSupportActionBar().setTitle("Add Place");  //title for the toolbar
-//
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//
-//        mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onBackPressed();
-//            }
-//        });         //back icon added
-
-
-
-        
-        loadPlacesImages();
-            
-        setUpMapIfNeeded(savedInstanceState);
 
     }
 
-//    private void setFAB(ImageView imageView) {
-//        actionButton = new FloatingActionButton.Builder(this)
-//                .setContentView(imageView)
-//                .setBackgroundDrawable(R.drawable.button_action_red_selector)
-//                .build();
-//    }
-//
-//    private ImageView initFAB(int drawable) {
-//        ImageView imageView = new ImageView(this);
-//        imageView.setImageResource(drawable);
-//        return imageView;
-//
-//    }
-//
-//    private void createMenuItems() {
-//        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
-//        itemBuilder.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_action_blue_selector));
-////        Creating Menu  items
-//        SubActionButton button1 = itemBuilder.setContentView(initFAB(R.drawable.ic_my_location_white_48dp))
-//
-//                .build();
-//        SubActionButton button2 = itemBuilder.setContentView(initFAB(R.drawable.ic_close)).build();
-//        SubActionButton button3 = itemBuilder.setContentView(initFAB(R.drawable.ic_menu)).build();
-//        button1.setOnClickListener(this);
-//        button2.setOnClickListener(this);
-//        button3.setOnClickListener(this);
-//        button3.setTag(Constants.TAG_LOCATION);
-//        button2.setTag(Constants.TAG_FILTER);
-//        button1.setTag(Constants.TAG_NOTYETDECIDED);
-//
-//
-////        Create Menu with Items
-//        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
-//                .addSubActionView(button1)
-//                .addSubActionView(button2)
-//                .addSubActionView(button3)
-//                        //  .addSubActionView(button4)
-//                .attachTo(actionButton)
-//                .build();
-//
-//    }
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
 
-    private void loadMarkers(ArrayList<Place> places_filtered){
-        for(Marker m:places_marker)
-            mapView.removeMarker(m);
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        // Add a marker in Sydney and move the camera
+        setUpMap();
+    }
 
-        for (Place x : places_filtered )
-        {
-            places_marker.add(mapView.addMarker(new MarkerOptions().position(
+
+    private void setUpMap() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        fab.setOnClickListener(this);
+
+        try {
+            Place first = places.get(0);
+            if (first != null) {
+                LatLng flatlang = new LatLng(Double.parseDouble(first.getLatitude()), Double.parseDouble(first.getLongitude()));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(flatlang, 11));
+                for (Place x : places) {
+                    places_marker.add(mMap.addMarker(new MarkerOptions().position(
+                            new LatLng(Double.parseDouble(x.getLatitude()),
+                                    Double.parseDouble(x.getLongitude()))).title(x.getName())));
+                }
+            }
+        } catch (IndexOutOfBoundsException e) {
+            //startActivity(new Intent(MapsActivity.this, ChooseCity.class));
+            Toast.makeText(this, "Check your internet!!!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void loadMarkers(ArrayList<Place> places_filtered) {
+
+        mMap.clear();
+
+        for (Place x : places_filtered) {
+            places_marker.add(mMap.addMarker(new MarkerOptions().position(
                     new LatLng(Double.parseDouble(x.getLatitude()),
                             Double.parseDouble(x.getLongitude()))).title(x.getName())));
         }
 
-        Toast.makeText(MapsActivity.this, "Places Updated for you", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MapActivity.this, "Places Updated for you", Toast.LENGTH_SHORT).show();
         //change map places to explore places
     }
 
-    private void loadFiltersLayout(){
-        
-    }
-    
-    private void loadPlacesImages(){
+
+    private void loadPlacesImages() {
         int loader = R.drawable.loader;         //loader image
         final Intent[] intents = new Intent[places.size()];
 
@@ -246,21 +179,21 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
 
         //converting px to dp
         final float scale = getResources().getDisplayMetrics().density;
-        int dpWidthInPx  = (int) (150 * scale);
+        int dpWidthInPx = (int) (150 * scale);
         int dpHeightInPx = (int) (100 * scale);
-        int dpMarginInPx = (int) (1*scale);
+        int dpMarginInPx = (int) (1 * scale);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dpWidthInPx, dpHeightInPx);
         params.setMargins(dpMarginInPx, dpMarginInPx, dpMarginInPx, dpMarginInPx);
 
-        for(int j=0; j<places.size(); j++){
+        for (int j = 0; j < places.size(); j++) {
             // Image url
             String image_url = places.get(j).getImageURL().split(",")[0];
-            if(image_url.equals("")){
+            if (image_url.equals("")) {
                 continue;
             }
             iv[j] = new ImageView(this);
-            iv[j].setId(j+1);
+            iv[j].setId(j + 1);
             iv[j].setLayoutParams(params);
             imageviews.addView(iv[j]);
 
@@ -278,7 +211,7 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
             iv[j].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    intents[finalJ] = new Intent(MapsActivity.this, ContentActivity.class);
+                    intents[finalJ] = new Intent(MapActivity.this, ContentActivity.class);
 
                     intents[finalJ].putExtra("imageviewId", finalJ);
                     intents[finalJ].putExtra("placesObject", places);
@@ -287,81 +220,35 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
                 }
             });
         }
-        //following lines of code can be used for retrieving ids when used in a loop
-//        String idImageView = "imageview" + i;
-//        iv[i] = (ImageView) findViewById(MapsActivity.this.getResources().getIdentifier(i+"", "id", getPackageName()));
-    }
-    
-    private void setUpMapIfNeeded(Bundle savedInstanceState) {
-        // Do a null check to confirm that we have not already instantiated the map.
-        mapView=(MapView)findViewById(R.id.mapview);
-        if (mapView != null)
-        {
-            setUpMap(savedInstanceState);
-        }
-
     }
 
 
-    private void setUpMap(Bundle savedInstanceState) {
-
-        mapView.setStyleUrl(Style.MAPBOX_STREETS);
-        mapView.setZoomLevel(11);
-        mapView.onCreate(savedInstanceState);
-
-        try{
-            Place first = places.get(0);
-            if(first!=null)
-            {
-                LatLng flatlang = new LatLng(Double.parseDouble(first.getLatitude()), Double.parseDouble(first.getLongitude()));
-                mapView.setCenterCoordinate(flatlang);
-                for (Place x : places)
-                {
-                    places_marker.add(mapView.addMarker(new MarkerOptions().position(
-                            new LatLng(Double.parseDouble(x.getLatitude()),
-                                    Double.parseDouble(x.getLongitude()))).title(x.getName())));
-                }
-            }
-        } catch (IndexOutOfBoundsException e){
-            //startActivity(new Intent(MapsActivity.this, ChooseCity.class));
-            Toast.makeText(this, "Check your internet!!!", Toast.LENGTH_LONG).show();
-        }
-    }
     @Override
     protected void onStart() {
         super.onStart();
-        mapView.onStart();
+        mGoogleApiClient.connect();
+        loadPlacesImages();
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
-        mapView.onResume();
     }
 
     @Override
-    public void onPause()  {
+    protected void onPause() {
         super.onPause();
-        mapView.onPause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mapView.onStop();
+        mGoogleApiClient.disconnect();
     }
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mapView.onDestroy();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
     }
 
     /**
@@ -371,110 +258,43 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
      */
     @Override
     public void onClick(View v) {
-        if (v.getTag().equals(Constants.TAG_LOCATION)) {
+        if (v.getId() == R.id.fab) {
 
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(mapView.getMyLocation()))   // Sets the center of the map to Maracanã
-                    .tilt(20)                                   // Sets the tilt of the camera to 30 degrees
-                    .build();                                   // Creates a CameraPosition from the builder
 
-            mapView.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 25000, null);
-        } else if (v.getTag().equals(Constants.TAG_FILTER)) {
-
-        } else if (v.getTag().equals(Constants.TAG_NOTYETDECIDED)) {
-
+            if (location == null) {
+                return;
+            }
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            Toast.makeText(this, String.valueOf(latitude), Toast.LENGTH_LONG).show();
         }
     }
 
-    /*private class GetUserPlacesAsyncTask extends AsyncTask<Place, Void, ArrayList<Place>> {
-
-        String server_output = null;
-        String temp_output = null;
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = ProgressDialog.show(MapsActivity.this, "",
-                    "loading places...", false, true);
+    @Override
+    public void onConnected(Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
         }
-
-        @Override
-        protected ArrayList<Place> doInBackground(Place... arg0) {
-
-            ArrayList<Place> places = new ArrayList<>();
-            try
-            {
-
-                PlaceQueryBuilder qb = new PlaceQueryBuilder(selectedCity+"_users");
-                URL url = new URL(qb.buildPlacesGetURL());
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Accept", "application/json");
-
-                if (conn.getResponseCode() != 200) {
-                    throw new RuntimeException("Failed : HTTP error code : "
-                            + conn.getResponseCode());
-                }
-
-                BufferedReader br = new BufferedReader(new InputStreamReader(
-                        (conn.getInputStream())));
-
-                while ((temp_output = br.readLine()) != null) {
-                    server_output = temp_output;
-                }
-
-                // create a basic db list
-                String mongoarray = "{ artificial_basicdb_list: "+server_output+"}";
-                Object o = com.mongodb.util.JSON.parse(mongoarray);
+        location = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
 
 
-                DBObject dbObj = (DBObject) o;
-                BasicDBList places_list = (BasicDBList) dbObj.get("artificial_basicdb_list");
-
-                for (Object obj : places_list) {
-                    DBObject userObj = (DBObject) obj;
-
-                    Place temp = new Place();
-                    temp.setPlace_id(userObj.get("_id").toString());
-                    temp.setName(userObj.get("name").toString());
-                    temp.setLatitude(userObj.get("latitude").toString());
-                    temp.setLongitude(userObj.get("longitude").toString());
-                    temp.setFilter(userObj.get("filter").toString());
-                    temp.setImageURL(userObj.get("imageURL").toString());
-                    temp.setContent(userObj.get("content").toString());
-                    temp.setAverageRating(userObj.get("averageRating").toString());
-                    temp.setCount(userObj.get("count").toString());
-                    places.add(temp);
-
-                }
-                HelperMethods.saveObjectToCache("saved_" + selectedCity, places);
-            }catch (Exception e) {
-                e.getMessage();
-            }
-
-            return places;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Place> places) {
-            if(progressDialog!=null && progressDialog.isShowing()){
-                progressDialog.dismiss();}
-            users_places = places;
-
-            for(Marker m:places_marker)
-                mapView.removeMarker(m);
-
-            for (Place x : users_places)
-            {
-                users_places_marker.add(mapView.addMarker(new MarkerOptions().position(
-                        new LatLng(Double.parseDouble(x.getLatitude()),
-                                Double.parseDouble(x.getLongitude()))).title(x.getName())));
-            }
-
-            Toast.makeText(MapsActivity.this, "Explore Places", Toast.LENGTH_SHORT).show();
-            //change map places to explore places
-        }
     }
-*/
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
 }

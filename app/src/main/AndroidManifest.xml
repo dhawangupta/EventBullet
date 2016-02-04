@@ -54,9 +54,14 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:windowSoftInputMode="stateUnchanged"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity
             android:name=".ui.activity.MapsActivity"
-            android:label="@string/title_activity_maps"/>
+            android:label="Map" />
+
 
         <!--<activity-->
         <!--android:name="com.facebook.FacebookActivity"-->
