@@ -164,7 +164,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Double.parseDouble(x.getLongitude()))).title(x.getName())));
         }
 
-        Toast.makeText(MapActivity.this, "Places Updated for you", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MapsActivity.this, "Places Updated for you", Toast.LENGTH_SHORT).show();
         //change map places to explore places
     }
 
@@ -211,7 +211,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             iv[j].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    intents[finalJ] = new Intent(MapActivity.this, ContentActivity.class);
+                    intents[finalJ] = new Intent(MapsActivity.this, ContentActivity.class);
 
                     intents[finalJ].putExtra("imageviewId", finalJ);
                     intents[finalJ].putExtra("placesObject", places);
