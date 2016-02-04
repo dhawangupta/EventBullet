@@ -25,8 +25,8 @@ import com.placediscovery.MongoLabPlace.PlaceQueryBuilder;
 import com.placediscovery.R;
 import com.placediscovery.HelperClasses.Constants;
 import com.placediscovery.HelperClasses.HelperMethods;
-import com.placediscovery.ui.activity.adapter.CityAdapter;
-import com.placediscovery.ui.activity.adapter.CityManager;
+import com.placediscovery.ui.adapter.CityAdapter;
+import com.placediscovery.ui.adapter.CityManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;

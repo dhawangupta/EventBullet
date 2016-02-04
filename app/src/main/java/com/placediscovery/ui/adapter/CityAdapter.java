@@ -1,4 +1,4 @@
-package com.placediscovery.ui.activity.adapter;
+package com.placediscovery.ui.adapter;
 
 /**
  * Created by ARIMIT on 18-Sep-15.
