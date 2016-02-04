@@ -22,6 +22,7 @@ import com.mapbox.mapboxsdk.views.MapView;
 //import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.placediscovery.HelperClasses.Constants;
 import com.placediscovery.ImageLoader.ImageLoader;
+import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
 
@@ -49,6 +50,60 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
         //retrieving places
         places = (ArrayList<Place>)getIntent().getExtras().getSerializable("places");
 
+//        actionButton = (FloatingActionButton)findViewById(R.id.fab);
+//        setFAB(initFAB(R.drawable.ic_star));
+//        createMenuItems();
+
+        loadFiltersLayout();
+        loadImages();
+            
+        setUpMapIfNeeded(savedInstanceState);
+
+    }
+
+//    private void setFAB(ImageView imageView) {
+//        actionButton = new FloatingActionButton.Builder(this)
+//                .setContentView(imageView)
+//                .setBackgroundDrawable(R.drawable.button_action_red_selector)
+//                .build();
+//    }
+//
+//    private ImageView initFAB(int drawable) {
+//        ImageView imageView = new ImageView(this);
+//        imageView.setImageResource(drawable);
+//        return imageView;
+//
+//    }
+//
+//    private void createMenuItems() {
+//        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+//        itemBuilder.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_action_blue_selector));
+////        Creating Menu  items
+//        SubActionButton button1 = itemBuilder.setContentView(initFAB(R.drawable.ic_my_location_white_48dp))
+//
+//                .build();
+//        SubActionButton button2 = itemBuilder.setContentView(initFAB(R.drawable.ic_close)).build();
+//        SubActionButton button3 = itemBuilder.setContentView(initFAB(R.drawable.ic_menu)).build();
+//        button1.setOnClickListener(this);
+//        button2.setOnClickListener(this);
+//        button3.setOnClickListener(this);
+//        button3.setTag(Constants.TAG_LOCATION);
+//        button2.setTag(Constants.TAG_FILTER);
+//        button1.setTag(Constants.TAG_NOTYETDECIDED);
+//
+//
+////        Create Menu with Items
+//        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+//                .addSubActionView(button1)
+//                .addSubActionView(button2)
+//                .addSubActionView(button3)
+//                        //  .addSubActionView(button4)
+//                .attachTo(actionButton)
+//                .build();
+//
+//    }
+
+    private void loadFiltersLayout(){
         TextView[] filtersTextViews = new TextView[places.size()];
 
         filtersTextViews[0] = (TextView)findViewById(R.id.filter_all);
@@ -99,58 +154,7 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
                 loadMarkers(places_filtered);
             }
         });
-
-//        actionButton = (FloatingActionButton)findViewById(R.id.fab);
-//        setFAB(initFAB(R.drawable.ic_star));
-//        createMenuItems();
-
-        loadPlacesImages();
-            
-        setUpMapIfNeeded(savedInstanceState);
-
     }
-
-//    private void setFAB(ImageView imageView) {
-//        actionButton = new FloatingActionButton.Builder(this)
-//                .setContentView(imageView)
-//                .setBackgroundDrawable(R.drawable.button_action_red_selector)
-//                .build();
-//    }
-//
-//    private ImageView initFAB(int drawable) {
-//        ImageView imageView = new ImageView(this);
-//        imageView.setImageResource(drawable);
-//        return imageView;
-//
-//    }
-//
-//    private void createMenuItems() {
-//        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
-//        itemBuilder.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_action_blue_selector));
-////        Creating Menu  items
-//        SubActionButton button1 = itemBuilder.setContentView(initFAB(R.drawable.ic_my_location_white_48dp))
-//
-//                .build();
-//        SubActionButton button2 = itemBuilder.setContentView(initFAB(R.drawable.ic_close)).build();
-//        SubActionButton button3 = itemBuilder.setContentView(initFAB(R.drawable.ic_menu)).build();
-//        button1.setOnClickListener(this);
-//        button2.setOnClickListener(this);
-//        button3.setOnClickListener(this);
-//        button3.setTag(Constants.TAG_LOCATION);
-//        button2.setTag(Constants.TAG_FILTER);
-//        button1.setTag(Constants.TAG_NOTYETDECIDED);
-//
-//
-////        Create Menu with Items
-//        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
-//                .addSubActionView(button1)
-//                .addSubActionView(button2)
-//                .addSubActionView(button3)
-//                        //  .addSubActionView(button4)
-//                .attachTo(actionButton)
-//                .build();
-//
-//    }
 
     private void loadMarkers(ArrayList<Place> places_filtered){
         for(Marker m:places_marker)
@@ -167,17 +171,24 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
         //change map places to explore places
     }
 
-    private void loadFiltersLayout(){
-        
-    }
-    
-    private void loadPlacesImages(){
+
+    private void loadImages(){
         int loader = R.drawable.loader;         //loader image
-        final Intent[] intents = new Intent[places.size()];
+
+        // counting numOfImages
+        int numOfImages = 0;
+        for(Place p:places){
+            if(p.getFilter().equals("Events"))
+                numOfImages+=p.getEvents().length;
+            else
+                numOfImages++;
+        }
+
+        final Intent[] intents = new Intent[numOfImages];
 
         //dyanmically creating imageviews
         LinearLayout imageviews = (LinearLayout) findViewById(R.id.imageviews);
-        ImageView[] iv = new ImageView[places.size()];
+        ImageView[] iv = new ImageView[numOfImages];
 
         //converting px to dp
         final float scale = getResources().getDisplayMetrics().density;
@@ -188,39 +199,69 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dpWidthInPx, dpHeightInPx);
         params.setMargins(dpMarginInPx, dpMarginInPx, dpMarginInPx, dpMarginInPx);
 
-        for(int j=0; j<places.size(); j++){
-            // Image url
-            String image_url = places.get(j).getImageURL().split(",")[0];
-            if(image_url.equals("")){
-                continue;
-            }
-            iv[j] = new ImageView(this);
-            iv[j].setId(j+1);
-            iv[j].setLayoutParams(params);
-            imageviews.addView(iv[j]);
+        for(int j=0; j<numOfImages; j++){
 
-            // ImageLoader class instance
-            ImageLoader imgLoader = new ImageLoader(getApplicationContext());
-            // whenever you want to load an image from url
-            // call DisplayImage function
-            // url - image url to load
-            // loader - loader image, will be displayed before getting image
-            // image - ImageView
-            imgLoader.DisplayImage(image_url, loader, iv[j]);
+            if(places.get(j).getFilter().equals("Events")){
+                for(Event event:places.get(j).getEvents()){
+                    String image_url = event.getImageURL().split(",")[0];
+                    if(image_url.equals("")){
+                        continue;
+                    }
+                    iv[j] = new ImageView(this);
+                    iv[j].setId(j+1);
+                    iv[j].setLayoutParams(params);
+                    imageviews.addView(iv[j]);
 
-            //on-click action:
-            final int finalJ = j;
-            iv[j].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    intents[finalJ] = new Intent(MapsActivity.this, ContentActivity.class);
+                    // ImageLoader class instance
+                    ImageLoader imgLoader = new ImageLoader(getApplicationContext());
+                    // whenever you want to load an image from url
+                    // call DisplayImage function
+                    // url - image url to load
+                    // loader - loader image, will be displayed before getting image
+                    // image - ImageView
+                    imgLoader.DisplayImage(image_url, loader, iv[j]);
 
-                    intents[finalJ].putExtra("imageviewId", finalJ);
-                    intents[finalJ].putExtra("placesObject", places);
-                    intents[finalJ].putExtra("selectedCity", selectedCity);
-                    startActivity(intents[finalJ]);
+                    iv[j].setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
                 }
-            });
+            } else {
+                // Image url
+                String image_url = places.get(j).getImageURL().split(",")[0];
+                if (image_url.equals("")) {
+                    continue;
+                }
+                iv[j] = new ImageView(this);
+                iv[j].setId(j + 1);
+                iv[j].setLayoutParams(params);
+                imageviews.addView(iv[j]);
+
+                // ImageLoader class instance
+                ImageLoader imgLoader = new ImageLoader(getApplicationContext());
+                // whenever you want to load an image from url
+                // call DisplayImage function
+                // url - image url to load
+                // loader - loader image, will be displayed before getting image
+                // image - ImageView
+                imgLoader.DisplayImage(image_url, loader, iv[j]);
+
+                //on-click action:
+                final int finalJ = j;
+                iv[j].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        intents[finalJ] = new Intent(MapsActivity.this, ContentActivity.class);
+
+                        intents[finalJ].putExtra("imageviewId", finalJ);
+                        intents[finalJ].putExtra("placesObject", places);
+                        intents[finalJ].putExtra("selectedCity", selectedCity);
+                        startActivity(intents[finalJ]);
+                    }
+                });
+            }
         }
         //following lines of code can be used for retrieving ids when used in a loop
 //        String idImageView = "imageview" + i;
