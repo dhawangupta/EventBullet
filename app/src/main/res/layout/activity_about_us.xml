@@ -25,5 +25,5 @@
         android:layout_below="@+id/toolbar"
         android:textSize="18sp"
         android:layout_margin="10dp"
-        android:textColor="@color/text_color" />
+        android:textColor="@color/primary_text" />
 </RelativeLayout>

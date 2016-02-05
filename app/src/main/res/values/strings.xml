@@ -97,5 +97,6 @@
     <string name="drawer_close">Close</string>
     <string name="drawer_open">Open</string>
     <string name="internet_req">Please Connect to Internet</string>
+    <string name="home_page_title">Events</string>
 </resources>
 
