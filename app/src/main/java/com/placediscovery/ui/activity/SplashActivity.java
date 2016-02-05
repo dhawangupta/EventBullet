@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.placediscovery.R;
 
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override
