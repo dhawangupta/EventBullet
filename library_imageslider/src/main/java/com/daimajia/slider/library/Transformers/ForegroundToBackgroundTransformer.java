@@ -19,7 +19,7 @@ public class ForegroundToBackgroundTransformer extends BaseTransformer {
         ViewHelper.setTranslationX(view,position > 0 ? width * position : -width * position * 0.25f);
 	}
 
-	private static final float min(float val, float min) {
+	private static float min(float val, float min) {
 		return val < min ? min : val;
 	}
 

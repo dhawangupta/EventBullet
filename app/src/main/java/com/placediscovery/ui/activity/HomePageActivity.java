@@ -2,7 +2,6 @@ package com.placediscovery.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,14 +16,15 @@ import com.placediscovery.ui.fragment.FragmentDrawer;
 public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
 
     private Toolbar toolbar;
-    private ViewPager mPager;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home_page);
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
+        toolbar.setTitle(R.string.home_page_title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setOnMenuItemClickListener(this);
@@ -39,9 +39,6 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
 
     }
 
-//    public void onDrawerItemClicked(int index) {
-//        mPager.setCurrentItem(index);
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,7 +55,12 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
+        if (item.getItemId() == R.id.menu_login)
+            startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
         return true;
     }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/pr/35
