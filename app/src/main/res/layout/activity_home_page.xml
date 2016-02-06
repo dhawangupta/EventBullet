@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/fragment_home_nav_draw"
-        android:name="com.placediscovery.ui.fragment.FragmentDrawer"
+        android:name="com.placediscovery.ui.fragment.DrawerFragment"
         android:layout_width="@dimen/nav_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"

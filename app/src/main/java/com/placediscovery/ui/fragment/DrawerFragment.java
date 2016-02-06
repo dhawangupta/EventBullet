@@ -20,9 +20,10 @@ import android.view.ViewGroup;
 
 import com.placediscovery.HelperClasses.Information;
 import com.placediscovery.R;
-import com.placediscovery.adapter.AdapterDrawer;
+import com.placediscovery.ui.ClickListener;
 import com.placediscovery.ui.activity.ChooseCity;
 import com.placediscovery.ui.activity.addingPlace.AddPlaceSelectCity;
+import com.placediscovery.ui.adapter.AdapterDrawer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ import static android.view.GestureDetector.SimpleOnGestureListener;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentDrawer extends Fragment {
+public class DrawerFragment extends Fragment {
 
     /*
     STEPS TO HANDLE THE RECYCLER CLICK
@@ -62,7 +63,7 @@ public class FragmentDrawer extends Fragment {
     private DrawerLayout mDrawerLayout;
     private View mContainer;
 
-    public FragmentDrawer() {
+    public DrawerFragment() {
         // Required empty public constructor
     }
 
@@ -162,13 +163,7 @@ public class FragmentDrawer extends Fragment {
     }
 
 
-    public interface ClickListener {
 
-        void onClick(View view, int position);
-
-        void onLongClick(View view, int position);
-
-    }
 
     class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
