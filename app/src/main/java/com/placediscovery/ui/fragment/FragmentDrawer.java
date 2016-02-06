@@ -108,6 +108,7 @@ public class FragmentDrawer extends Fragment {
 
                     case 2:
                         startActivity(new Intent(getActivity(), AddPlaceSelectCity.class));
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
                         break;
                 }
 
