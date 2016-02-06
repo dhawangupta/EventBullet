@@ -1,4 +1,4 @@
-package com.placediscovery.adapter;
+package com.placediscovery.ui.adapter;
 
 import android.support.v4.app.Fragment;
 
