@@ -3,7 +3,6 @@ package com.placediscovery.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.GestureDetector.SimpleOnGestureListener;
-import static com.placediscovery.HelperClasses.Constants.PREF_FILE_NAME;
 
 
 /**
@@ -57,29 +56,14 @@ public class FragmentDrawer extends Fragment {
 
     9 Add the onItemTouchListener object for our RecyclerView that uses our class created in step 1
      */
-    public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
+
     private RecyclerView recyclerView;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-    private boolean mUserLearnedDrawer;
-    private boolean mFromSavedInstanceState;
     private View mContainer;
-    private boolean mDrawerOpened = false;
 
     public FragmentDrawer() {
         // Required empty public constructor
-    }
-
-    public static void saveToPreferences(Context context, String prefName, String prefValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(prefName, prefValue);
-        editor.apply();
-    }
-
-    public static String readFromPreferences(Context context, String prefName, String defValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(prefName, defValue);
     }
 
     public List<Information> getData() {
@@ -99,8 +83,6 @@ public class FragmentDrawer extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUserLearnedDrawer = Boolean.valueOf(readFromPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, String.valueOf(false)));
-        mFromSavedInstanceState = savedInstanceState != null;
     }
 
     @Override
@@ -121,12 +103,14 @@ public class FragmentDrawer extends Fragment {
                 switch (position) {
                     case 1:
                         startActivity(new Intent(getActivity(), ChooseCity.class));
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
                         break;
 
                     case 2:
                         startActivity(new Intent(getActivity(), AddPlaceSelectCity.class));
                         break;
                 }
+
 
             }
 
@@ -147,10 +131,6 @@ public class FragmentDrawer extends Fragment {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 Log.d("VIVZ", "onDrawerOpened");
-                if (!mUserLearnedDrawer) {
-                    mUserLearnedDrawer = true;
-                    saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, String.valueOf(mUserLearnedDrawer));
-                }
                 getActivity().supportInvalidateOptionsMenu();
             }
 
@@ -173,9 +153,7 @@ public class FragmentDrawer extends Fragment {
             @Override
             public void run() {
                 mDrawerToggle.syncState();
-                if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
-                    mDrawerLayout.openDrawer(mContainer);
-                }
+                mDrawerLayout.openDrawer(mContainer);
             }
         });
 

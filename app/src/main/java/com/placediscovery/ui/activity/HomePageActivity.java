@@ -55,8 +55,9 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.menu_login)
+        if (item.getItemId() == R.id.menu_login) {
             startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
+        }
         return true;
     }
 }
