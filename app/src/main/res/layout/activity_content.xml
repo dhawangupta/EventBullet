@@ -76,7 +76,7 @@
                         android:drawableStart="@drawable/ic_star_black_24dp"
                         android:drawableLeft="@drawable/ic_star_black_24dp"
                         android:textSize="18sp"
-                        android:textColor="@color/text_color"/>
+                        android:textColor="@color/primary_text"/>
 
                     <TextView
                         android:id="@+id/count"
@@ -131,14 +131,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="17sp"
-                                android:textColor="@color/text_color"
+                                android:textColor="@color/primary_text"
                                 android:text="@string/timings"/>
                             <TextView
                                 android:id="@+id/timingsValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="15sp"
-                                android:textColor="@color/text_color"/>
+                                android:textColor="@color/primary_text"/>
                         </LinearLayout>
                         <LinearLayout
                             android:id="@+id/ticket"
@@ -149,14 +149,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="17sp"
-                                android:textColor="@color/text_color"
+                                android:textColor="@color/primary_text"
                                 android:text="@string/ticket"/>
                             <TextView
                                 android:id="@+id/ticketValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="15sp"
-                                android:textColor="@color/text_color"/>
+                                android:textColor="@color/primary_text"/>
                         </LinearLayout>
                         <LinearLayout
                             android:id="@+id/bestTime"
@@ -167,15 +167,36 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="17sp"
-                                android:textColor="@color/text_color"
+                                android:textColor="@color/primary_text"
                                 android:text="@string/bestTime"/>
                             <TextView
                                 android:id="@+id/bestTimeValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="15sp"
-                                android:textColor="@color/text_color"/>
+                                android:textColor="@color/primary_text"/>
                         </LinearLayout>
+<<<<<<< HEAD
+=======
+                        <LinearLayout
+                            android:id="@+id/toDo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/toDoLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="17sp"
+                                android:textColor="@color/primary_text"
+                                android:text="@string/toDo"/>
+                            <TextView
+                                android:id="@+id/toDoValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="15sp"
+                                android:textColor="@color/primary_text"/>
+                        </LinearLayout>
+>>>>>>> refs/remotes/origin/pr/35
 
                         <!-- Separator-->
                         <View
@@ -191,7 +212,7 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
-                            android:textColor="@color/text_color"
+                            android:textColor="@color/primary_text"
                             android:textSize="16sp"
                             android:lineSpacingMultiplier="1.3"/>
 
@@ -210,7 +231,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textAutoCorrect"
-                                android:textColor="@color/text_color"
+                                android:textColor="@color/primary_text"
                                 android:hint="Leave a one line tip..."
                                 android:textColorHint="@color/LightSlateGray"/>
                             <Button

@@ -52,49 +52,51 @@
 
     <string name="clear">Clear</string>
 
-        <!-- Test Activities -->
-        <string name="activity_infowindow_adapter">InfoWindow Adapter</string>
-        <string name="activity_map_fragment">Map Fragment Activity</string>
-        <string name="activity_press_for_marker">Press For Marker Activity</string>
-        <string name="activity_marker_in_bulk">Add Bulk Markers Activity</string>
-        <string name="activity_info_window">InfoWindow Activity</string>
-        <string name="activity_visible_coordinate_bounds">Visible Coordinate Bounds</string>
+    <!-- Test Activities -->
+    <string name="activity_infowindow_adapter">InfoWindow Adapter</string>
+    <string name="activity_map_fragment">Map Fragment Activity</string>
+    <string name="activity_press_for_marker">Press For Marker Activity</string>
+    <string name="activity_marker_in_bulk">Add Bulk Markers Activity</string>
+    <string name="activity_info_window">InfoWindow Activity</string>
+    <string name="activity_visible_coordinate_bounds">Visible Coordinate Bounds</string>
 
-        <string name="navdrawer_menu_title_mainactivity_controls">Main Activity Controls</string>
-        <string name="navdrawer_menu_title_mainactivity_styles">Main Activity Styles</string>
-        <string name="navdrawer_menu_title_individual_tests">Individual Tests</string>
-        <string name="action_gps">Toggle GPS location</string>
-        <string name="action_location_none">Disable tracking</string>
-        <string name="action_location_follow">Use follow tracking mode</string>
-        <string name="action_location_bearing">Use bearing tracking mode tracking</string>
-        <string name="action_compass">Toggle compass</string>
-        <string name="action_debug">Toggle debug mode</string>
-        <string name="action_point_annotations">Toggle point annotations</string>
-        <string name="action_info_window_adapter">InfoWindow Adapter</string>
-        <string name="action_map_fragment">MapFragment</string>
-        <string name="action_press_for_marker">Press For Marker</string>
-        <string name="action_info_window">InfoWindow</string>
-        <string name="action_add_bulk_markers">Add Markers in bulk</string>
-        <string name="action_visible_bounds">Set Visible Bounds</string>
-        <string name="action_visible_bounds_explanation">Center map around 2 markers</string>
+    <string name="navdrawer_menu_title_mainactivity_controls">Main Activity Controls</string>
+    <string name="navdrawer_menu_title_mainactivity_styles">Main Activity Styles</string>
+    <string name="navdrawer_menu_title_individual_tests">Individual Tests</string>
+    <string name="action_gps">Toggle GPS location</string>
+    <string name="action_location_none">Disable tracking</string>
+    <string name="action_location_follow">Use follow tracking mode</string>
+    <string name="action_location_bearing">Use bearing tracking mode tracking</string>
+    <string name="action_compass">Toggle compass</string>
+    <string name="action_debug">Toggle debug mode</string>
+    <string name="action_point_annotations">Toggle point annotations</string>
+    <string name="action_info_window_adapter">InfoWindow Adapter</string>
+    <string name="action_map_fragment">MapFragment</string>
+    <string name="action_press_for_marker">Press For Marker</string>
+    <string name="action_info_window">InfoWindow</string>
+    <string name="action_add_bulk_markers">Add Markers in bulk</string>
+    <string name="action_visible_bounds">Set Visible Bounds</string>
+    <string name="action_visible_bounds_explanation">Center map around 2 markers</string>
 
-        <string name="label_fps">FPS:</string>
+    <string name="label_fps">FPS:</string>
 
-        <string name="styleMapboxStreets">Mapbox Streets</string>
-        <string name="styleEmerald">Emerald</string>
-        <string name="styleLight">Light</string>
-        <string name="styleDark">Dark</string>
-        <string name="styleSatellite">Satellite</string>
-        <string name="styleSatelliteStreets">Satellite Streets</string>
+    <string name="styleMapboxStreets">Mapbox Streets</string>
+    <string name="styleEmerald">Emerald</string>
+    <string name="styleLight">Light</string>
+    <string name="styleDark">Dark</string>
+    <string name="styleSatellite">Satellite</string>
+    <string name="styleSatelliteStreets">Satellite Streets</string>
 
-        <string-array name="outdoors_class_list">
-            <item>Day</item>
-            <item>Night</item>
-        </string-array>
+    <string-array name="outdoors_class_list">
+        <item>Day</item>
+        <item>Night</item>
+    </string-array>
 
-        <!-- TODO: Remove or change this placeholder text -->
-        <string name="hello_blank_fragment">Hello blank fragment</string>
-        <string name="drawer_close">Close</string>
-        <string name="drawer_open">Open</string>
-    </resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_close">Close</string>
+    <string name="drawer_open">Open</string>
+    <string name="internet_req">Please Connect to Internet</string>
+    <string name="home_page_title">Events</string>
+</resources>
 

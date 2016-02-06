@@ -8,4 +8,8 @@
     android:background="@color/primary"
     >
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/pr/35
 </android.support.v7.widget.Toolbar>
