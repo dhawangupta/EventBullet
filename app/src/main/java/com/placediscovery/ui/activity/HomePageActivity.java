@@ -60,7 +60,3 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         return true;
     }
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/pr/35

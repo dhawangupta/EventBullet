@@ -176,27 +176,6 @@
                                 android:textSize="15sp"
                                 android:textColor="@color/primary_text"/>
                         </LinearLayout>
-<<<<<<< HEAD
-=======
-                        <LinearLayout
-                            android:id="@+id/toDo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:id="@+id/toDoLabel"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="17sp"
-                                android:textColor="@color/primary_text"
-                                android:text="@string/toDo"/>
-                            <TextView
-                                android:id="@+id/toDoValue"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="15sp"
-                                android:textColor="@color/primary_text"/>
-                        </LinearLayout>
->>>>>>> refs/remotes/origin/pr/35
 
                         <!-- Separator-->
                         <View

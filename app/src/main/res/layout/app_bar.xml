@@ -5,11 +5,6 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/primary"
-    >
+    android:background="@color/primary" >
 
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/pr/35
 </android.support.v7.widget.Toolbar>
