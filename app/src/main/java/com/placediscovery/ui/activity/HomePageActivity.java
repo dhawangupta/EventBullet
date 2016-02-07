@@ -61,4 +61,3 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         return true;
     }
 }
-

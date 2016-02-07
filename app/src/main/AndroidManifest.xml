@@ -63,11 +63,17 @@
             android:name=".ui.activity.MapsActivity"
             android:label="Map" />
 
-        <!-- <activity -->
-        <!-- android:name="com.facebook.FacebookActivity" -->
-        <!-- android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" -->
-        <!-- android:label="@string/app_name" -->
-        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" /> -->
+        <activity
+            android:name=".ui.activity.EventsContentActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateUnchanged"/>
+
+        <!--<activity-->
+        <!--android:name="com.facebook.FacebookActivity"-->
+        <!--android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"-->
+        <!--android:label="@string/app_name"-->
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
 
         <activity
             android:name=".ui.activity.addingPlace.AddPlaceSelectCity"
