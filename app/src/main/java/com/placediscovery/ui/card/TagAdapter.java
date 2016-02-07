@@ -44,7 +44,7 @@ public class TagAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.label.setText(mDataset.get(position).getmText1());
-        holder.dateTime.setText(mDataset.get(position).getmText2());
+
     }
 
     public void addItem(Content content, int index) {
