@@ -43,7 +43,7 @@ public class
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //ButterKnife.inject(this);
+
         _signupLink = (TextView) findViewById(R.id.link_signup);
         _emailText = (EditText) findViewById(R.id.input_email);
         _passwordText = (EditText) findViewById(R.id.input_password);

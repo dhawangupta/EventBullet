@@ -26,4 +26,5 @@
         android:textSize="18sp"
         android:layout_margin="10dp"
         android:textColor="@color/primary_text" />
+
 </RelativeLayout>
