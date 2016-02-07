@@ -15,15 +15,13 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class AdapterDrawer extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     List<Information> data = Collections.emptyList();
     private LayoutInflater inflater;
-    private Context context;
 
-    public AdapterDrawer(Context context, List<Information> data) {
-        this.context = context;
+    public DrawerAdapter(Context context, List<Information> data) {
         inflater = LayoutInflater.from(context);
         this.data = data;
     }

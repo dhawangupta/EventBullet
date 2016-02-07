@@ -33,7 +33,7 @@ public final class Constants {
     //DrawerFragment
     public static final String PREF_FILE_NAME = "testpref";
     public static final String KEY_USER_LEARNED_DRAWER = "userlearnedrawer";
-    public static final String LOG_TAG = "MyRecyclerViewAdapter";
+    public static final String LOG_TAG = "TagAdapter";
     public static LatLng varanasiLatLng = new LatLng(25.28, 82.96);
     public static LatLng bengaluruLatLng = new LatLng(12.96, 77.56);
     public static LatLng kolkataLatLng = new LatLng(22.56, 88.36);
