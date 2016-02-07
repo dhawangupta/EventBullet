@@ -6,13 +6,13 @@
 
     <com.mapbox.mapboxsdk.views.MapView
         android:id="@+id/mapviewAddingPlace"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         mapbox:access_token="pk.eyJ1IjoienViZXIiLCJhIjoiY2lqMzRrOHF1MDAxOXc4a2x6bmt6MnJ6aSJ9.3xE6UONybpETyJgRPk4FmA" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_addPlaceMaps"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:layout_marginLeft="24dp"

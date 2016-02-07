@@ -23,7 +23,7 @@ import com.placediscovery.R;
 import com.placediscovery.ui.ClickListener;
 import com.placediscovery.ui.activity.ChooseCity;
 import com.placediscovery.ui.activity.addingPlace.AddPlaceSelectCity;
-import com.placediscovery.ui.adapter.AdapterDrawer;
+import com.placediscovery.ui.adapter.DrawerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,27 +36,7 @@ import static android.view.GestureDetector.SimpleOnGestureListener;
  */
 public class DrawerFragment extends Fragment {
 
-    /*
-    STEPS TO HANDLE THE RECYCLER CLICK
 
-    1 Create a class that EXTENDS RecylcerView.OnItemTouchListener
-
-    2 Create an interface inside that class that supports click and long click and indicates the View that was clicked and the position where it was clicked
-
-    3 Create a GestureDetector to detect ACTION_UP single tap and Long Press events
-
-    4 Return true from the singleTap to indicate your GestureDetector has consumed the event.
-
-    5 Find the childView containing the coordinates specified by the MotionEvent and if the childView is not null and the listener is not null either, fire a long click event
-
-    6 Use the onInterceptTouchEvent of your RecyclerView to check if the childView is not null, the listener is not null and the gesture detector consumed the touch event
-
-    7 if above condition holds true, fire the click event
-
-    8 return false from the onInterceptedTouchEvent to give a chance to the childViews of the RecyclerView to process touch events if any.
-
-    9 Add the onItemTouchListener object for our RecyclerView that uses our class created in step 1
-     */
 
     private RecyclerView recyclerView;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -95,7 +75,7 @@ public class DrawerFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         recyclerView = (RecyclerView) view.findViewById(R.id.drawerList);
-        AdapterDrawer mAdapter = new AdapterDrawer(getActivity(), getData());
+        DrawerAdapter mAdapter = new DrawerAdapter(getActivity(), getData());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {

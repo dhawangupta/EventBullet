@@ -11,11 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.placediscovery.R;
+import com.placediscovery.ui.card.TagFragment;
 import com.placediscovery.ui.fragment.DrawerFragment;
 
 public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
 
     private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
 
 
     @Override
@@ -28,15 +30,20 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setOnMenuItemClickListener(this);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         setUpNavDrawer();
+        setUpCards();
+    }
+
+    private void setUpCards() {
+        TagFragment tagFragment = (TagFragment) getSupportFragmentManager().findFragmentById(R.id.cards);
+
     }
 
     private void setUpNavDrawer() {
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         DrawerFragment drawerFragment = (DrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_home_nav_draw);
         drawerFragment.setUp(R.id.fragment_home_nav_draw, drawerLayout, toolbar);
-
-
     }
 
 
