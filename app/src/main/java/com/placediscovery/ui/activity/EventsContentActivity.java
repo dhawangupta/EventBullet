@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
@@ -43,7 +44,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 
-public class ContentActivity extends AppCompatActivity implements
+public class EventsContentActivity extends AppCompatActivity implements
         BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     String selectedCity;
@@ -58,12 +59,12 @@ public class ContentActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_content);
+        setContentView(R.layout.activity_events_content);
 
         final UserStatus userStatus = new UserStatus();
         loggedInUser = new User(userStatus);
 
-        mDemoSlider = (SliderLayout) findViewById(R.id.contentPageImageSlider);
+        mDemoSlider = (SliderLayout) findViewById(R.id.eventContentPageImageSlider);
 
         //Following is the upper toolbar code which is not needed for now.
         /*
@@ -88,19 +89,23 @@ public class ContentActivity extends AppCompatActivity implements
         String ticket = selectedPlace.getTicket();
         String bestTime = selectedPlace.getBestTime();
 
-        TextView t1 = (TextView) findViewById(R.id.place_name);
-        TextView t2 = (TextView) findViewById(R.id.currentratingtext);
-        TextView countText = (TextView) findViewById(R.id.count);
-        final TextView rateThis = (TextView) findViewById(R.id.ratethis);
-        TextView t3 = (TextView) findViewById(R.id.place_content);
-        LinearLayout timingsLayout = (LinearLayout) findViewById(R.id.timings);
-        TextView timingsValue = (TextView) findViewById(R.id.timingsValue);
-        LinearLayout ticketLayout = (LinearLayout) findViewById(R.id.ticket);
-        TextView ticketValue = (TextView) findViewById(R.id.ticketValue);
-        LinearLayout bestTimeLayout = (LinearLayout) findViewById(R.id.bestTime);
-        TextView bestTimeValue = (TextView) findViewById(R.id.bestTimeValue);
-        reviewField = (EditText) findViewById(R.id.reviewTextField);
-        Button reviewSubmitBtn = (Button) findViewById(R.id.reviewBtn);
+        TextView t1 = (TextView) findViewById(R.id.event_name);
+        TextView t2 = (TextView) findViewById(R.id.event_currentratingtext);
+        TextView countText = (TextView) findViewById(R.id.event_rating_count);
+        final TextView rateThis = (TextView) findViewById(R.id.event_rating_ratethis);
+        TextView t3 = (TextView) findViewById(R.id.event_content);
+        LinearLayout timingsLayout = (LinearLayout) findViewById(R.id.event_timings);
+        TextView timingsValue = (TextView) findViewById(R.id.event_timingsValue);
+        LinearLayout typeLayout = (LinearLayout) findViewById(R.id.event_type);
+        TextView typeValue = (TextView) findViewById(R.id.event_typeValue);
+        LinearLayout ticketLayout = (LinearLayout) findViewById(R.id.event_ticket);
+        TextView ticketValue = (TextView) findViewById(R.id.event_ticketValue);
+        LinearLayout freqLayout = (LinearLayout) findViewById(R.id.event_freq);
+        TextView freqValue = (TextView) findViewById(R.id.event_freqValue);
+        LinearLayout durationLayout = (LinearLayout) findViewById(R.id.event_duration);
+        TextView durationValue = (TextView) findViewById(R.id.event_durationValue);
+        reviewField = (EditText) findViewById(R.id.event_reviewTextField);
+        Button reviewSubmitBtn = (Button) findViewById(R.id.event_reviewBtn);
 
 
         t1.setText(place_name);
@@ -118,17 +123,14 @@ public class ContentActivity extends AppCompatActivity implements
         else
             ticketValue.setText(" " + ticket);
 
-        if (bestTime.equals(""))
-            bestTimeLayout.setVisibility(LinearLayout.GONE);
-        else
-            bestTimeValue.setText(" " + bestTime);
+
 
         rateThis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (UserStatus.isLoginStatus()) {
-                    Dialog ratingDialog = new Dialog(ContentActivity.this);
+                    Dialog ratingDialog = new Dialog(EventsContentActivity.this);
                     ratingDialog.setContentView(R.layout.dialog_ratingplace);
                     ratingDialog.setCancelable(true);
 
@@ -147,7 +149,7 @@ public class ContentActivity extends AppCompatActivity implements
                             selectedPlace.setCount(String.valueOf(newCount));
                             selectedPlace.setAverageRating(String.valueOf(newRating));
 
-                            Toast.makeText(ContentActivity.this, "New Rating: " + rating,
+                            Toast.makeText(EventsContentActivity.this, "New Rating: " + rating,
                                     Toast.LENGTH_SHORT).show();
 
                         }
@@ -168,7 +170,7 @@ public class ContentActivity extends AppCompatActivity implements
                     ratingDialog.show();
 
                 } else {
-                    Toast.makeText(ContentActivity.this, "Please Login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EventsContentActivity.this, "Please Login", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -231,9 +233,9 @@ public class ContentActivity extends AppCompatActivity implements
 //                    UpdateUserAsyncTask tsk = new UpdateUserAsyncTask();
 //                    tsk.execute(loggedInUser);
 //
-//                    Toast.makeText(ContentActivity.this, "Added to List", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(EventsContentActivity.this, "Added to List", Toast.LENGTH_SHORT).show();
 //                } else {
-//                    Toast.makeText(ContentActivity.this, "Please login first", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(EventsContentActivity.this, "Please login first", Toast.LENGTH_LONG).show();
 //                }
 //            }
 //
@@ -251,7 +253,7 @@ public class ContentActivity extends AppCompatActivity implements
                     UpdatePlaceReviewAsyncTask task = new UpdatePlaceReviewAsyncTask();
                     task.execute(selectedPlace, loggedInUser.getUser_id(), review);
                 } else
-                    Toast.makeText(ContentActivity.this, "Please login first", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EventsContentActivity.this, "Please login first", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -345,10 +347,10 @@ public class ContentActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             if (aBoolean) {
-                Toast.makeText(ContentActivity.this, "Rating submitted successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EventsContentActivity.this, "Rating submitted successfully", Toast.LENGTH_SHORT).show();
 
             } else
-                Toast.makeText(ContentActivity.this, "rating failed to submit!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(EventsContentActivity.this, "rating failed to submit!!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -393,10 +395,10 @@ public class ContentActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             if (aBoolean) {
-                Toast.makeText(ContentActivity.this, "Review submitted successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EventsContentActivity.this, "Review submitted successfully", Toast.LENGTH_SHORT).show();
                 reviewField.setText("");
             } else
-                Toast.makeText(ContentActivity.this, "review failed to submit!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(EventsContentActivity.this, "review failed to submit!!", Toast.LENGTH_LONG).show();
         }
     }
 

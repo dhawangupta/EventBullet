@@ -108,12 +108,12 @@ public class PlaceQueryBuilder {
 						"\"timings\":\"%s\"," +
 						"\"ticket\":\"%s\"," +
 						"\"bestTime\":\"%s\"," +
-						"\"toDo\":\"%s\"," +
+						"\"events\":[],"+
 						"\"reviews\":[]"+
 						"}",
-                place.getName(),place.getLatitude(), place.getLongitude(), place.getFilter(),
+				place.getName(),place.getLatitude(), place.getLongitude(), place.getFilter(),
 				place.getImageURL(), place.getContent(), place.getAverageRating(), place.getCount(),
-				place.getTimings(),place.getTicket(),place.getBestTime(),place.getToDo());
+				place.getTimings(),place.getTicket(),place.getBestTime());
 	}
 
     /**
@@ -134,11 +134,10 @@ public class PlaceQueryBuilder {
 						"\"timings\":\"%s\"," +
 						"\"ticket\":\"%s\"," +
 						"\"bestTime\":\"%s\"," +
-						"\"toDo\":\"%s\"," +
 						" } }",
-                place.getName(),place.getLatitude(), place.getLongitude(), place.getFilter(),
+				place.getName(),place.getLatitude(), place.getLongitude(), place.getFilter(),
 				place.getImageURL(), place.getContent(), place.getAverageRating(), place.getCount(),
-				place.getTimings(),place.getTicket(),place.getBestTime(),place.getToDo());
+				place.getTimings(),place.getTicket(),place.getBestTime());
     }
 
     public String addReview(String user_id, String review){
