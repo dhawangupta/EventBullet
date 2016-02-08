@@ -20,12 +20,12 @@ import android.widget.Toast;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.placediscovery.HelperClasses.Constants;
+import com.placediscovery.HelperClasses.HelperMethods;
 import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.MongoLabPlace.PlaceQueryBuilder;
 import com.placediscovery.R;
-import com.placediscovery.HelperClasses.Constants;
-import com.placediscovery.HelperClasses.HelperMethods;
 import com.placediscovery.ui.adapter.CityAdapter;
 import com.placediscovery.ui.adapter.CityManager;
 
@@ -36,17 +36,15 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ChooseCity extends AppCompatActivity implements ViewHolderResponser {
 
+    Intent intent;
+    ArrayList<Place> places = new ArrayList<>();
+    String selectedCity;
     private RecyclerView mRecyclerView;
     private CityAdapter mAdapter;
     private ProgressDialog progressDialog;
-    Intent intent;
-
-    ArrayList<Place> places = new ArrayList<>();
-    String selectedCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,11 +176,11 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
 
                             Event tempEvent = new Event();
                             tempEvent.setName(eventObj.get("name").toString());
-                            tempEvent.setTimings(eventObj.get("timings").toString());
+                            //tempEvent.setTimings(eventObj.get("timings").toString());
                             tempEvent.setType(eventObj.get("type").toString());
                             tempEvent.setTicket(eventObj.get("ticket").toString());
                             tempEvent.setFreq(eventObj.get("freq").toString());
-                            tempEvent.setEduration(eventObj.get("eduration").toString());
+                            tempEvent.setduration(eventObj.get("eduration").toString());
                             tempEvent.setImageURL(eventObj.get("imageURL").toString());
                             tempEvent.setContent(eventObj.get("content").toString());
 

@@ -13,5 +13,5 @@
         android:gravity="center"
         android:text="@string/clear"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/black" />
+        android:textColor="@color/Black" />
 </RelativeLayout>
