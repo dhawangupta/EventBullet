@@ -4,78 +4,78 @@ import com.mongodb.BasicDBObject;
 
 import java.io.Serializable;
 
-public class Place implements Serializable{
+public class Place implements Serializable {
 
-	public String place_id;
-	public String name="";
-	public String latitude="";
-	public String longitude="";
-	public String filter="";
-	public String imageURL="";
-	public String content="";
-	public String averageRating="";
-	public String count="";			//this is count of ratings given by user
-	public String timings="";
-	public String ticket="";
-	public String bestTime="";
-	public Event[] events;
-	public BasicDBObject[] reviews;
+    public String place_id;
+    public String name = "";
+    public String latitude = "";
+    public String longitude = "";
+    public String filter = "";
+    public String imageURL = "";
+    public String content = "";
+    public String averageRating = "";
+    public String count = "";            //this is count of ratings given by user
+    public String timings = "";
+    public String ticket = "";
+    public String bestTime = "";
+    public Event[] events;
+    public BasicDBObject[] reviews;
 
-	public String getPlace_id() {
-		return place_id;
-	}
+    public String getPlace_id() {
+        return place_id;
+    }
 
-	public void setPlace_id(String place_id) {
-		this.place_id = place_id;
-	}
+    public void setPlace_id(String place_id) {
+        this.place_id = place_id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getLatitude() {
-		return latitude;
-	}
+    public String getLatitude() {
+        return latitude;
+    }
 
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
 
-	public String getLongitude() {
-		return longitude;
-	}
+    public String getLongitude() {
+        return longitude;
+    }
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
-	public String getFilter() {
-		return filter;
-	}
+    public String getFilter() {
+        return filter;
+    }
 
-	public void setFilter(String filter) {
-		this.filter = filter;
-	}
+    public void setFilter(String filter) {
+        this.filter = filter;
+    }
 
-	public String getImageURL() {
-		return imageURL;
-	}
+    public String getImageURL() {
+        return imageURL;
+    }
 
-	public void setImageURL(String imageURL) {
-		this.imageURL = imageURL;
-	}
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public String getAverageRating() {
         return averageRating;
@@ -118,7 +118,7 @@ public class Place implements Serializable{
     }
 
 
-	public BasicDBObject[] getReviews() {
+    public BasicDBObject[] getReviews() {
         return reviews;
     }
 

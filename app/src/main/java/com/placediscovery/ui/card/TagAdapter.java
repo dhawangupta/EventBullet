@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.R;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,14 +20,16 @@ public class TagAdapter extends RecyclerView
         .ViewHolder> {
 
     private static MyClickListener myClickListener;
-    List<Content> mDataset = Collections.emptyList();
+    List<Event> eventses;
+    List<Event> events = Collections.emptyList();
+    private ImageLoader imageLoader;
+    private Context context;
 
-    public TagAdapter(List<Content> myDataset) {
-        mDataset = myDataset;
+    public TagAdapter(List<Event> myDataset, Context context) {
+        events = myDataset;
+        this.context = context;
     }
 
-    public TagAdapter(Context context, ArrayList<Content> data) {
-    }
 
     public void setOnItemClickListener(MyClickListener myClickListener) {
         TagAdapter.myClickListener = myClickListener;
@@ -43,23 +47,23 @@ public class TagAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.label.setText(mDataset.get(position).getmText1());
-
+        Event eventObj = events.get(position);
+        imageLoader = CustomVolleyRequest.getInstance(context).getImageLoader();
+        imageLoader.get(eventObj.getImageURL(), ImageLoader.getImageListener(holder.imageView,
+                R.mipmap.ic_launcher, android.R.drawable.ic_dialog_alert));
+        holder.imageView.setImageUrl(eventObj.getImageURL(), imageLoader);
+        holder.textViewName.setText(eventObj.getName());
+        holder.textViewRank.setText(String.valueOf(eventObj.getTimings()));
+        holder.textViewRealName.setText(eventObj.getTicket());
+        holder.textViewCreatedBy.setText(eventObj.getFreq());
+        holder.textViewFirstAppearance.setText(eventObj.getduration());
     }
 
-    public void addItem(Content content, int index) {
-        mDataset.add(index, content);
-        notifyItemInserted(index);
-    }
 
-    public void deleteItem(int index) {
-        mDataset.remove(index);
-        notifyItemRemoved(index);
-    }
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return events.size();
     }
 
     public interface MyClickListener {
@@ -68,13 +72,23 @@ public class TagAdapter extends RecyclerView
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View
             .OnClickListener {
-        TextView label;
-        TextView dateTime;
+        public NetworkImageView imageView;
+        public TextView textViewName;
+        public TextView textViewRank;
+        public TextView textViewRealName;
+        public TextView textViewCreatedBy;
+        public TextView textViewFirstAppearance;
+        public TextView textViewPowers;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            label = (TextView) itemView.findViewById(R.id.textView);
-            dateTime = (TextView) itemView.findViewById(R.id.textView2);
+            imageView = (NetworkImageView) itemView.findViewById(R.id.imageViewHero);
+            textViewName = (TextView) itemView.findViewById(R.id.textViewName);
+            textViewRank = (TextView) itemView.findViewById(R.id.textViewRank);
+            textViewRealName = (TextView) itemView.findViewById(R.id.textViewRealName);
+            textViewCreatedBy = (TextView) itemView.findViewById(R.id.textViewCreatedBy);
+            textViewFirstAppearance = (TextView) itemView.findViewById(R.id.textViewFirstAppearance);
+            textViewPowers = (TextView) itemView.findViewById(R.id.textViewPowers);
 
         }
 

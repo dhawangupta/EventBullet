@@ -1,7 +1,7 @@
 package com.placediscovery.HelperClasses;
 
 
-import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Created by Dhawan Gupta on 08-12-2015.

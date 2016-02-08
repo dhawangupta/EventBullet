@@ -1,21 +1,31 @@
 package com.placediscovery.ui.card;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.placediscovery.HelperClasses.Config;
+import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.R;
 import com.placediscovery.ui.ClickListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +40,11 @@ public class TagFragment extends Fragment {
 
 
     private static final String TITLE = "TagFragment";
-    private static final int SPAN_COUNT = 2;
-    private static final int DATASET_COUNT = 60;
-    protected LayoutManager mLayoutManager;
+
     private RecyclerView recyclerView;
-    private DrawerLayout mDrawerLayout;
-    private View mContainer;
-    private List<Content> mDataset;
+    private List<Event> events;
+    private TagAdapter adapter;
+
 
 
     public TagFragment() {
@@ -46,11 +54,10 @@ public class TagFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        events = new ArrayList<>();
 
         // Initialize dataset, this data would usually come from a local content provider or
         // remote server.
-        initDataset();
-
     }
 
     @Override
@@ -59,15 +66,76 @@ public class TagFragment extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_tag, container, false);
         rootview.setTag(TITLE);
         recyclerView = (RecyclerView) rootview.findViewById(R.id.event_list);
+        recyclerView.setHasFixedSize(true);
+        getData();
         return rootview;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        TagAdapter mAdapter = new TagAdapter(mDataset);
-        recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    //This method will get data from the web api
+    private void getData() {
+        //Showing a progress dialog
+        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Loading Data", "Please wait...", false, false);
+
+        //Creating a json array request
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Config.DATA_URL,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        //Dismissing progress dialog
+                        loading.dismiss();
+
+                        //calling method to parse json array
+                        parseData(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        //Creating request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+
+        //Adding request to the queue
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    //This method will parse json data
+    private void parseData(JSONArray array) {
+        for (int i = 0; i < array.length(); i++) {
+            Event eventObj = new Event();
+            JSONObject json = null;
+            try {
+                json = array.getJSONObject(i);
+                eventObj.setImageURL(json.getString(Config.TAG_IMAGE_URL));
+                eventObj.setName(json.getString(Config.TAG_NAME));
+                eventObj.setTimings(json.getInt(Config.TAG_TIME));
+                eventObj.setTicket(json.getString(Config.TAG_TICKET));
+                eventObj.setCreatedby(json.getString(Config.TAG_CREATED_BY));
+                eventObj.setFreq(json.getString(Config.TAG_FREQ));
+                JSONArray jsonArray = json.getJSONArray(Config.TAG_DURATION);
+                String duration = (String) jsonArray.get(0);
+                eventObj.setduration(duration);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            events.add(eventObj);
+        }
+
+        //Finally initializing our adapter
+        adapter = new TagAdapter(events, getActivity());
+
+        //Adding adapter to recyclerview
+        recyclerView.setAdapter(adapter);
     }
 
     /**
@@ -75,21 +143,6 @@ public class TagFragment extends Fragment {
      * from a local content provider or remote server.
      */
 
-    private void initDataset() {
-        mDataset = new ArrayList(DATASET_COUNT);
-        for (int index = 0; index < 20; index++) {
-            Content obj = new Content("Some Primary Text " + index,
-                    "Secondary " + index);
-            mDataset.add(obj);
-        }
-
-    }
-
-
-    private enum LayoutManagerType {
-        GRID_LAYOUT_MANAGER,
-        LINEAR_LAYOUT_MANAGER
-    }
 
     class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 

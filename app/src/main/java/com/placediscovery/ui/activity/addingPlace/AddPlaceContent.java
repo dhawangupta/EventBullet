@@ -26,7 +26,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.google.android.gms.maps.model.LatLng;
 import com.placediscovery.AWSClasses.Util;
 import com.placediscovery.HelperClasses.Constants;
 import com.placediscovery.MongoLabPlace.CreatePlaceAsyncTask;
@@ -149,8 +149,8 @@ public class AddPlaceContent extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                userAddedPlace.setLatitude(String.valueOf(userPlaceLatLng.getLatitude()));
-                userAddedPlace.setLongitude(String.valueOf(userPlaceLatLng.getLongitude()));
+                userAddedPlace.setLatitude(String.valueOf(userPlaceLatLng.latitude));
+                userAddedPlace.setLongitude(String.valueOf(userPlaceLatLng.longitude));
                 userAddedPlace.setName(String.valueOf(place_title.getText()));
                 userAddedPlace.setContent(String.valueOf(place_details.getText()));
                 userAddedPlace.setImageURL(imageURLfromAWS);
