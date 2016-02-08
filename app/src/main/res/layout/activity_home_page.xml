@@ -6,7 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true" >
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,11 +18,25 @@
             android:id="@+id/app_bar"
             layout="@layout/app_bar" />
 
+        <LinearLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/app_bar">
+
+            <fragment
+                android:id="@+id/cards"
+                android:name="com.placediscovery.ui.card.TagFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+
     </RelativeLayout>
 
     <fragment
         android:id="@+id/fragment_home_nav_draw"
-        android:name="com.placediscovery.ui.fragment.FragmentDrawer"
+        android:name="com.placediscovery.ui.fragment.DrawerFragment"
         android:layout_width="@dimen/nav_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"

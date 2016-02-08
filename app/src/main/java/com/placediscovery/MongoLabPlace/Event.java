@@ -5,15 +5,24 @@ import java.io.Serializable;
 /**
  * Created by Dhawan Gupta on 03-02-2016.
  */
-public class Event implements Serializable{
-    public String name="";
-    public String timings="";
-    public String type="";
-    public String ticket="";
-    public String freq="";
-    public String eduration="";
-    public String imageURL="";
-    public String content="";
+public class Event implements Serializable {
+    private String name = "";
+    private int timings;
+    private String type = "";
+    private String ticket = "";
+    private String freq = "";
+    private String duration = "";
+    private String imageURL = "";
+    private String content = "";
+    private String createdby = "";
+
+    public String getCreatedby() {
+        return createdby;
+    }
+
+    public void setCreatedby(String createdby) {
+        this.createdby = createdby;
+    }
 
     public String getName() {
         return name;
@@ -23,11 +32,11 @@ public class Event implements Serializable{
         this.name = name;
     }
 
-    public String getTimings() {
+    public int getTimings() {
         return timings;
     }
 
-    public void setTimings(String timings) {
+    public void setTimings(int timings) {
         this.timings = timings;
     }
 
@@ -55,12 +64,12 @@ public class Event implements Serializable{
         this.freq = freq;
     }
 
-    public String getEduration() {
-        return eduration;
+    public String getduration() {
+        return duration;
     }
 
-    public void setEduration(String eduration) {
-        this.eduration = eduration;
+    public void setduration(String eduration) {
+        this.duration = eduration;
     }
 
     public String getImageURL() {
