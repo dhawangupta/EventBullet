@@ -3,7 +3,6 @@ package com.placediscovery.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,66 +20,31 @@ import android.view.ViewGroup;
 
 import com.placediscovery.HelperClasses.Information;
 import com.placediscovery.R;
-import com.placediscovery.adapter.AdapterDrawer;
+import com.placediscovery.ui.ClickListener;
 import com.placediscovery.ui.activity.ChooseCity;
 import com.placediscovery.ui.activity.addingPlace.AddPlaceSelectCity;
+import com.placediscovery.ui.adapter.DrawerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.GestureDetector.SimpleOnGestureListener;
-import static com.placediscovery.HelperClasses.Constants.PREF_FILE_NAME;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentDrawer extends Fragment {
+public class DrawerFragment extends Fragment {
 
-    /*
-    STEPS TO HANDLE THE RECYCLER CLICK
 
-    1 Create a class that EXTENDS RecylcerView.OnItemTouchListener
 
-    2 Create an interface inside that class that supports click and long click and indicates the View that was clicked and the position where it was clicked
-
-    3 Create a GestureDetector to detect ACTION_UP single tap and Long Press events
-
-    4 Return true from the singleTap to indicate your GestureDetector has consumed the event.
-
-    5 Find the childView containing the coordinates specified by the MotionEvent and if the childView is not null and the listener is not null either, fire a long click event
-
-    6 Use the onInterceptTouchEvent of your RecyclerView to check if the childView is not null, the listener is not null and the gesture detector consumed the touch event
-
-    7 if above condition holds true, fire the click event
-
-    8 return false from the onInterceptedTouchEvent to give a chance to the childViews of the RecyclerView to process touch events if any.
-
-    9 Add the onItemTouchListener object for our RecyclerView that uses our class created in step 1
-     */
-    public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private RecyclerView recyclerView;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-    private boolean mUserLearnedDrawer;
-    private boolean mFromSavedInstanceState;
     private View mContainer;
-    private boolean mDrawerOpened = false;
 
-    public FragmentDrawer() {
+    public DrawerFragment() {
         // Required empty public constructor
-    }
-
-    public static void saveToPreferences(Context context, String prefName, String prefValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(prefName, prefValue);
-        editor.apply();
-    }
-
-    public static String readFromPreferences(Context context, String prefName, String defValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(prefName, defValue);
     }
 
     public List<Information> getData() {
@@ -99,8 +64,6 @@ public class FragmentDrawer extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUserLearnedDrawer = Boolean.valueOf(readFromPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, String.valueOf(false)));
-        mFromSavedInstanceState = savedInstanceState != null;
     }
 
     @Override
@@ -112,7 +75,7 @@ public class FragmentDrawer extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         recyclerView = (RecyclerView) view.findViewById(R.id.drawerList);
-        AdapterDrawer mAdapter = new AdapterDrawer(getActivity(), getData());
+        DrawerAdapter mAdapter = new DrawerAdapter(getActivity(), getData());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
@@ -121,12 +84,15 @@ public class FragmentDrawer extends Fragment {
                 switch (position) {
                     case 1:
                         startActivity(new Intent(getActivity(), ChooseCity.class));
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
                         break;
 
                     case 2:
                         startActivity(new Intent(getActivity(), AddPlaceSelectCity.class));
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
                         break;
                 }
+
 
             }
 
@@ -147,10 +113,6 @@ public class FragmentDrawer extends Fragment {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 Log.d("VIVZ", "onDrawerOpened");
-                if (!mUserLearnedDrawer) {
-                    mUserLearnedDrawer = true;
-                    saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, String.valueOf(mUserLearnedDrawer));
-                }
                 getActivity().supportInvalidateOptionsMenu();
             }
 
@@ -173,9 +135,7 @@ public class FragmentDrawer extends Fragment {
             @Override
             public void run() {
                 mDrawerToggle.syncState();
-                if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
-                    mDrawerLayout.openDrawer(mContainer);
-                }
+                mDrawerLayout.openDrawer(mContainer);
             }
         });
 
@@ -183,13 +143,7 @@ public class FragmentDrawer extends Fragment {
     }
 
 
-    public interface ClickListener {
 
-        void onClick(View view, int position);
-
-        void onLongClick(View view, int position);
-
-    }
 
     class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
