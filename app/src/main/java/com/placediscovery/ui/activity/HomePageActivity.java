@@ -11,11 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.placediscovery.R;
-import com.placediscovery.ui.fragment.FragmentDrawer;
+import com.placediscovery.ui.card.TagFragment;
+import com.placediscovery.ui.fragment.DrawerFragment;
 
 public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
 
     private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
 
 
     @Override
@@ -28,15 +30,20 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setOnMenuItemClickListener(this);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         setUpNavDrawer();
+        setUpCards();
+    }
+
+    private void setUpCards() {
+        TagFragment tagFragment = (TagFragment) getSupportFragmentManager().findFragmentById(R.id.cards);
+
     }
 
     private void setUpNavDrawer() {
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        FragmentDrawer drawerFragment = (FragmentDrawer) getSupportFragmentManager().findFragmentById(R.id.fragment_home_nav_draw);
+
+        DrawerFragment drawerFragment = (DrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_home_nav_draw);
         drawerFragment.setUp(R.id.fragment_home_nav_draw, drawerLayout, toolbar);
-
-
     }
 
 
@@ -55,8 +62,9 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.menu_login)
+        if (item.getItemId() == R.id.menu_login) {
             startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
+        }
         return true;
     }
 }

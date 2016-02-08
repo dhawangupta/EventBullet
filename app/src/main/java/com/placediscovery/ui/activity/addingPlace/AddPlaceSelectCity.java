@@ -1,14 +1,13 @@
 package com.placediscovery.ui.activity.addingPlace;
 
 import android.app.ListActivity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.google.android.gms.maps.model.LatLng;
 import com.placediscovery.HelperClasses.Constants;
 import com.placediscovery.R;
 
@@ -76,11 +75,11 @@ public class AddPlaceSelectCity extends ListActivity {
             Toast.makeText(getApplicationContext(),"userPlaceLatLng is null",Toast.LENGTH_LONG).show();
         }
         else {
-            Intent i = new Intent(this, AddPlaceMapsActivity.class);
-            i.putExtra("selectedCity", selectedCity);
-            i.putExtra(Constants.Latitutude,selectedCityLatLng.getLatitude());
-            i.putExtra(Constants.Longitude,selectedCityLatLng.getLongitude());
-            startActivity(i);
+//            Intent i = new Intent(this, AddPlaceMapsActivity.class);
+//            i.putExtra("selectedCity", selectedCity);
+//            i.putExtra(Constants.Latitutude,selectedCityLatLng.getLatitude());
+//            i.putExtra(Constants.Longitude,selectedCityLatLng.getLongitude());
+//            startActivity(i);
         }
     }
 }
