@@ -1,6 +1,7 @@
 package com.placediscovery.ui.activity;
 
 import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,9 +11,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.placediscovery.MongoLabUser.CreateUserAsyncTask;
 import com.placediscovery.MongoLabUser.User;
+import com.placediscovery.MongoLabUser.UserQueryBuilder;
 import com.placediscovery.R;
+
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
@@ -23,6 +28,7 @@ public class SignupActivity extends AppCompatActivity {
     protected Button _signupButton;
     protected TextView _loginLink;
     private TextView info;
+    private ProgressDialog progressDialog;
 
     User user;
 
@@ -63,12 +69,6 @@ public class SignupActivity extends AppCompatActivity {
 
         _signupButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
-                R.style.AppTheme);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Creating Account...");
-        progressDialog.show();
-
         // TODO: Implement your own signup logic here.
         user = new User();
         user.name = _nameText.getText().toString();
@@ -78,17 +78,6 @@ public class SignupActivity extends AppCompatActivity {
         CreateUserAsyncTask tsk = new CreateUserAsyncTask();
         tsk.execute(user);
 
-
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
-                        onSignupSuccess();
-                        // onSignupFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 20000);
     }
 
 
@@ -99,7 +88,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "SignUp failed", Toast.LENGTH_LONG).show();
 
         _signupButton.setEnabled(true);
     }
@@ -138,4 +127,56 @@ public class SignupActivity extends AppCompatActivity {
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        callbackManager.onActivityResult(requestCode, resultCode, data);
 //    }
+
+    class CreateUserAsyncTask extends AsyncTask<User, Void, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(SignupActivity.this, "",
+                    "Creating Account...", false);
+        }
+
+        @Override
+        protected Boolean doInBackground(User... arg0) {
+            try
+            {
+                User user = arg0[0];
+
+                UserQueryBuilder qb = new UserQueryBuilder();
+                URL url = new URL(qb.buildUsersSaveURL());
+                HttpURLConnection connection = (HttpURLConnection) url
+                        .openConnection();
+                connection.setReadTimeout(15000);
+                connection.setConnectTimeout(15000);
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                connection.setDoInput(false);
+                connection.setRequestProperty("Content-Type",
+                        "application/json");
+                //connection.setRequestProperty("Accept", "application/json");
+
+                OutputStreamWriter osw = new OutputStreamWriter(
+                        connection.getOutputStream());
+
+                osw.write(qb.createUser(user));
+                osw.flush();
+                osw.close();
+                return connection.getResponseCode() < 205;
+
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if(progressDialog!=null && progressDialog.isShowing()){
+                progressDialog.dismiss();}
+            if(aBoolean){
+                onSignupSuccess();
+            } else
+                onSignupFailed();
+        }
+
+    }
 }
