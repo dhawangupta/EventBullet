@@ -52,7 +52,7 @@
 
     <string name="clear">Clear</string>
 
-    <!-- Test Activities -->
+    <!-- TestActivity Activities -->
     <string name="activity_infowindow_adapter">InfoWindow Adapter</string>
     <string name="activity_map_fragment">Map Fragment Activity</string>
     <string name="activity_press_for_marker">Press For Marker Activity</string>
@@ -98,5 +98,6 @@
     <string name="drawer_open">Open</string>
     <string name="internet_req">Please Connect to Internet</string>
     <string name="home_page_title">Events</string>
+    <string name="title_activity_test">Test</string>
 </resources>
 
