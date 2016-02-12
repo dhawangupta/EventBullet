@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -44,7 +45,6 @@ public class TagFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Event> events;
     private TagAdapter adapter;
-
 
 
     public TagFragment() {
@@ -109,6 +109,9 @@ public class TagFragment extends Fragment {
 
     //This method will parse json data
     private void parseData(JSONArray array) {
+
+        Toast.makeText(getActivity(), array.toString(), Toast.LENGTH_LONG).show();
+
         for (int i = 0; i < array.length(); i++) {
             Event eventObj = new Event();
             JSONObject json = null;
@@ -136,6 +139,7 @@ public class TagFragment extends Fragment {
 
         //Adding adapter to recyclerview
         recyclerView.setAdapter(adapter);
+        Toast.makeText(getActivity(), "Adapter attached", Toast.LENGTH_LONG).show();
     }
 
     /**
