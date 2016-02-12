@@ -258,7 +258,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fab) {
+        if (v.getId() == R.id.add_fab) {
 
 
             if (location == null) {
