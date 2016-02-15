@@ -1,7 +1,6 @@
 package com.placediscovery.ui.card;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -79,7 +78,7 @@ public class TagFragment extends Fragment {
     //This method will get data from the web api
     private void getData() {
         //Showing a progress dialog
-        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Loading Data", "Please wait...", false, false);
+//        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Loading Data", "Please wait...", false, false);
 
         //Creating a json array request
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Config.DATA_URL,
@@ -87,7 +86,7 @@ public class TagFragment extends Fragment {
                     @Override
                     public void onResponse(JSONArray response) {
                         //Dismissing progress dialog
-                        loading.dismiss();
+//                        loading.dismiss();
 
                         //calling method to parse json array
                         parseData(response);
