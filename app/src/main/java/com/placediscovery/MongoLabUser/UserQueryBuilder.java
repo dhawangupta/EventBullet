@@ -105,9 +105,7 @@ public class UserQueryBuilder {
 		return String
 		.format("{\"name\": \"%s\"," +
                         "\"email\": \"%s\", " +
-                        "\"password\": \"%s\"" +
-                        "\"savedplaces\":\"\", " +
-                        "\"ratings\":[]}",
+                        "\"password\": \"%s\"",
 				user.name, user.email, user.password);
 	}
 
