@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.placediscovery.R;
-import com.placediscovery.ui.card.TagFragment;
+import com.placediscovery.ui.fragment.TagFragment;
 import com.placediscovery.ui.fragment.DrawerFragment;
 
 public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
