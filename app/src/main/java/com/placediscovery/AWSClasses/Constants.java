@@ -21,12 +21,12 @@ public class Constants {
      * You should replace these values with your own. See the README for details
      * on what to fill in.
      */
-    public static final String COGNITO_POOL_ID = "ap-northeast-1:a954a814-4d29-4fcf-b386-8ec3f0da8469";
+    public static final String COGNITO_POOL_ID = "ap-northeast-1:fba6ad01-cc90-45b0-bd23-a12f3507af12";
 
     /*
      * Note, you must first create a bucket using the S3 console before running
      * the sample (https://console.aws.amazon.com/s3/). After creating a bucket,
      * put it's name in the field below.
      */
-    public static final String BUCKET_NAME = "place-discovery";
+    public static final String BUCKET_NAME = "eventbullet";
 }
