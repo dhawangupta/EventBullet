@@ -1,6 +1,7 @@
 package com.placediscovery.ui.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,12 +12,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.placediscovery.HelperClasses.SessionManager;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.MongoLabUser.UserQueryBuilder;
 import com.placediscovery.R;
 
-import java.io.OutputStreamWriter;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class SignupActivity extends AppCompatActivity {
@@ -30,7 +41,12 @@ public class SignupActivity extends AppCompatActivity {
     private TextView info;
     private ProgressDialog progressDialog;
 
+    //To be retreived from JSON received after Signup
+    private String response;
+    private String result;
+
     User user;
+    SessionManager session;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,7 +85,6 @@ public class SignupActivity extends AppCompatActivity {
 
         _signupButton.setEnabled(false);
 
-        // TODO: Implement your own signup logic here.
         user = new User();
         user.name = _nameText.getText().toString();
         user.email = _emailText.getText().toString();
@@ -82,9 +97,11 @@ public class SignupActivity extends AppCompatActivity {
 
 
     public void onSignupSuccess() {
-        _signupButton.setEnabled(true);
-        setResult(RESULT_OK, null);
-        finish();
+        session.createLoginSession(user.name,user.email,result);
+        Intent intent = new Intent(SignupActivity.this, HomePageActivity.class);
+        Toast.makeText(getApplicationContext(), "Welcome " + user.name +
+                ", You are now logged in.", Toast.LENGTH_SHORT).show();
+        startActivity(intent);
     }
 
     public void onSignupFailed() {
@@ -128,7 +145,7 @@ public class SignupActivity extends AppCompatActivity {
 //        callbackManager.onActivityResult(requestCode, resultCode, data);
 //    }
 
-    class CreateUserAsyncTask extends AsyncTask<User, Void, Boolean> {
+    class CreateUserAsyncTask extends AsyncTask<User, Void, JSONObject> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -137,46 +154,85 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Boolean doInBackground(User... arg0) {
-            try
-            {
-                User user = arg0[0];
+        protected JSONObject doInBackground(User... params) {
+
+            JSONObject jObj = null;
+            String json = "";
+
+            try {
+                User user = params[0];
 
                 UserQueryBuilder qb = new UserQueryBuilder();
-                URL url = new URL(qb.buildUsersSaveURL());
-                HttpURLConnection connection = (HttpURLConnection) url
-                        .openConnection();
-                connection.setReadTimeout(15000);
-                connection.setConnectTimeout(15000);
-                connection.setRequestMethod("POST");
-                connection.setDoOutput(true);
-                connection.setDoInput(false);
-                connection.setRequestProperty("Content-Type",
-                        "application/json");
-                //connection.setRequestProperty("Accept", "application/json");
 
-                OutputStreamWriter osw = new OutputStreamWriter(
-                        connection.getOutputStream());
+                URL url = new URL("http://52.192.70.192:80/register");
 
-                osw.write(qb.createUser(user));
-                osw.flush();
-                osw.close();
-                return connection.getResponseCode() < 205;
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-            } catch (Exception e) {
-                return false;
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+
+                conn.setRequestMethod("POST");
+
+                conn.setRequestProperty("Content-Type", "application/json");
+
+                OutputStream os = conn.getOutputStream();
+                os.write(qb.createUser(user).getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = conn.getInputStream();
+
+                try {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    is.close();
+                    json = sb.toString();
+
+                } catch (Exception e) {
+                    Log.e("Buffer Error", "Error converting result " + e.toString());
+                    return null;
+                }
+
+
+                try {
+                    jObj = new JSONObject(json);
+                } catch (JSONException e) {
+                    Log.e("JSON Parser", "Error parsing data " + e.toString());
+                    return null;
+                }
+
+                return jObj;
+
+            } catch (IOException e) {
+                return null;
             }
+
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
             if(progressDialog!=null && progressDialog.isShowing()){
-                progressDialog.dismiss();}
-            if(aBoolean){
-                onSignupSuccess();
-            } else
+                progressDialog.dismiss();
+            }
+
+            if(jsonObject == null){
                 onSignupFailed();
+            } else
+                try {
+                    if(jsonObject.getString("response").equals("SUCCESS")) {
+                        result = jsonObject.getString("result");    //this result is to be used as signin token
+                        onSignupSuccess(); //TODO: have to edit signupsuccess
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
         }
+
 
     }
 }
