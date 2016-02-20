@@ -15,7 +15,7 @@ public class UserQueryBuilder {
 	 * @return
 	 */
 	public String getApiKey() {
-		return "RXHr6P_daeHiIoDGIZ8guPJGJVfR_QHE";
+		return "xA8E78wu30cfP3fdc3PJBvHhu8KYRbS-";
 	}
 	
 	/**
@@ -105,9 +105,7 @@ public class UserQueryBuilder {
 		return String
 		.format("{\"name\": \"%s\"," +
                         "\"email\": \"%s\", " +
-                        "\"password\": \"%s\"" +
-                        "\"savedplaces\":\"\", " +
-                        "\"ratings\":[]}",
+                        "\"password\": \"%s\"",
 				user.name, user.email, user.password);
 	}
 
