@@ -18,7 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.placediscovery.HelperClasses.Information;
+import com.placediscovery.Data.Information;
 import com.placediscovery.R;
 import com.placediscovery.ui.ClickListener;
 import com.placediscovery.ui.activity.ChooseCity;

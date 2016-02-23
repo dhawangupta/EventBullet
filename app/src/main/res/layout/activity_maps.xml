@@ -23,19 +23,6 @@
             android:layout_height="match_parent"
             tools:context="com.placediscovery.ui.activity.MapActivity" />
 
-        <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/add_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_add_white_24dp"
-            fab:fab_colorNormal="@color/primary"
-            fab:fab_colorPressed="@color/LightBlue"
-            fab:fab_colorRipple="@color/MediumPurple"
-            fab:fab_type="mini" />
-
-
     </FrameLayout>
 
 

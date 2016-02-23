@@ -9,7 +9,6 @@ import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -25,7 +24,6 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.MongoLabPlace.PlaceQueryBuilder;
 import com.placediscovery.MongoLabPlace.UpdatePlaceAsyncTask;
@@ -42,18 +40,20 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+//import com.placediscovery.ImageLoader.ImageLoader;
+
 
 public class ContentActivity extends AppCompatActivity implements
         BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     String selectedCity;
-    private SliderLayout mDemoSlider;   //this is imageslider used
-    private RatingBar ratingBar;
     User loggedInUser;
     float userRating;
     EditText reviewField;
     Place selectedPlace;
     ProgressBar progressBarFooter;
+    private SliderLayout mDemoSlider;   //this is imageslider used
+    private RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,13 +180,13 @@ public class ContentActivity extends AppCompatActivity implements
             int loader = R.drawable.loader;         //loader image
             String hd_url = image_url.substring(0, image_url.length() - 6) + ".jpg";
             // ImageLoader class instance
-            ImageLoader imgLoader = new ImageLoader(getApplicationContext());
+//            ImageLoader imgLoader = new ImageLoader(getApplicationContext());
             // whenever you want to load an image from url
             // call DisplayImage function
             // url - image url to load
             // loader - loader image, will be displayed before getting image
             // image - ImageView
-            imgLoader.DisplayImage(hd_url, loader, (ImageView) findViewById(R.id.contentPageImage));
+//            imgLoader.DisplayImage(hd_url, loader, (ImageView) findViewById(R.id.contentPageImage));
 
         } else {
 
@@ -301,6 +301,26 @@ public class ContentActivity extends AppCompatActivity implements
             reviewsList.addView(reviews[j]);
 
         }
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
 
     }
 
@@ -472,26 +492,6 @@ public class ContentActivity extends AppCompatActivity implements
             progressBarFooter.setVisibility(View.GONE);
             super.onPostExecute(user);
         }
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
-
     }
 
 }
