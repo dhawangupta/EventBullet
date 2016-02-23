@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.placediscovery.HelperClasses.Information;
+import com.placediscovery.Data.Information;
 import com.placediscovery.R;
 
 import java.util.Collections;

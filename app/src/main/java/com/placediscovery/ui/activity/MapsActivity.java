@@ -23,8 +23,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.melnykov.fab.FloatingActionButton;
-import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.Place;
 import com.placediscovery.R;
 
@@ -32,7 +30,6 @@ import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    FloatingActionButton fab;
 
     ArrayList<Place> places = new ArrayList<>();
     ArrayList<Place> places_filtered = new ArrayList<>();
@@ -52,7 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        fab = (FloatingActionButton) findViewById(R.id.add_fab);
+
 
 
         selectedCity = getIntent().getExtras().getString("selectedCity");
@@ -135,7 +132,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        fab.setOnClickListener(this);
+
 
         try {
             Place first = places.get(0);
@@ -198,13 +195,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             imageviews.addView(iv[j]);
 
             // ImageLoader class instance
-            ImageLoader imgLoader = new ImageLoader(getApplicationContext());
+//            ImageLoader imgLoader = new ImageLoader(getApplicationContext());
             // whenever you want to load an image from url
             // call DisplayImage function
             // url - image url to load
             // loader - loader image, will be displayed before getting image
             // image - ImageView
-            imgLoader.DisplayImage(image_url, loader, iv[j]);
+//            imgLoader.DisplayImage(image_url, loader, iv[j]);
 
             //on-click action:
             final int finalJ = j;
@@ -258,16 +255,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.add_fab) {
-
-
-            if (location == null) {
-                return;
-            }
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-            Toast.makeText(this, String.valueOf(latitude), Toast.LENGTH_LONG).show();
-        }
+//        if (v.getId() == R.id.add_fab) {
+//
+//
+//            if (location == null) {
+//                return;
+//            }
+//            double latitude = location.getLatitude();
+//            double longitude = location.getLongitude();
+//            Toast.makeText(this, String.valueOf(latitude), Toast.LENGTH_LONG).show();
+//        }
     }
 
     @Override
