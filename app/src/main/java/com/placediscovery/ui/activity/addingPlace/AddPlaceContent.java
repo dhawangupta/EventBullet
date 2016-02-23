@@ -195,7 +195,7 @@ public class AddPlaceContent extends AppCompatActivity {
                 file);
 
         HashMap<String, Object> map = new HashMap<>();
-        Util.fillMap(map, observer, false);
+//        Util.fillMap(map, observer, false);
         observer.setTransferListener(new UploadListener());
     }
 

@@ -11,8 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.placediscovery.R;
-import com.placediscovery.ui.fragment.TagFragment;
 import com.placediscovery.ui.fragment.DrawerFragment;
+
 
 public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
 
@@ -32,13 +32,9 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         toolbar.setOnMenuItemClickListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         setUpNavDrawer();
-        setUpCards();
-    }
-
-    private void setUpCards() {
-        TagFragment tagFragment = (TagFragment) getSupportFragmentManager().findFragmentById(R.id.cards);
 
     }
+
 
     private void setUpNavDrawer() {
 
