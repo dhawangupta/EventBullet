@@ -1,4 +1,4 @@
-package com.placediscovery.HelperClasses;
+package com.placediscovery.ui.CustomViews;
 
 import android.content.Context;
 import android.text.TextUtils;

@@ -14,9 +14,9 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.placediscovery.Data.FeedItem;
-import com.placediscovery.HelperClasses.FeedImageView;
 import com.placediscovery.Network.MySingleton;
 import com.placediscovery.R;
+import com.placediscovery.ui.CustomViews.FeedImageView;
 
 import java.util.List;
 
