@@ -180,7 +180,7 @@ public class ChooseCity extends AppCompatActivity implements ViewHolderResponser
                             tempEvent.setType(eventObj.get("type").toString());
                             tempEvent.setTicket(eventObj.get("ticket").toString());
                             tempEvent.setFreq(eventObj.get("freq").toString());
-                            tempEvent.setduration(eventObj.get("eduration").toString());
+                            tempEvent.setDuration(eventObj.get("eduration").toString());
                             tempEvent.setImageURL(eventObj.get("imageURL").toString());
                             tempEvent.setContent(eventObj.get("content").toString());
 
