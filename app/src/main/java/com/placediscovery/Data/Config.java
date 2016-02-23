@@ -1,4 +1,4 @@
-package com.placediscovery.HelperClasses;
+package com.placediscovery.Data;
 
 public class Config {
 
