@@ -15,6 +15,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.placediscovery.Data.FeedItem;
 import com.placediscovery.HelperClasses.FeedImageView;
+import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.Network.MySingleton;
 import com.placediscovery.R;
 
@@ -23,11 +24,11 @@ import java.util.List;
 
 public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<FeedItem> feeditems;
+    private final List<Event> feeditems;
     private Context context;
     private ImageLoader imageLoader;
 
-    public MyFeedItemRecyclerViewAdapter(List<FeedItem> items, Context context) {
+    public MyFeedItemRecyclerViewAdapter(List<Event> items, Context context) {
         feeditems = items;
         this.context = context;
     }
@@ -48,40 +49,40 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
         holder.name.setText(holder.item.getName());
 
         // Converting timestamp into x ago format
-        CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
-                Long.parseLong(holder.item.getTimeStamp()),
-                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
-        holder.timestamp.setText(timeAgo);
-
-        // Chcek for empty status message
-        if (!TextUtils.isEmpty(holder.item.getStatus())) {
-            holder.statusMsg.setText(holder.item.getStatus());
-            holder.statusMsg.setVisibility(View.VISIBLE);
-        } else {
-            // status is empty, remove from view
-            holder.statusMsg.setVisibility(View.GONE);
-        }
-
-        // Checking for null feed url
-        if (holder.item.getUrl() != null) {
-            holder.url.setText(Html.fromHtml("<a href=\"" + holder.item.getUrl() + "\">"
-                    + holder.item.getUrl() + "</a> "));
-
-            // Making url clickable
-            holder.url.setMovementMethod(LinkMovementMethod.getInstance());
-            holder.url.setVisibility(View.VISIBLE);
-        } else {
-            // url is null, remove from the view
-            holder.url.setVisibility(View.GONE);
-        }
-
-//        user profile pic
-        holder.profilePic.setImageUrl(holder.item.getProfilePic(), imageLoader);
+//        CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
+//                Long.parseLong(holder.item.getTimeStamp()),
+//                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+//        holder.timestamp.setText(timeAgo);
+//
+//        // Chcek for empty status message
+//        if (!TextUtils.isEmpty(holder.item.getStatus())) {
+//            holder.statusMsg.setText(holder.item.getStatus());
+//            holder.statusMsg.setVisibility(View.VISIBLE);
+//        } else {
+//            // status is empty, remove from view
+//            holder.statusMsg.setVisibility(View.GONE);
+//        }
+//
+//        // Checking for null feed url
+//        if (holder.item.getUrl() != null) {
+//            holder.url.setText(Html.fromHtml("<a href=\"" + holder.item.getUrl() + "\">"
+//                    + holder.item.getUrl() + "</a> "));
+//
+//            // Making url clickable
+//            holder.url.setMovementMethod(LinkMovementMethod.getInstance());
+//            holder.url.setVisibility(View.VISIBLE);
+//        } else {
+//            // url is null, remove from the view
+//            holder.url.setVisibility(View.GONE);
+//        }
+//
+////        user profile pic
+//        holder.profilePic.setImageUrl(holder.item.getProfilePic(), imageLoader);
 
         // Feed image
-        if (holder.item.getImge() != null) {
+        if (holder.item.getImageURL() != null) {
 
-            holder.feedImageView.setImageUrl(holder.item.getImge(), imageLoader);
+            holder.feedImageView.setImageUrl(holder.item.getImageURL().split(",")[0], imageLoader);
             holder.feedImageView.setVisibility(View.VISIBLE);
             holder.feedImageView
                     .setResponseObserver(new FeedImageView.ResponseObserver() {
@@ -108,22 +109,22 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public View convertView;
-        public FeedItem item;
+        public Event item;
         TextView name;
-        TextView timestamp;
-        TextView statusMsg;
-        TextView url;
-        NetworkImageView profilePic;
+        //        TextView timestamp;
+//        TextView statusMsg;
+//        TextView url;
+//        NetworkImageView profilePic;
         FeedImageView feedImageView;
 
         public ViewHolder(View view) {
             super(view);
             convertView = view;
             name = (TextView) convertView.findViewById(R.id.name);
-            timestamp = (TextView) convertView.findViewById(R.id.timestamp);
-            statusMsg = (TextView) convertView.findViewById(R.id.txtStatusMsg);
-            url = (TextView) convertView.findViewById(R.id.txtUrl);
-            profilePic = (NetworkImageView) convertView.findViewById(R.id.profilePic);
+//            timestamp = (TextView) convertView.findViewById(R.id.timestamp);
+//            statusMsg = (TextView) convertView.findViewById(R.id.txtStatusMsg);
+//            url = (TextView) convertView.findViewById(R.id.txtUrl);
+//            profilePic = (NetworkImageView) convertView.findViewById(R.id.profilePic);
             feedImageView = (FeedImageView) convertView.findViewById(R.id.feedImage1);
         }
     }
