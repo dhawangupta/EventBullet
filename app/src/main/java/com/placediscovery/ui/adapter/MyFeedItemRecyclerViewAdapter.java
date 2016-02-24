@@ -2,18 +2,12 @@ package com.placediscovery.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.text.TextUtils;
-import android.text.format.DateUtils;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-import com.placediscovery.Data.FeedItem;
 import com.placediscovery.HelperClasses.FeedImageView;
 import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.Network.MySingleton;

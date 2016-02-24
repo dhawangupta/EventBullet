@@ -17,7 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.placediscovery.Data.FeedItem;
 import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.Network.MySingleton;
 import com.placediscovery.R;
@@ -207,6 +206,6 @@ public class FeedItemFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(FeedItem item);
+        void onListFragmentInteraction(Event item);
     }
 }
