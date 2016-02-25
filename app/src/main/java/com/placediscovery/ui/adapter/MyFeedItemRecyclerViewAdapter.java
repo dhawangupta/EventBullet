@@ -40,13 +40,19 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
         if (imageLoader == null)
             imageLoader = MySingleton.getInstance(context).getImageLoader();
         holder.item = feeditems.get(position);
-        holder.name.setText(holder.item.getName());
+        holder.eventName.setText(holder.item.getName());
+        holder.eventTimings.setText(holder.item.getTimings());
+        holder.eventType.setText(holder.item.getType());
 
-        // Converting timestamp into x ago format
+        holder.eventName.setVisibility(View.VISIBLE);
+        holder.eventTimings.setVisibility(View.VISIBLE);
+        holder.eventType.setVisibility(View.VISIBLE);
+
+        // Converting eventTimings into x ago format
 //        CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
 //                Long.parseLong(holder.item.getTimeStamp()),
 //                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
-//        holder.timestamp.setText(timeAgo);
+//        holder.eventTimings.setText(timeAgo);
 //
 //        // Chcek for empty status message
 //        if (!TextUtils.isEmpty(holder.item.getStatus())) {
@@ -104,22 +110,22 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
 
         public View convertView;
         public Event item;
-        TextView name;
-        //        TextView timestamp;
+        TextView eventName;
+        TextView eventTimings;
 //        TextView statusMsg;
-//        TextView url;
+        TextView eventType;
 //        NetworkImageView profilePic;
         FeedImageView feedImageView;
 
         public ViewHolder(View view) {
             super(view);
             convertView = view;
-            name = (TextView) convertView.findViewById(R.id.name);
-//            timestamp = (TextView) convertView.findViewById(R.id.timestamp);
-//            statusMsg = (TextView) convertView.findViewById(R.id.txtStatusMsg);
-//            url = (TextView) convertView.findViewById(R.id.txtUrl);
+            eventName = (TextView) convertView.findViewById(R.id.eventName);
+            eventTimings = (TextView) convertView.findViewById(R.id.eventTimings);
+//            statusMsg = (TextView) convertView.findViewById(R.id.eventName);
+            eventType = (TextView) convertView.findViewById(R.id.eventType);
 //            profilePic = (NetworkImageView) convertView.findViewById(R.id.profilePic);
-            feedImageView = (FeedImageView) convertView.findViewById(R.id.feedImage1);
+            feedImageView = (FeedImageView) convertView.findViewById(R.id.eventImage);
         }
     }
 }
