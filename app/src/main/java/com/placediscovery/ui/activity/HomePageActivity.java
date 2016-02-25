@@ -2,6 +2,8 @@ package com.placediscovery.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +14,7 @@ import android.view.View;
 
 import com.placediscovery.R;
 import com.placediscovery.ui.fragment.DrawerFragment;
+import com.placediscovery.ui.fragment.FeedItemFragment;
 
 
 public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
@@ -32,7 +35,16 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         toolbar.setOnMenuItemClickListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         setUpNavDrawer();
+        setFeed();
 
+    }
+
+    private void setFeed() {
+        FeedItemFragment frag = new FeedItemFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.feed_container, frag, "FeedItemFragment");
+        transaction.commit();
     }
 
 

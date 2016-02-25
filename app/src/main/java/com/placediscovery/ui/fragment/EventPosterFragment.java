@@ -27,4 +27,5 @@ public class EventPosterFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_event_poster, container, false);
     }
 
+
 }
