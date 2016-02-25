@@ -7,22 +7,13 @@ import java.io.Serializable;
  */
 public class Event implements Serializable {
     private String name = "";
-    private int timings;
+    private String timings = "";
     private String type = "";
     private String ticket = "";
     private String freq = "";
     private String duration = "";
     private String imageURL = "";
     private String content = "";
-    private String createdby = "";
-
-    public String getCreatedby() {
-        return createdby;
-    }
-
-    public void setCreatedby(String createdby) {
-        this.createdby = createdby;
-    }
 
     public String getName() {
         return name;
@@ -32,11 +23,11 @@ public class Event implements Serializable {
         this.name = name;
     }
 
-    public int getTimings() {
+    public String getTimings() {
         return timings;
     }
 
-    public void setTimings(int timings) {
+    public void setTimings(String timings) {
         this.timings = timings;
     }
 
@@ -64,11 +55,11 @@ public class Event implements Serializable {
         this.freq = freq;
     }
 
-    public String getduration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setduration(String eduration) {
+    public void setDuration(String eduration) {
         this.duration = eduration;
     }
 
