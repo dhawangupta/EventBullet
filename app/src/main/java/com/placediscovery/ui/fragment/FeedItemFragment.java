@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.placediscovery.Data.FeedItem;
+import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.Network.MySingleton;
 import com.placediscovery.R;
 import com.placediscovery.ui.adapter.MyFeedItemRecyclerViewAdapter;
@@ -42,8 +43,8 @@ public class FeedItemFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private List<FeedItem> feedItems;
-    private String URL_FEED = "http://api.androidhive.info/feed/feed.json";
+    private List<Event> feedItems;
+    private String URL_FEED = "http://52.192.70.192/getEvents";
     private MyFeedItemRecyclerViewAdapter adapter;
 
     /**
@@ -151,27 +152,27 @@ public class FeedItemFragment extends Fragment {
 
     private void parseJsonFeed(JSONObject response) {
         try {
-            JSONArray feedArray = response.getJSONArray("feed");
+            JSONArray feedArray = response.getJSONArray("result");
 
             for (int i = 0; i < feedArray.length(); i++) {
                 JSONObject feedObj = (JSONObject) feedArray.get(i);
 
-                FeedItem item = new FeedItem();
-                item.setId(feedObj.getInt("id"));
+                Event item = new Event();
+                //item.setId(feedObj.getInt("id"));
                 item.setName(feedObj.getString("name"));
 
                 // Image might be null sometimes
-                String image = feedObj.isNull("image") ? null : feedObj
-                        .getString("image");
-                item.setImge(image);
-                item.setStatus(feedObj.getString("status"));
-                item.setProfilePic(feedObj.getString("profilePic"));
-                item.setTimeStamp(feedObj.getString("timeStamp"));
+                String imageURL = feedObj.isNull("imageURL") ? null : feedObj
+                        .getString("imageURL");
+                item.setImageURL(imageURL);
+//                item.setStatus(feedObj.getString("status"));
+//                item.setProfilePic(feedObj.getString("profilePic"));
+//                item.setTimeStamp(feedObj.getString("timeStamp"));
 
                 // url might be null sometimes
-                String feedUrl = feedObj.isNull("url") ? null : feedObj
-                        .getString("url");
-                item.setUrl(feedUrl);
+//                String feedUrl = feedObj.isNull("url") ? null : feedObj
+//                        .getString("url");
+//                item.setUrl(feedUrl);
 
                 feedItems.add(item);
             }
