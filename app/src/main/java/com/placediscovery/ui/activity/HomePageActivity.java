@@ -35,6 +35,7 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         toolbar.setOnMenuItemClickListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         setUpNavDrawer();
+        setFeed();
 
     }
 
