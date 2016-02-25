@@ -17,7 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.placediscovery.Data.FeedItem;
 import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.Network.MySingleton;
 import com.placediscovery.R;
@@ -33,7 +32,7 @@ import java.util.List;
 
 /**
  * A fragment representing a list of Items.
- * <p/>
+ * <p>
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
@@ -169,6 +168,9 @@ public class FeedItemFragment extends Fragment {
 //                item.setProfilePic(feedObj.getString("profilePic"));
 //                item.setTimeStamp(feedObj.getString("timeStamp"));
 
+//                item.setTimings(feedObj.getString("timings"));
+                item.setType(feedObj.getString("type"));
+
                 // url might be null sometimes
 //                String feedUrl = feedObj.isNull("url") ? null : feedObj
 //                        .getString("url");
@@ -200,13 +202,13 @@ public class FeedItemFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(FeedItem item);
+        void onListFragmentInteraction(Event item);
     }
 }
