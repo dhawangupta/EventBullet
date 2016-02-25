@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.placediscovery.Data.FeedItem;
+import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.Network.MySingleton;
 import com.placediscovery.R;
 import com.placediscovery.ui.CustomViews.FeedImageView;
@@ -23,11 +22,11 @@ import java.util.List;
 
 public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<FeedItem> feeditems;
+    private final List<Event> feeditems;
     private Context context;
     private ImageLoader imageLoader;
 
-    public MyFeedItemRecyclerViewAdapter(List<FeedItem> items, Context context) {
+    public MyFeedItemRecyclerViewAdapter(List<Event> items, Context context) {
         feeditems = items;
         this.context = context;
     }
@@ -48,10 +47,10 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
         holder.name.setText(holder.item.getName());
 
         // Converting timestamp into x ago format
-        CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
-                Long.parseLong(holder.item.getTimeStamp()),
-                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
-        holder.timestamp.setText(timeAgo);
+//        CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
+//                Long.parseLong(holder.item.getTimeStamp()),
+//                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+        holder.timing.setText(holder.item.getTimings());
 
         // Chcek for empty status message
         if (!TextUtils.isEmpty(holder.item.getStatus())) {
@@ -63,9 +62,9 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
         }
 
         // Checking for null feed url
-        if (holder.item.getUrl() != null) {
-            holder.url.setText(Html.fromHtml("<a href=\"" + holder.item.getUrl() + "\">"
-                    + holder.item.getUrl() + "</a> "));
+        if (holder.item.getEventUrl() != null) {
+            holder.url.setText(Html.fromHtml("<a href=\"" + holder.item.getEventUrl() + "\">"
+                    + holder.item.getEventUrl() + "</a> "));
 
             // Making url clickable
             holder.url.setMovementMethod(LinkMovementMethod.getInstance());
@@ -76,12 +75,12 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
         }
 
 //        user profile pic
-        holder.profilePic.setImageUrl(holder.item.getProfilePic(), imageLoader);
+        holder.profilePic.setImageUrl(holder.item.getProfilePicUrl(), imageLoader);
 
         // Feed image
-        if (holder.item.getImge() != null) {
+        if (holder.item.getFeedimageURL() != null) {
 
-            holder.feedImageView.setImageUrl(holder.item.getImge(), imageLoader);
+            holder.feedImageView.setImageUrl(holder.item.getFeedimageURL(), imageLoader);
             holder.feedImageView.setVisibility(View.VISIBLE);
             holder.feedImageView
                     .setResponseObserver(new FeedImageView.ResponseObserver() {
@@ -108,9 +107,9 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public View convertView;
-        public FeedItem item;
+        public Event item;
         TextView name;
-        TextView timestamp;
+        TextView timing;
         TextView statusMsg;
         TextView url;
         NetworkImageView profilePic;
@@ -120,7 +119,7 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
             super(view);
             convertView = view;
             name = (TextView) convertView.findViewById(R.id.name);
-            timestamp = (TextView) convertView.findViewById(R.id.timestamp);
+            timing = (TextView) convertView.findViewById(R.id.timestamp);
             statusMsg = (TextView) convertView.findViewById(R.id.txtStatusMsg);
             url = (TextView) convertView.findViewById(R.id.txtUrl);
             profilePic = (NetworkImageView) convertView.findViewById(R.id.profilePic);
