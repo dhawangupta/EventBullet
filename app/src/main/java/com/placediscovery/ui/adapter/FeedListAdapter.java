@@ -16,17 +16,17 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.placediscovery.HelperClasses.AppController;
-import com.placediscovery.HelperClasses.FeedImageView;
 import com.placediscovery.HelperClasses.FeedItem;
 import com.placediscovery.R;
+import com.placediscovery.ui.CustomViews.FeedImageView;
 
 import java.util.List;
 
 public class FeedListAdapter extends BaseAdapter {
+    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     private Activity activity;
     private LayoutInflater inflater;
     private List<FeedItem> feedItems;
-    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
     public FeedListAdapter(Activity activity, List<FeedItem> feedItems) {
         this.activity = activity;
