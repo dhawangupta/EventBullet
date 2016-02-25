@@ -22,10 +22,10 @@
             android:id="@+id/feed_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/app_bar" />
+            android:layout_below="@id/app_bar"></RelativeLayout>
+
 
     </RelativeLayout>
-
 
     <fragment
         android:id="@+id/fragment_home_nav_draw"
