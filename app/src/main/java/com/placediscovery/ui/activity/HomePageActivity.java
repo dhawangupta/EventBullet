@@ -44,6 +44,7 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.feed_container, frag, "FeedItemFragment");
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
