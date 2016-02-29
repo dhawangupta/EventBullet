@@ -34,7 +34,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<Place> places = new ArrayList<>();
     ArrayList<Place> places_filtered = new ArrayList<>();
     ArrayList<Marker> places_marker = new ArrayList<>();
-    String selectedCity;
+    String selectedCity = null;
     TextView[] filtersTextViews;
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -49,10 +49,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
-
-
         selectedCity = getIntent().getExtras().getString("selectedCity");
+//        if (selectedCity == null) {
+//            selectedCity = Constants.Varanasi;
+//        }
         //retrieving places
         places = (ArrayList<Place>) getIntent().getExtras().getSerializable("places");
         filtersTextViews = new TextView[places.size()];

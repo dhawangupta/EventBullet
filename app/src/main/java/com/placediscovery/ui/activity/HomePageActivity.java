@@ -1,5 +1,6 @@
 package com.placediscovery.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -14,12 +15,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
 import com.placediscovery.R;
 import com.placediscovery.ui.fragment.DrawerFragment;
 import com.placediscovery.ui.fragment.FeedItemFragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -29,11 +32,6 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private int[] tabIcons = {
-            R.drawable.ic_action_search_orange,
-            R.drawable.ic_action_trending_orange,
-            R.drawable.ic_action_upcoming_orange
-    };
 
 
     @Override
@@ -102,6 +100,9 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         if (item.getItemId() == R.id.menu_login) {
             startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
         }
+        if (item.getItemId() == R.id.map_icon) {
+            startActivity(new Intent(HomePageActivity.this, ChooseCity.class));
+        }
         return true;
     }
 
@@ -133,4 +134,30 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
             return mFragmentTitleList.get(position);
         }
     }
+
+    private class StableArrayAdapter extends ArrayAdapter<String> {
+
+        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+
+        public StableArrayAdapter(Context context, int textViewResourceId,
+                                  List<String> objects) {
+            super(context, textViewResourceId, objects);
+            for (int i = 0; i < objects.size(); ++i) {
+                mIdMap.put(objects.get(i), i);
+            }
+        }
+
+        @Override
+        public long getItemId(int position) {
+            String item = getItem(position);
+            return mIdMap.get(item);
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+    }
+
 }
