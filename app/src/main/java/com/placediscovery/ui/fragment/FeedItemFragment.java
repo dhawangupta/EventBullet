@@ -104,7 +104,6 @@ public class FeedItemFragment extends Fragment {
                 switch (position) {
                     case 1:
                         startActivity(new Intent(getActivity(), ChooseCity.class));
-
                         break;
 
                     case 2:
