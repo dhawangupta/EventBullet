@@ -30,11 +30,12 @@
                 <!--android:layout_height="@dimen/feed_item_profile_pic"-->
                 <!--android:scaleType="fitCenter"/>-->
 
-            <!--<LinearLayout-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="vertical"-->
-                <!--android:paddingLeft="@dimen/feed_item_profile_info_padd">-->
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/profilePic"
+                android:layout_width="@dimen/feed_item_profile_pic"
+                android:layout_height="@dimen/feed_item_profile_pic"
+                android:scaleType="fitCenter" />
+
 
                 <!--<TextView-->
                     <!--android:id="@+id/name"-->
@@ -85,6 +86,14 @@
             android:paddingLeft="@dimen/feed_item_status_pad_left_right"
             android:paddingRight="@dimen/feed_item_status_pad_left_right"
             android:textColorLink="@color/link" />
+
+        <com.placediscovery.ui.CustomViews.FeedImageView
+            android:id="@+id/feedImage1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:scaleType="fitXY"
+            android:visibility="visible" />
 
     </LinearLayout>
 </LinearLayout>

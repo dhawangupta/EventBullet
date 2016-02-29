@@ -15,11 +15,11 @@ import android.widget.Toast;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.placediscovery.HelperClasses.HelperMethods;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.MongoLabUser.UserQueryBuilder;
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
-import com.placediscovery.HelperClasses.HelperMethods;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -27,8 +27,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class
-        LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
@@ -116,7 +115,7 @@ public class
             _passwordText.setError(null);
         }
 
-        if(!HelperMethods.isInternetAvailable(this))
+        if (!HelperMethods.isInternetAvailable(this))
             valid = false;
         return valid;
     }
@@ -124,6 +123,7 @@ public class
     private class GetUserAsyncTask extends AsyncTask<User, Void, ArrayList<User>> {
         String server_output = null;
         String temp_output = null;
+
         @Override
         protected void onPreExecute() {
             // update the UI immediately after the task is executed
@@ -132,12 +132,12 @@ public class
             progressDialog = ProgressDialog.show(LoginActivity.this, "",
                     "signing in...", false);
         }
+
         @Override
         protected ArrayList<User> doInBackground(User... arg0) {
 
             ArrayList<User> users = new ArrayList<>();  //list of all the users in db
-            try
-            {
+            try {
 
                 UserQueryBuilder qb = new UserQueryBuilder();
                 URL url = new URL(qb.buildUsersGetURL());
@@ -159,7 +159,7 @@ public class
                 }
 
                 // create a basic db list
-                String mongoarray = "{ artificial_basicdb_list: "+server_output+"}";
+                String mongoarray = "{ artificial_basicdb_list: " + server_output + "}";
                 Object o = com.mongodb.util.JSON.parse(mongoarray);
 
 
@@ -184,7 +184,7 @@ public class
                     users.add(temp);
                 }
 
-            }catch (Exception e) {
+            } catch (Exception e) {
                 e.getMessage();
             }
 
@@ -192,8 +192,9 @@ public class
         }
 
         protected void onPostExecute(ArrayList<User> returnValues) {
-            if(progressDialog!=null && progressDialog.isShowing()){
-                progressDialog.dismiss();}
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
 
             if (returnValues.size() != 0) {
                 String email = _emailText.getText().toString();
@@ -206,11 +207,11 @@ public class
                     }
                 }
 
-                if(!UserStatus.LoginStatus)
-                    Toast.makeText(getApplicationContext(),"Incorrent Username or Password",Toast.LENGTH_SHORT).show();
+                if (!UserStatus.LoginStatus)
+                    Toast.makeText(getApplicationContext(), "Incorrent Username or Password", Toast.LENGTH_SHORT).show();
 
                 _loginButton.setEnabled(true);
-            } else{
+            } else {
                 onLoginFailed();
             }
         }

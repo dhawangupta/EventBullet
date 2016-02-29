@@ -6,13 +6,20 @@ import java.io.Serializable;
  * Created by Dhawan Gupta on 03-02-2016.
  */
 public class Event implements Serializable {
+
+
     private String name = "";
+    //User(or Event Organiser) Status to be implemented in database....I think.
+    private String status = "";
+    //organisers website
+    private String eventUrl = "";
+    private String profilePicUrl = "";
     private String timings = "";
     private String type = "";
     private String ticket = "";
     private String freq = "";
     private String duration = "";
-    private String imageURL = "";
+    private String feedimageURL = "";
     private String content = "";
 
     public String getName() {
@@ -63,12 +70,37 @@ public class Event implements Serializable {
         this.duration = eduration;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getProfilePicUrl() {
+        return profilePicUrl;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setProfilePicUrl(String profilePicUrl) {
+        this.profilePicUrl = profilePicUrl;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getEventUrl() {
+        return eventUrl;
+    }
+
+    public void setEventUrl(String eventUrl) {
+        this.eventUrl = eventUrl;
+    }
+
+    public String getFeedimageURL() {
+        return feedimageURL;
+    }
+
+    public void setFeedimageURL(String imageURL) {
+        this.feedimageURL = imageURL;
     }
 
     public String getContent() {

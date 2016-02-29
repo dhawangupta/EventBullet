@@ -21,4 +21,9 @@
     <dimen name="feed_item_corner_radius">3dp</dimen>
     <dimen name="feed_item_border_width">1dp</dimen>
 
+
+    <dimen name="tab_max_width">264dp</dimen>
+    <dimen name="tab_padding_bottom">16dp</dimen>
+    <dimen name="tab_label">14sp</dimen>
+
 </resources>

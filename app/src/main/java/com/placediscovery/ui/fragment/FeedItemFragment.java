@@ -1,12 +1,15 @@
 package com.placediscovery.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,9 +20,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.placediscovery.MongoLabPlace.Event;
+import com.placediscovery.Data.FeedItem;
 import com.placediscovery.Network.MySingleton;
 import com.placediscovery.R;
+import com.placediscovery.ui.ClickListener;
+import com.placediscovery.ui.activity.ChooseCity;
+import com.placediscovery.ui.activity.addingPlace.AddPlaceSelectCity;
 import com.placediscovery.ui.adapter.MyFeedItemRecyclerViewAdapter;
 
 import org.json.JSONArray;
@@ -30,21 +36,17 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+
 public class FeedItemFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private List<Event> feedItems;
-    private String URL_FEED = "http://52.192.70.192/getEvents";
+    private List<FeedItem> feedItems;
+    private String URL_FEED = "http://api.androidhive.info/feed/feed.json";
     private MyFeedItemRecyclerViewAdapter adapter;
+    private RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -81,7 +83,7 @@ public class FeedItemFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -96,6 +98,29 @@ public class FeedItemFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                switch (position) {
+                    case 1:
+                        startActivity(new Intent(getActivity(), ChooseCity.class));
+                        break;
+
+                    case 2:
+                        startActivity(new Intent(getActivity(), AddPlaceSelectCity.class));
+
+                        break;
+                }
+
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+
+            }
+        }));
         getData();
     }
 
@@ -151,30 +176,30 @@ public class FeedItemFragment extends Fragment {
 
     private void parseJsonFeed(JSONObject response) {
         try {
-            JSONArray feedArray = response.getJSONArray("result");
+            JSONArray feedArray = response.getJSONArray("feed");
 
             for (int i = 0; i < feedArray.length(); i++) {
                 JSONObject feedObj = (JSONObject) feedArray.get(i);
 
-                Event item = new Event();
-                //item.setId(feedObj.getInt("id"));
+                FeedItem item = new FeedItem();
+                item.setId(feedObj.getInt("id"));
                 item.setName(feedObj.getString("name"));
 
                 // Image might be null sometimes
-                String imageURL = feedObj.isNull("imageURL") ? null : feedObj
-                        .getString("imageURL");
-                item.setImageURL(imageURL);
-//                item.setStatus(feedObj.getString("status"));
-//                item.setProfilePic(feedObj.getString("profilePic"));
-//                item.setTimeStamp(feedObj.getString("timeStamp"));
+                String image = feedObj.isNull("image") ? null : feedObj
+                        .getString("image");
+                item.setImge(image);
+                item.setStatus(feedObj.getString("status"));
+                item.setProfilePic(feedObj.getString("profilePic"));
+                item.setTimeStamp(feedObj.getString("timeStamp"));
 
 //                item.setTimings(feedObj.getString("timings"));
                 item.setType(feedObj.getString("type"));
 
                 // url might be null sometimes
-//                String feedUrl = feedObj.isNull("url") ? null : feedObj
-//                        .getString("url");
-//                item.setUrl(feedUrl);
+                String feedUrl = feedObj.isNull("url") ? null : feedObj
+                        .getString("url");
+                item.setUrl(feedUrl);
 
                 feedItems.add(item);
             }
@@ -197,18 +222,50 @@ public class FeedItemFragment extends Fragment {
         super.onDetach();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(Event item);
+    class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+
+        GestureDetector gestureDetector;
+        ClickListener clickListener;
+
+        public RecyclerTouchListener(Context context, RecyclerView mRecyclerDrawer, final ClickListener clickListener) {
+            this.clickListener = clickListener;
+            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
+                    if (view != null && clickListener != null) {
+                        clickListener.onLongClick(view, recyclerView.getChildAdapterPosition(view));
+                    }
+                }
+            });
+
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            View view = rv.findChildViewUnder(e.getX(), e.getY());
+            if (view != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
+                clickListener.onClick(view, rv.getChildLayoutPosition(view));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
     }
+
+
 }
