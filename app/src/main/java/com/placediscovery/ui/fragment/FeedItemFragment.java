@@ -193,6 +193,9 @@ public class FeedItemFragment extends Fragment {
                 item.setProfilePic(feedObj.getString("profilePic"));
                 item.setTimeStamp(feedObj.getString("timeStamp"));
 
+//                item.setTimings(feedObj.getString("timings"));
+                item.setType(feedObj.getString("type"));
+
                 // url might be null sometimes
                 String feedUrl = feedObj.isNull("url") ? null : feedObj
                         .getString("url");
