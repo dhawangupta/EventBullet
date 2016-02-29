@@ -6,21 +6,29 @@ import java.io.Serializable;
  * Created by Dhawan Gupta on 03-02-2016.
  */
 public class Event implements Serializable {
-
-
+    private String id = "";
     private String name = "";
-    //User(or Event Organiser) Status to be implemented in database....I think.
-    private String status = "";
-    //organisers website
-    private String eventUrl = "";
-    private String profilePicUrl = "";
     private String timings = "";
     private String type = "";
     private String ticket = "";
     private String freq = "";
     private String duration = "";
-    private String feedimageURL = "";
+    private String imageURL = "";
     private String content = "";
+    private String latitude = "";
+    private String longitude = "";
+    private String venue = "";
+    private String organizer = "";
+    private String contact = "";
+    private String web = "";
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -70,37 +78,12 @@ public class Event implements Serializable {
         this.duration = eduration;
     }
 
-    public String getProfilePicUrl() {
-        return profilePicUrl;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setProfilePicUrl(String profilePicUrl) {
-        this.profilePicUrl = profilePicUrl;
-    }
-
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getEventUrl() {
-        return eventUrl;
-    }
-
-    public void setEventUrl(String eventUrl) {
-        this.eventUrl = eventUrl;
-    }
-
-    public String getFeedimageURL() {
-        return feedimageURL;
-    }
-
-    public void setFeedimageURL(String imageURL) {
-        this.feedimageURL = imageURL;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getContent() {
@@ -109,5 +92,53 @@ public class Event implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getVenue() {
+        return venue;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
+
+    public String getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(String organizer) {
+        this.organizer = organizer;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getWeb() {
+        return web;
+    }
+
+    public void setWeb(String web) {
+        this.web = web;
     }
 }

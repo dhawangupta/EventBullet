@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -30,8 +31,6 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
 
 
     @Override
@@ -45,34 +44,34 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setOnMenuItemClickListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
+//        viewPager = (ViewPager) findViewById(R.id.viewpager);
+//        setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+//        tabLayout = (TabLayout) findViewById(R.id.tabs);
+//        tabLayout.setupWithViewPager(viewPager);
         setUpNavDrawer();
-        // setFeed();
+        setFeed();
 
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FeedItemFragment(), "ONE");
-        adapter.addFragment(new FeedItemFragment(), "TWO");
-        adapter.addFragment(new FeedItemFragment(), "THREE");
-
-        viewPager.setAdapter(adapter);
-    }
-
-
-//    private void setFeed() {
-//        FeedItemFragment frag = new FeedItemFragment();
-//        FragmentManager manager = getSupportFragmentManager();
-//        FragmentTransaction transaction = manager.beginTransaction();
-//        transaction.add(R.id.feed_container, frag, "FeedItemFragment");
-//        transaction.addToBackStack(null);
-//        transaction.commit();
+//    private void setupViewPager(ViewPager viewPager) {
+//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//        adapter.addFragment(new FeedItemFragment(), "ONE");
+//        adapter.addFragment(new FeedItemFragment(), "TWO");
+//        adapter.addFragment(new FeedItemFragment(), "THREE");
+//
+//        viewPager.setAdapter(adapter);
 //    }
+
+
+    private void setFeed() {
+        FeedItemFragment frag = new FeedItemFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.feed_container, frag, "FeedItemFragment");
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
 
     private void setUpNavDrawer() {
@@ -102,6 +101,7 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         }
         if (item.getItemId() == R.id.map_icon) {
             startActivity(new Intent(HomePageActivity.this, ChooseCity.class));
+            //TODO: intent.putExtra("events",feedItems);    //feedItems can be found in FeedItemFragment
         }
         return true;
     }
