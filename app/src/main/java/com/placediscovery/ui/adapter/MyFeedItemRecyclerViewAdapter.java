@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.placediscovery.HelperClasses.FeedImageView;
 import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.Network.MySingleton;
 import com.placediscovery.R;
@@ -20,11 +19,11 @@ import java.util.List;
 
 public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<FeedItem> feeditems;
+    private final List<Event> feeditems;
     private Context context;
     private ImageLoader imageLoader;
 
-    public MyFeedItemRecyclerViewAdapter(List<FeedItem> items, Context context) {
+    public MyFeedItemRecyclerViewAdapter(List<Event> items, Context context) {
         feeditems = items;
         this.context = context;
     }
@@ -82,9 +81,9 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
 //        holder.profilePic.setImageUrl(holder.item.getProfilePic(), imageLoader);
 
         // Feed image
-        if (holder.item.getImge() != null) {
+        if (holder.item.getImageURL() != null) {
 
-            holder.feedImageView.setImageUrl(holder.item.getImge(), imageLoader);
+            holder.feedImageView.setImageUrl(holder.item.getImageURL(), imageLoader);
             holder.feedImageView.setVisibility(View.VISIBLE);
             holder.feedImageView
                     .setResponseObserver(new FeedImageView.ResponseObserver() {
