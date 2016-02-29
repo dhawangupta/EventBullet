@@ -1,13 +1,9 @@
 package com.placediscovery.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,23 +11,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 
 import com.placediscovery.R;
 import com.placediscovery.ui.fragment.DrawerFragment;
 import com.placediscovery.ui.fragment.FeedItemFragment;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
+    private FragmentManager manager;
 
 
     @Override
@@ -45,35 +35,27 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setOnMenuItemClickListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
         setUpNavDrawer();
-        // setFeed();
+        setFeed();
 
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FeedItemFragment(), "ONE");
-        adapter.addFragment(new FeedItemFragment(), "TWO");
-        adapter.addFragment(new FeedItemFragment(), "THREE");
 
-        viewPager.setAdapter(adapter);
+    private void setFeed() {
+        FeedItemFragment frag = new FeedItemFragment();
+        manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.feed_container, frag, "FeedItemFragment");
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
-
-//    private void setFeed() {
-//        FeedItemFragment frag = new FeedItemFragment();
-//        FragmentManager manager = getSupportFragmentManager();
-//        FragmentTransaction transaction = manager.beginTransaction();
-//        transaction.add(R.id.feed_container, frag, "FeedItemFragment");
-//        transaction.addToBackStack(null);
-//        transaction.commit();
-//    }
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+    }
 
     private void setUpNavDrawer() {
 
@@ -106,58 +88,14 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         return true;
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (manager.getBackStackEntryCount() > 1) {
+            manager.popBackStack();
+        } else {
+            // if there is only one entry in the backstack, show the home screen
+            finish();
         }
     }
-
-    private class StableArrayAdapter extends ArrayAdapter<String> {
-
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
-            super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
-            }
-        }
-
-        @Override
-        public long getItemId(int position) {
-            String item = getItem(position);
-            return mIdMap.get(item);
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-
-    }
-
 }

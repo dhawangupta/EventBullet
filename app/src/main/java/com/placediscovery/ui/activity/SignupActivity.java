@@ -20,14 +20,12 @@ import com.placediscovery.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class SignupActivity extends AppCompatActivity {
@@ -38,15 +36,13 @@ public class SignupActivity extends AppCompatActivity {
     protected EditText _passwordText;
     protected Button _signupButton;
     protected TextView _loginLink;
+    User user;
+    SessionManager session;
     private TextView info;
     private ProgressDialog progressDialog;
-
     //To be retreived from JSON received after Signup
     private String response;
     private String result;
-
-    User user;
-    SessionManager session;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,7 +93,7 @@ public class SignupActivity extends AppCompatActivity {
 
 
     public void onSignupSuccess() {
-        session.createLoginSession(user.name,user.email,result);
+        session.createLoginSession(user.name, user.email, result);
         Intent intent = new Intent(SignupActivity.this, HomePageActivity.class);
         Toast.makeText(getApplicationContext(), "Welcome " + user.name +
                 ", You are now logged in.", Toast.LENGTH_SHORT).show();
@@ -216,15 +212,15 @@ public class SignupActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
             super.onPostExecute(jsonObject);
-            if(progressDialog!=null && progressDialog.isShowing()){
+            if (progressDialog != null && progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
 
-            if(jsonObject == null){
+            if (jsonObject == null) {
                 onSignupFailed();
             } else
                 try {
-                    if(jsonObject.getString("response").equals("SUCCESS")) {
+                    if (jsonObject.getString("response").equals("SUCCESS")) {
                         result = jsonObject.getString("result");    //this result is to be used as signin token
                         onSignupSuccess(); //TODO: have to edit signupsuccess
                     }
