@@ -23,7 +23,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.placediscovery.MongoLabPlace.Place;
+import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.R;
 
 import java.util.ArrayList;
@@ -31,10 +31,10 @@ import java.util.ArrayList;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
 
-    ArrayList<Place> places = new ArrayList<>();
-    ArrayList<Place> places_filtered = new ArrayList<>();
-    ArrayList<Marker> places_marker = new ArrayList<>();
-    String selectedCity = null;
+    ArrayList<Event> events = new ArrayList<>();
+    ArrayList<Event> events_filtered = new ArrayList<>();
+    ArrayList<Marker> events_marker = new ArrayList<>();
+    String selectedCity;
     TextView[] filtersTextViews;
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -49,14 +49,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        selectedCity = getIntent().getExtras().getString("selectedCity");
-//        if (selectedCity == null) {
-//            selectedCity = Constants.Varanasi;
-//        }
-        //retrieving places
-        places = (ArrayList<Place>) getIntent().getExtras().getSerializable("places");
-        filtersTextViews = new TextView[places.size()];
-        initTextViews();
+
+//        selectedCity = getIntent().getExtras().getString("selectedCity");
+        //retrieving events
+        events = (ArrayList<Event>) getIntent().getExtras().getSerializable("events");
+        filtersTextViews = new TextView[events.size()];
+//        initTextViews();
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -75,8 +73,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         filtersTextViews[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                places_filtered = places;
-                loadMarkers(places_filtered);
+                events_filtered = events;
+                loadMarkers(events_filtered);
             }
         });
         setFilters(filtersTextViews[1]);
@@ -90,12 +88,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 TextView tv = (TextView) v;
                 String filter = (String) tv.getText();
-                places_filtered.clear();
-                for (Place p : places) {
-                    if (p.getFilter().equals(filter))
-                        places_filtered.add(p);
+                events_filtered.clear();
+                for (Event p : events) {
+//                    if (p.getFilter().equals(filter))
+                    events_filtered.add(p);
                 }
-                loadMarkers(places_filtered);
+                loadMarkers(events_filtered);
             }
         });
 
@@ -135,12 +133,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         try {
-            Place first = places.get(0);
+            Event first = events.get(0);
             if (first != null) {
                 LatLng flatlang = new LatLng(Double.parseDouble(first.getLatitude()), Double.parseDouble(first.getLongitude()));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(flatlang, 11));
-                for (Place x : places) {
-                    places_marker.add(mMap.addMarker(new MarkerOptions().position(
+                for (Event x : events) {
+                    events_marker.add(mMap.addMarker(new MarkerOptions().position(
                             new LatLng(Double.parseDouble(x.getLatitude()),
                                     Double.parseDouble(x.getLongitude()))).title(x.getName())));
                 }
@@ -151,28 +149,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void loadMarkers(ArrayList<Place> places_filtered) {
+    private void loadMarkers(ArrayList<Event> events_filtered) {
 
         mMap.clear();
 
-        for (Place x : places_filtered) {
-            places_marker.add(mMap.addMarker(new MarkerOptions().position(
+        for (Event x : events_filtered) {
+            events_marker.add(mMap.addMarker(new MarkerOptions().position(
                     new LatLng(Double.parseDouble(x.getLatitude()),
                             Double.parseDouble(x.getLongitude()))).title(x.getName())));
         }
 
-        Toast.makeText(MapsActivity.this, "Places Updated for you", Toast.LENGTH_SHORT).show();
-        //change map places to explore places
+        Toast.makeText(MapsActivity.this, "Events Updated for you", Toast.LENGTH_SHORT).show();
+        //change map events to explore events
     }
 
 
-    private void loadPlacesImages() {
+    private void loadEventsImages() {
         int loader = R.drawable.loader;         //loader image
-        final Intent[] intents = new Intent[places.size()];
+        final Intent[] intents = new Intent[events.size()];
 
         //dyanmically creating imageviews
         LinearLayout imageviews = (LinearLayout) findViewById(R.id.imageviews);
-        ImageView[] iv = new ImageView[places.size()];
+        ImageView[] iv = new ImageView[events.size()];
 
         //converting px to dp
         final float scale = getResources().getDisplayMetrics().density;
@@ -183,9 +181,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dpWidthInPx, dpHeightInPx);
         params.setMargins(dpMarginInPx, dpMarginInPx, dpMarginInPx, dpMarginInPx);
 
-        for (int j = 0; j < places.size(); j++) {
+        for (int j = 0; j < events.size(); j++) {
             // Image url
-            String image_url = places.get(j).getImageURL().split(",")[0];
+            String image_url = events.get(j).getImageURL().split(",")[0];
             if (image_url.equals("")) {
                 continue;
             }
@@ -211,7 +209,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     intents[finalJ] = new Intent(MapsActivity.this, ContentActivity.class);
 
                     intents[finalJ].putExtra("imageviewId", finalJ);
-                    intents[finalJ].putExtra("placesObject", places);
+                    intents[finalJ].putExtra("eventsObject", events);
                     intents[finalJ].putExtra("selectedCity", selectedCity);
                     startActivity(intents[finalJ]);
                 }
@@ -224,7 +222,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
-        loadPlacesImages();
+        loadEventsImages();
     }
 
     @Override

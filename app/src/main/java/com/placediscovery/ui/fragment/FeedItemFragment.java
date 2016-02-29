@@ -20,12 +20,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.placediscovery.Data.FeedItem;
+import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.Network.MySingleton;
 import com.placediscovery.R;
 import com.placediscovery.ui.ClickListener;
-import com.placediscovery.ui.activity.ChooseCity;
-import com.placediscovery.ui.activity.addingPlace.AddPlaceSelectCity;
+import com.placediscovery.ui.activity.MapsActivity;
 import com.placediscovery.ui.adapter.MyFeedItemRecyclerViewAdapter;
 
 import org.json.JSONArray;
@@ -41,13 +40,13 @@ public class FeedItemFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    RecyclerView recyclerView;
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private List<FeedItem> feedItems;
-    private String URL_FEED = "http://api.androidhive.info/feed/feed.json";
+    private List<Event> feedItems;
+    private String URL_FEED = "http://52.192.70.192/getEvents";
+    private Intent map_intent;
     private MyFeedItemRecyclerViewAdapter adapter;
-    private RecyclerView recyclerView;
-
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -73,7 +72,9 @@ public class FeedItemFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
         feedItems = new ArrayList<>();
+        map_intent = new Intent(getContext(), MapsActivity.class);
     }
 
     @Override
@@ -101,17 +102,6 @@ public class FeedItemFragment extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                switch (position) {
-                    case 1:
-                        startActivity(new Intent(getActivity(), ChooseCity.class));
-                        break;
-
-                    case 2:
-                        startActivity(new Intent(getActivity(), AddPlaceSelectCity.class));
-
-                        break;
-                }
-
 
             }
 
@@ -133,6 +123,7 @@ public class FeedItemFragment extends Fragment {
                 String data = new String(entry.data, "UTF-8");
                 try {
                     parseJsonFeed(new JSONObject(data));
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -176,27 +167,39 @@ public class FeedItemFragment extends Fragment {
 
     private void parseJsonFeed(JSONObject response) {
         try {
-            JSONArray feedArray = response.getJSONArray("feed");
+            JSONArray feedArray = response.getJSONArray("result");
 
             for (int i = 0; i < feedArray.length(); i++) {
                 JSONObject feedObj = (JSONObject) feedArray.get(i);
 
-                FeedItem item = new FeedItem();
-                item.setId(feedObj.getInt("id"));
+                Event item = new Event();
+                item.setId(feedObj.getString("_id"));
                 item.setName(feedObj.getString("name"));
+                item.setFreq(feedObj.getString("freq"));
+                item.setLatitude(feedObj.getString("latitude"));
+                item.setLongitude(feedObj.getString("longitude"));
+                item.setContent(feedObj.getString("content"));
+                item.setContact(feedObj.getString("contact"));
+                item.setDuration(feedObj.getString("duration"));
+                item.setVenue(feedObj.getString("evenue"));
+                item.setOrganizer(feedObj.getString("organizer"));
+                item.setWeb(feedObj.getString("web"));
+                item.setTimings(feedObj.getString("timings"));
+                item.setType(feedObj.getString("type"));
 
                 // Image might be null sometimes
-                String image = feedObj.isNull("image") ? null : feedObj
-                        .getString("image");
-                item.setImge(image);
-                item.setStatus(feedObj.getString("status"));
-                item.setProfilePic(feedObj.getString("profilePic"));
-                item.setTimeStamp(feedObj.getString("timeStamp"));
+//                String imageURL = feedObj.isNull("imageURL") ? null : feedObj
+//                        .getString("imageURL");
+//                item.setImageURL(imageURL);
+//                item.setStatus(feedObj.getString("status"));
+//                item.setProfilePic(feedObj.getString("profilePic"));
+//                item.setTimeStamp(feedObj.getString("timeStamp"));
+
 
                 // url might be null sometimes
-                String feedUrl = feedObj.isNull("url") ? null : feedObj
-                        .getString("url");
-                item.setUrl(feedUrl);
+//                String feedUrl = feedObj.isNull("url") ? null : feedObj
+//                        .getString("url");
+//                item.setUrl(feedUrl);
 
                 feedItems.add(item);
             }
