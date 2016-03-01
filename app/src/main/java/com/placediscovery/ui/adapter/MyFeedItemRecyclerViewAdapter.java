@@ -83,7 +83,7 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
         // Feed image
         if (holder.item.getImageURL() != null) {
 
-            holder.feedImageView.setImageUrl(holder.item.getImageURL(), imageLoader);
+            holder.feedImageView.setImageUrl(holder.item.getImageURL().split(",")[0], imageLoader);
             holder.feedImageView.setVisibility(View.VISIBLE);
             holder.feedImageView
                     .setResponseObserver(new FeedImageView.ResponseObserver() {
