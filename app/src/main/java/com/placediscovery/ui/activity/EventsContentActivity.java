@@ -69,6 +69,12 @@ public class EventsContentActivity extends AppCompatActivity implements
 //        final int currentCount = Integer.parseInt(event.getCount());
         String timings = event.getTimings();
         String ticket = event.getTicket();
+        String type = event.getType();
+        String duration = event.getDuration();
+        String web = event.getWeb();
+        String organizer = event.getOrganizer();
+        String contact = event.getContact();
+        String venue = event.getVenue();
 
         TextView t1 = (TextView) findViewById(R.id.event_name);
 //        TextView t2 = (TextView) findViewById(R.id.currentratingtext);
@@ -83,6 +89,14 @@ public class EventsContentActivity extends AppCompatActivity implements
         TextView ticketValue = (TextView) findViewById(R.id.event_ticketValue);
         LinearLayout durationLayout = (LinearLayout) findViewById(R.id.event_duration);
         TextView durationValue = (TextView) findViewById(R.id.event_durationValue);
+        LinearLayout venueLayout = (LinearLayout) findViewById(R.id.event_venue);
+        TextView venueValue = (TextView) findViewById(R.id.event_venueValue);
+        LinearLayout organizerLayout = (LinearLayout) findViewById(R.id.event_organizer);
+        TextView organizerValue = (TextView) findViewById(R.id.event_organizerValue);
+        LinearLayout webLayout = (LinearLayout) findViewById(R.id.event_web);
+        TextView webValue = (TextView) findViewById(R.id.event_webValue);
+        LinearLayout contactLayout = (LinearLayout) findViewById(R.id.event_contact);
+        TextView contactValue = (TextView) findViewById(R.id.event_contactValue);
 //        reviewField = (EditText) findViewById(R.id.event_reviewTextField);
 //        Button reviewSubmitBtn = (Button) findViewById(R.id.event_reviewBtn);
 
@@ -95,11 +109,34 @@ public class EventsContentActivity extends AppCompatActivity implements
             timingsLayout.setVisibility(LinearLayout.GONE);
         else
             timingsValue.setText(" " + timings);
-
         if (ticket.equals(""))
             ticketLayout.setVisibility(LinearLayout.GONE);
         else
             ticketValue.setText(" " + ticket);
+        if (type.equals(""))
+            typeLayout.setVisibility(LinearLayout.GONE);
+        else
+            typeValue.setText(" " + type);
+        if (duration.equals(""))
+            durationLayout.setVisibility(LinearLayout.GONE);
+        else
+            durationValue.setText(" " + duration);
+        if (venue.equals(""))
+            venueLayout.setVisibility(LinearLayout.GONE);
+        else
+            venueValue.setText(" " + venue);
+        if (web.equals(""))
+            webLayout.setVisibility(LinearLayout.GONE);
+        else
+            webValue.setText(" " + web);
+        if (organizer.equals(""))
+            organizerLayout.setVisibility(LinearLayout.GONE);
+        else
+            organizerValue.setText(" " + organizer);
+        if (contact.equals(""))
+            contactLayout.setVisibility(LinearLayout.GONE);
+        else
+            contactValue.setText(" " + contact);
 
 
 //        rateThis.setOnClickListener(new View.OnClickListener() {
