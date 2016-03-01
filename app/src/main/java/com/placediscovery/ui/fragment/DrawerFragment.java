@@ -19,8 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.placediscovery.Data.Information;
-import com.placediscovery.Interface.ClickListener;
 import com.placediscovery.R;
+import com.placediscovery.Interface.ClickListener;
 import com.placediscovery.ui.activity.ChooseCity;
 import com.placediscovery.ui.activity.addingPlace.AddPlaceSelectCity;
 import com.placediscovery.ui.adapter.DrawerAdapter;
@@ -31,7 +31,9 @@ import java.util.List;
 import static android.view.GestureDetector.SimpleOnGestureListener;
 
 
-
+/**
+ * A simple {@link Fragment} subclass.
+ */
 public class DrawerFragment extends Fragment {
 
 

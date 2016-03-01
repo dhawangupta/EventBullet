@@ -27,11 +27,12 @@ import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
 
-    ArrayList<Event> events = new ArrayList<>();
+    static ArrayList<Event> events = new ArrayList<>();
     ArrayList<Event> events_filtered = new ArrayList<>();
     ArrayList<Marker> events_marker = new ArrayList<>();
     String selectedCity;
@@ -50,9 +51,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
 
+
+
 //        selectedCity = getIntent().getExtras().getString("selectedCity");
         //retrieving events
-        events = (ArrayList<Event>) getIntent().getExtras().getSerializable("events");
+//        events = (ArrayList<Event>) getIntent().getExtras().getSerializable("events");
         filtersTextViews = new TextView[events.size()];
 //        initTextViews();
         if (mGoogleApiClient == null) {
@@ -64,40 +67,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
-    private void initTextViews() {
-        filtersTextViews[0] = (TextView) findViewById(R.id.filter_all);
-        filtersTextViews[1] = (TextView) findViewById(R.id.filter_attractions);
-        filtersTextViews[2] = (TextView) findViewById(R.id.filter_food);
-        filtersTextViews[3] = (TextView) findViewById(R.id.filter_events);
-        filtersTextViews[0].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                events_filtered = events;
-                loadMarkers(events_filtered);
-            }
-        });
-        setFilters(filtersTextViews[1]);
-        setFilters(filtersTextViews[2]);
-        setFilters(filtersTextViews[3]);
+    static void setEvents(Object o){
+        events = (ArrayList<Event>)o;
     }
 
-    private void setFilters(TextView textView) {
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView tv = (TextView) v;
-                String filter = (String) tv.getText();
-                events_filtered.clear();
-                for (Event p : events) {
-//                    if (p.getFilter().equals(filter))
-                    events_filtered.add(p);
-                }
-                loadMarkers(events_filtered);
-            }
-        });
+//    private void initTextViews() {
+//        filtersTextViews[0] = (TextView) findViewById(R.id.filter_all);
+//        filtersTextViews[1] = (TextView) findViewById(R.id.filter_attractions);
+//        filtersTextViews[2] = (TextView) findViewById(R.id.filter_food);
+//        filtersTextViews[3] = (TextView) findViewById(R.id.filter_events);
+//        filtersTextViews[0].setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                events_filtered = events;
+//                loadMarkers(events_filtered);
+//            }
+//        });
+//        setFilters(filtersTextViews[1]);
+//        setFilters(filtersTextViews[2]);
+//        setFilters(filtersTextViews[3]);
+//    }
 
-    }
+//    private void setFilters(TextView textView) {
+//        textView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                TextView tv = (TextView) v;
+//                String filter = (String) tv.getText();
+//                events_filtered.clear();
+//                for (Event p : events) {
+////                    if (p.getFilter().equals(filter))
+//                        events_filtered.add(p);
+//                }
+//                loadMarkers(events_filtered);
+//            }
+//        });
+//
+//    }
 
     /**
      * Manipulates the map once available.
@@ -149,80 +155,80 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void loadMarkers(ArrayList<Event> events_filtered) {
+//    private void loadMarkers(ArrayList<Event> events_filtered) {
+//
+//        mMap.clear();
+//
+//        for (Event x : events_filtered) {
+//            events_marker.add(mMap.addMarker(new MarkerOptions().position(
+//                    new LatLng(Double.parseDouble(x.getLatitude()),
+//                            Double.parseDouble(x.getLongitude()))).title(x.getName())));
+//        }
+//
+//        Toast.makeText(MapsActivity.this, "Events Updated for you", Toast.LENGTH_SHORT).show();
+//        //change map events to explore events
+//    }
 
-        mMap.clear();
 
-        for (Event x : events_filtered) {
-            events_marker.add(mMap.addMarker(new MarkerOptions().position(
-                    new LatLng(Double.parseDouble(x.getLatitude()),
-                            Double.parseDouble(x.getLongitude()))).title(x.getName())));
-        }
-
-        Toast.makeText(MapsActivity.this, "Events Updated for you", Toast.LENGTH_SHORT).show();
-        //change map events to explore events
-    }
-
-
-    private void loadEventsImages() {
-        int loader = R.drawable.loader;         //loader image
-        final Intent[] intents = new Intent[events.size()];
-
-        //dyanmically creating imageviews
-        LinearLayout imageviews = (LinearLayout) findViewById(R.id.imageviews);
-        ImageView[] iv = new ImageView[events.size()];
-
-        //converting px to dp
-        final float scale = getResources().getDisplayMetrics().density;
-        int dpWidthInPx = (int) (150 * scale);
-        int dpHeightInPx = (int) (100 * scale);
-        int dpMarginInPx = (int) (1 * scale);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dpWidthInPx, dpHeightInPx);
-        params.setMargins(dpMarginInPx, dpMarginInPx, dpMarginInPx, dpMarginInPx);
-
-        for (int j = 0; j < events.size(); j++) {
-            // Image url
-            String image_url = events.get(j).getImageURL().split(",")[0];
-            if (image_url.equals("")) {
-                continue;
-            }
-            iv[j] = new ImageView(this);
-            iv[j].setId(j + 1);
-            iv[j].setLayoutParams(params);
-            imageviews.addView(iv[j]);
-
-            // ImageLoader class instance
-//            ImageLoader imgLoader = new ImageLoader(getApplicationContext());
-            // whenever you want to load an image from url
-            // call DisplayImage function
-            // url - image url to load
-            // loader - loader image, will be displayed before getting image
-            // image - ImageView
-//            imgLoader.DisplayImage(image_url, loader, iv[j]);
-
-            //on-click action:
-            final int finalJ = j;
-            iv[j].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    intents[finalJ] = new Intent(MapsActivity.this, ContentActivity.class);
-
-                    intents[finalJ].putExtra("imageviewId", finalJ);
-                    intents[finalJ].putExtra("eventsObject", events);
-                    intents[finalJ].putExtra("selectedCity", selectedCity);
-                    startActivity(intents[finalJ]);
-                }
-            });
-        }
-    }
+//    private void loadEventsImages() {
+//        int loader = R.drawable.loader;         //loader image
+//        final Intent[] intents = new Intent[events.size()];
+//
+//        //dyanmically creating imageviews
+//        LinearLayout imageviews = (LinearLayout) findViewById(R.id.imageviews);
+//        ImageView[] iv = new ImageView[events.size()];
+//
+//        //converting px to dp
+//        final float scale = getResources().getDisplayMetrics().density;
+//        int dpWidthInPx = (int) (150 * scale);
+//        int dpHeightInPx = (int) (100 * scale);
+//        int dpMarginInPx = (int) (1 * scale);
+//
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dpWidthInPx, dpHeightInPx);
+//        params.setMargins(dpMarginInPx, dpMarginInPx, dpMarginInPx, dpMarginInPx);
+//
+//        for (int j = 0; j < events.size(); j++) {
+//            // Image url
+//            String image_url = events.get(j).getImageURL().split(",")[0];
+//            if (image_url.equals("")) {
+//                continue;
+//            }
+//            iv[j] = new ImageView(this);
+//            iv[j].setId(j + 1);
+//            iv[j].setLayoutParams(params);
+//            imageviews.addView(iv[j]);
+//
+//            // ImageLoader class instance
+////            ImageLoader imgLoader = new ImageLoader(getApplicationContext());
+//            // whenever you want to load an image from url
+//            // call DisplayImage function
+//            // url - image url to load
+//            // loader - loader image, will be displayed before getting image
+//            // image - ImageView
+////            imgLoader.DisplayImage(image_url, loader, iv[j]);
+//
+//            //on-click action:
+//            final int finalJ = j;
+//            iv[j].setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    intents[finalJ] = new Intent(MapsActivity.this, ContentActivity.class);
+//
+//                    intents[finalJ].putExtra("imageviewId", finalJ);
+//                    intents[finalJ].putExtra("eventsObject", events);
+//                    intents[finalJ].putExtra("selectedCity", selectedCity);
+//                    startActivity(intents[finalJ]);
+//                }
+//            });
+//        }
+//    }
 
 
     @Override
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
-        loadEventsImages();
+//        loadEventsImages();
     }
 
     @Override

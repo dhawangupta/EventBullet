@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.Network.MySingleton;
 import com.placediscovery.R;
