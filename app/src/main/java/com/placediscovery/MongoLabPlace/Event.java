@@ -11,7 +11,6 @@ public class Event implements Serializable {
     private String timings = "";
     private String type = "";
     private String ticket = "";
-    private String freq = "";
     private String duration = "";
     private String imageURL = "";
     private String content = "";
@@ -60,14 +59,6 @@ public class Event implements Serializable {
 
     public void setTicket(String ticket) {
         this.ticket = ticket;
-    }
-
-    public String getFreq() {
-        return freq;
-    }
-
-    public void setFreq(String freq) {
-        this.freq = freq;
     }
 
     public String getDuration() {
