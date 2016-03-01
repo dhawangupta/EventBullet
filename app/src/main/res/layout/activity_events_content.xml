@@ -36,7 +36,9 @@
                 <ImageView
                     android:id="@+id/eventContentPageImage"
                     android:layout_width="match_parent"
-                    android:layout_height="230dp"/>     <!-- Height of image on content page -->
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:scaleType="fitXY"/>
 
                 <!--Image Slider-->
                 <com.daimajia.slider.library.SliderLayout
@@ -64,54 +66,54 @@
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:id="@+id/event_rating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/event_name">
-                    <TextView
-                        android:id="@+id/event_currentratingtext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_star_black_24dp"
-                        android:drawableLeft="@drawable/ic_star_black_24dp"
-                        android:textSize="18sp"
-                        android:textColor="@color/primary_text"/>
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/event_rating"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_below="@+id/event_name">-->
+                    <!--<TextView-->
+                        <!--android:id="@+id/event_currentratingtext"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:drawableStart="@drawable/ic_star_black_24dp"-->
+                        <!--android:drawableLeft="@drawable/ic_star_black_24dp"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textColor="@color/primary_text"/>-->
 
-                    <TextView
-                        android:id="@+id/event_rating_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/primary_dark"
-                        android:layout_marginLeft="5dp"/>
+                    <!--<TextView-->
+                        <!--android:id="@+id/event_rating_count"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textSize="16sp"-->
+                        <!--android:textColor="@color/primary_dark"-->
+                        <!--android:layout_marginLeft="5dp"/>-->
 
-                    <TextView
-                        android:id="@+id/event_rating_ratethis"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:textColor="@color/Blue"
-                        android:text="@string/rate"
-                        android:layout_marginStart="150dp"
-                        android:layout_marginLeft="150dp"/>
-                </LinearLayout>
+                    <!--<TextView-->
+                        <!--android:id="@+id/event_rating_ratethis"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textColor="@color/Blue"-->
+                        <!--android:text="@string/rate"-->
+                        <!--android:layout_marginStart="150dp"-->
+                        <!--android:layout_marginLeft="150dp"/>-->
+                <!--</LinearLayout>-->
 
                 <!-- Separator-->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_below="@+id/event_rating"/>
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="@android:color/darker_gray"-->
+                    <!--android:layout_marginTop="3dp"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:layout_below="@+id/event_rating"/>-->
 
                 <ScrollView
                     android:id="@+id/scroller1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="vertical"
-                    android:layout_below="@+id/event_rating"
+                    android:layout_below="@+id/event_name"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
                     android:fillViewport="true"
@@ -231,31 +233,31 @@
                             android:textSize="16sp"
                             android:lineSpacingMultiplier="1.3"/>
 
-                        <ListView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/event_reviewsList">
-                        </ListView>
+                        <!--<ListView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:id="@+id/event_reviewsList">-->
+                        <!--</ListView>-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <EditText
-                                android:id="@+id/event_reviewTextField"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:inputType="textAutoCorrect"
-                                android:textColor="@color/primary_text"
-                                android:hint="Leave a one line tip..."
-                                android:textColorHint="@color/LightSlateGray"/>
-                            <Button
-                                android:id="@+id/event_reviewBtn"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Submit tip"
-                                android:textAllCaps="false"/>
-                        </LinearLayout>
+                        <!--<LinearLayout-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:orientation="vertical">-->
+                            <!--<EditText-->
+                                <!--android:id="@+id/event_reviewTextField"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:inputType="textAutoCorrect"-->
+                                <!--android:textColor="@color/primary_text"-->
+                                <!--android:hint="Leave a one line tip..."-->
+                                <!--android:textColorHint="@color/LightSlateGray"/>-->
+                            <!--<Button-->
+                                <!--android:id="@+id/event_reviewBtn"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="Submit tip"-->
+                                <!--android:textAllCaps="false"/>-->
+                        <!--</LinearLayout>-->
 
                     </LinearLayout>
                 </ScrollView>
