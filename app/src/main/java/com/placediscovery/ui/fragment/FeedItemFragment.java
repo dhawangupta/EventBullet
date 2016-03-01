@@ -22,12 +22,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.placediscovery.Interface.ClickListener;
+import com.placediscovery.Interface.FragmentCommunicator;
 import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.Network.MySingleton;
 import com.placediscovery.R;
-import com.placediscovery.ui.activity.ChooseCity;
-import com.placediscovery.ui.activity.MapsActivity;
-import com.placediscovery.ui.activity.addingPlace.AddPlaceSelectCity;
+import com.placediscovery.ui.activity.ContentActivity;
 import com.placediscovery.ui.adapter.MyFeedItemRecyclerViewAdapter;
 
 import org.json.JSONArray;
@@ -47,10 +46,11 @@ public class FeedItemFragment extends Fragment {
 
     private List<Event> feedItems;
     private String URL_FEED = "http://52.192.70.192/getEvents";
-    private Intent map_intent;
 
     private MyFeedItemRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
+    FragmentCommunicator comm;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -78,7 +78,7 @@ public class FeedItemFragment extends Fragment {
         }
 
         feedItems = new ArrayList<>();
-        map_intent = new Intent(getContext(), MapsActivity.class);
+        comm = (FragmentCommunicator) getActivity();
     }
 
     @Override
@@ -106,17 +106,17 @@ public class FeedItemFragment extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-
+                startActivity(new Intent(getActivity(), ContentActivity.class));
             }
 
             @Override
             public void onLongClick(View view, int position) {
 
-
             }
         }));
         getData();
     }
+
 
     private void getData() {
         Cache cache = MySingleton.getInstance(getActivity()).getRequestQueue().getCache();
@@ -172,14 +172,13 @@ public class FeedItemFragment extends Fragment {
     private void parseJsonFeed(JSONObject response) {
         try {
             JSONArray feedArray = response.getJSONArray("result");
-
+            Toast.makeText(getActivity(), ((JSONObject) feedArray.get(1)).getString("name"), Toast.LENGTH_SHORT).show();
             for (int i = 0; i < feedArray.length(); i++) {
                 JSONObject feedObj = (JSONObject) feedArray.get(i);
 
                 Event item = new Event();
                 item.setId(feedObj.getString("_id"));
                 item.setName(feedObj.getString("name"));
-                item.setFreq(feedObj.getString("freq"));
                 item.setLatitude(feedObj.getString("latitude"));
                 item.setLongitude(feedObj.getString("longitude"));
                 item.setContent(feedObj.getString("content"));
@@ -210,11 +209,16 @@ public class FeedItemFragment extends Fragment {
 
             // notify data changes to list adapater
             adapter.notifyDataSetChanged();
+            comm.sendObjectFromFragment(feedItems);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
 
     @Override
     public void onAttach(Context context) {

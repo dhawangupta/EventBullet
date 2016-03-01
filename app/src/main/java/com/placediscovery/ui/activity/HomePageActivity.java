@@ -1,5 +1,6 @@
 package com.placediscovery.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
+import com.placediscovery.Interface.FragmentCommunicator;
 import com.placediscovery.R;
 import com.placediscovery.ui.fragment.DrawerFragment;
 import com.placediscovery.ui.fragment.FeedItemFragment;
@@ -27,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
+public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, FragmentCommunicator {
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -90,20 +92,20 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
 
     }
 
-    public void launch_choosecity(View view) {
-        startActivity(new Intent(HomePageActivity.this, ChooseCity.class));
-    }
-
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.menu_login) {
             startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
         }
         if (item.getItemId() == R.id.map_icon) {
-            startActivity(new Intent(HomePageActivity.this, ChooseCity.class));
-            //TODO: intent.putExtra("events",feedItems);    //feedItems can be found in FeedItemFragment
+            startActivity(new Intent(HomePageActivity.this, MapsActivity.class));
         }
         return true;
+    }
+
+    @Override
+    public void sendObjectFromFragment(Object o) {
+        MapsActivity.setEvents(o);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

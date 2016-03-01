@@ -113,9 +113,9 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
         public Event item;
         TextView eventName;
         TextView eventTimings;
-//        TextView statusMsg;
+        //        TextView statusMsg;
         TextView eventType;
-//        NetworkImageView profilePic;
+        //        NetworkImageView profilePic;
         FeedImageView feedImageView;
 
         public ViewHolder(View view) {
