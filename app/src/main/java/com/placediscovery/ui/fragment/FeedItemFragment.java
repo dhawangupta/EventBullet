@@ -27,6 +27,7 @@ import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.Network.MySingleton;
 import com.placediscovery.R;
 import com.placediscovery.ui.activity.ContentActivity;
+import com.placediscovery.ui.activity.EventsContentActivity;
 import com.placediscovery.ui.adapter.MyFeedItemRecyclerViewAdapter;
 
 import org.json.JSONArray;
@@ -106,7 +107,9 @@ public class FeedItemFragment extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                startActivity(new Intent(getActivity(), ContentActivity.class));
+                Intent i = new Intent(getActivity(), EventsContentActivity.class);
+                i.putExtra("event",feedItems.get(position));
+                startActivity(i);
             }
 
             @Override
@@ -189,6 +192,7 @@ public class FeedItemFragment extends Fragment {
                 item.setWeb(feedObj.getString("web"));
                 item.setTimings(feedObj.getString("timings"));
                 item.setType(feedObj.getString("type"));
+                item.setImageURL(feedObj.getString("imageURL"));
 
                 // Image might be null sometimes
 //                String imageURL = feedObj.isNull("imageURL") ? null : feedObj
