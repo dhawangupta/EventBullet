@@ -26,7 +26,6 @@ import com.placediscovery.Interface.FragmentCommunicator;
 import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.Network.MySingleton;
 import com.placediscovery.R;
-import com.placediscovery.ui.activity.ContentActivity;
 import com.placediscovery.ui.activity.EventsContentActivity;
 import com.placediscovery.ui.adapter.MyFeedItemRecyclerViewAdapter;
 
@@ -42,15 +41,13 @@ public class FeedItemFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-
-    private List<Event> feedItems;
-    private String URL_FEED = "http://52.192.70.192/getEvents";
-
-    private MyFeedItemRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
     FragmentCommunicator comm;
+    // TODO: Customize parameters
+    private int mColumnCount = 1;
+    private List<Event> feedItems;
+    private String URL_FEED = "http://52.192.70.192/getEvents";
+    private MyFeedItemRecyclerViewAdapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -108,7 +105,7 @@ public class FeedItemFragment extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 Intent i = new Intent(getActivity(), EventsContentActivity.class);
-                i.putExtra("event",feedItems.get(position));
+                i.putExtra("event", feedItems.get(position));
                 startActivity(i);
             }
 
