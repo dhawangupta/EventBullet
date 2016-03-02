@@ -46,7 +46,7 @@
                 <Button
                     android:id="@+id/button1"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/filter_button"
                     android:text="All"
@@ -55,49 +55,47 @@
                 <Button
                     android:id="@+id/button2"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/filter_button"
-                    android:text="All"
+                    android:text="Concerts"
                     android:textAlignment="center" />
 
                 <Button
                     android:id="@+id/button3"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/filter_button"
-                    android:text="All"
+                    android:text="Workshops"
                     android:textAlignment="center" />
 
                 <Button
                     android:id="@+id/button4"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/filter_button"
-                    android:text="All"
+                    android:text="MeetUps"
                     android:textAlignment="center" />
 
                 <Button
                     android:id="@+id/button5"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/filter_button"
-                    android:text="All"
+                    android:text="Exhibitions"
                     android:textAlignment="center" />
 
                 <Button
                     android:id="@+id/button6"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/filter_button"
-                    android:text="All"
+                    android:text="Others"
                     android:textAlignment="center" />
-
-
             </LinearLayout>
 
         </HorizontalScrollView>
