@@ -18,8 +18,13 @@
     <!-- ContentActivity Strings-->
     <string name="timings">Timings:</string>
     <string name="ticket">Ticket:</string>
-    <string name="bestTime">Best Time to Visit:</string>
-    <string name="toDo">Things to Do:</string>
+    <string name="duration">Duration:</string>
+    <string name="venue">Venue:</string>
+    <string name="type">Type:</string>
+    <string name="organizer">Organizer:</string>
+    <string name="contact">Contact:</string>
+    <string name="web">Web:</string>
+
     <string name="rate">Rate this</string>
 
     <!-- About Us activity strings-->
