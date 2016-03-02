@@ -1,15 +1,13 @@
 package com.placediscovery.ui.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 
 import com.placediscovery.Interface.FragmentCommunicator;
 import com.placediscovery.R;
@@ -29,10 +28,11 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, FragmentCommunicator {
+public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, FragmentCommunicator, View.OnClickListener {
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
+    private List<Button> buttons;
 
 
     @Override
@@ -46,6 +46,8 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setOnMenuItemClickListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        buttons = new ArrayList<>();
+        initializeButtons();
 //        viewPager = (ViewPager) findViewById(R.id.viewpager);
 //        setupViewPager(viewPager);
 
@@ -54,6 +56,21 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
         setUpNavDrawer();
         setFeed();
 
+    }
+
+    private void initializeButtons() {
+        buttons.add((Button) findViewById(R.id.button1));
+        buttons.add((Button) findViewById(R.id.button2));
+        buttons.add((Button) findViewById(R.id.button3));
+        buttons.add((Button) findViewById(R.id.button4));
+        buttons.add((Button) findViewById(R.id.button5));
+        buttons.add((Button) findViewById(R.id.button6));
+        for (Button button : buttons) {
+            button.setOnClickListener(this);
+            button.setTextColor(Color.BLUE);
+            button.setBackgroundColor(Color.WHITE);
+
+        }
     }
 
 //    private void setupViewPager(ViewPager viewPager) {
@@ -106,6 +123,59 @@ public class HomePageActivity extends AppCompatActivity implements Toolbar.OnMen
     @Override
     public void sendObjectFromFragment(Object o) {
         MapsActivity.setEvents(o);
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button1: {
+                removeColors();
+                setColor(0);
+                break;
+            }
+            case R.id.button2: {
+                removeColors();
+                setColor(1);
+                break;
+            }
+            case R.id.button3: {
+                removeColors();
+                setColor(2);
+                break;
+            }
+            case R.id.button4: {
+                removeColors();
+                setColor(3);
+                break;
+            }
+            case R.id.button5: {
+                removeColors();
+                setColor(4);
+                break;
+            }
+            case R.id.button6: {
+                removeColors();
+                setColor(5);
+                break;
+            }
+        }
+    }
+
+    private void setColor(int i) {
+        buttons.get(i).setTextColor(Color.WHITE);
+        buttons.get(i).setBackgroundColor(Color.BLUE);
+    }
+
+    private void removeColors() {
+        for (Button button : buttons) {
+            button.setBackgroundColor(Color.WHITE);
+            button.setTextColor(Color.BLUE);
+        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

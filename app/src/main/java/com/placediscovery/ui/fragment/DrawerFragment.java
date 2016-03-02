@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,8 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.placediscovery.Data.Information;
-import com.placediscovery.R;
 import com.placediscovery.Interface.ClickListener;
+import com.placediscovery.R;
 import com.placediscovery.ui.activity.ChooseCity;
 import com.placediscovery.ui.activity.addingPlace.AddPlaceSelectCity;
 import com.placediscovery.ui.adapter.DrawerAdapter;
@@ -37,11 +38,9 @@ import static android.view.GestureDetector.SimpleOnGestureListener;
 public class DrawerFragment extends Fragment {
 
 
-
     private RecyclerView recyclerView;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-    private View mContainer;
 
     public DrawerFragment() {
         // Required empty public constructor
@@ -50,7 +49,7 @@ public class DrawerFragment extends Fragment {
     public List<Information> getData() {
         //load only static data inside a drawer
         List<Information> data = new ArrayList<>();
-        int[] icons = {R.drawable.ic_action_search_orange, R.drawable.ic_action_trending_orange, R.drawable.ic_action_upcoming_orange};
+        int[] icons = {R.drawable.ic_action_search_orange, R.drawable.ic_action_trending_orange, R.drawable.ic_launcher, R.drawable.ic_action_upcoming_orange};
         String[] titles = getResources().getStringArray(R.array.drawer_tabs);
         for (int i = 0; i < titles.length; i++) {
             Information information = new Information();
@@ -91,6 +90,10 @@ public class DrawerFragment extends Fragment {
                         startActivity(new Intent(getActivity(), AddPlaceSelectCity.class));
                         mDrawerLayout.closeDrawer(Gravity.LEFT);
                         break;
+                    case 3:
+                        AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
+
+                        break;
                 }
 
 
@@ -106,7 +109,7 @@ public class DrawerFragment extends Fragment {
     }
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar) {
-        mContainer = getActivity().findViewById(fragmentId);
+        View mContainer = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
         mDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
@@ -141,8 +144,6 @@ public class DrawerFragment extends Fragment {
 
 
     }
-
-
 
 
     class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
