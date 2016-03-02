@@ -3,7 +3,6 @@
     <string-array name="drawer_tabs">
         <item>Choose City</item>
         <item>Add a Place</item>
-        <item>Create</item>
         <item>Upcoming</item>
     </string-array>
 </resources>

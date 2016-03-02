@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +22,6 @@ import com.placediscovery.Data.Information;
 import com.placediscovery.Interface.ClickListener;
 import com.placediscovery.R;
 import com.placediscovery.ui.activity.ChooseCity;
-import com.placediscovery.ui.activity.addingPlace.AddPlaceSelectCity;
 import com.placediscovery.ui.adapter.DrawerAdapter;
 
 import java.util.ArrayList;
@@ -49,7 +47,7 @@ public class DrawerFragment extends Fragment {
     public List<Information> getData() {
         //load only static data inside a drawer
         List<Information> data = new ArrayList<>();
-        int[] icons = {R.drawable.ic_action_search_orange, R.drawable.ic_action_trending_orange, R.drawable.ic_launcher, R.drawable.ic_action_upcoming_orange};
+        int[] icons = {R.drawable.ic_action_search_orange, R.drawable.ic_action_trending_orange, R.drawable.ic_action_upcoming_orange};
         String[] titles = getResources().getStringArray(R.array.drawer_tabs);
         for (int i = 0; i < titles.length; i++) {
             Information information = new Information();
@@ -85,15 +83,53 @@ public class DrawerFragment extends Fragment {
                         startActivity(new Intent(getActivity(), ChooseCity.class));
                         mDrawerLayout.closeDrawer(Gravity.LEFT);
                         break;
-
                     case 2:
-                        startActivity(new Intent(getActivity(), AddPlaceSelectCity.class));
-                        mDrawerLayout.closeDrawer(Gravity.LEFT);
-                        break;
-                    case 3:
-                        AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
-
-                        break;
+//                        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+//                                .setTitle("Create")
+//                                .setSingleChoiceItems(R.array.event_menu, 0, new DialogInterface.OnClickListener() {
+//                                    /**
+//                                     * This method will be invoked when a button in the dialog is clicked.
+//                                     *
+//                                     * @param dialog The dialog that received the click.
+//                                     * @param which  The button that was clicked (e.g.
+//                                     *               {@link DialogInterface#BUTTON1}) or the position
+//                                     */
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//
+//                                    }
+//                                })
+//                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                                    /**
+//                                     * This method will be invoked when a button in the dialog is clicked.
+//                                     *
+//                                     * @param dialog The dialog that received the click.
+//                                     * @param which  The button that was clicked (e.g.
+//                                     *               {@link DialogInterface#BUTTON1}) or the position
+//                                     */
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.dismiss();
+//                                    }
+//                                })
+//                                .setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+//
+//                                    /**
+//                                     * This method will be invoked when a button in the dialog is clicked.
+//                                     *
+//                                     * @param dialog The dialog that received the click.
+//                                     * @param which  The button that was clicked (e.g.
+//                                     *               {@link DialogInterface#BUTTON1}) or the position
+//                                     */
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.dismiss();
+//                                    }
+//                                })
+//                                .create();
+//                        dialog.show();
+//                        break;
+                        new CreateFragment().show(getFragmentManager(), "Dialog");
                 }
 
 
