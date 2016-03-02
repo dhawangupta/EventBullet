@@ -2,7 +2,7 @@
 <resources>
     <string-array name="drawer_tabs">
         <item>Choose City</item>
-        <item>Add a Place</item>
+        <item>Create an Event</item>
         <item>Upcoming</item>
     </string-array>
 </resources>

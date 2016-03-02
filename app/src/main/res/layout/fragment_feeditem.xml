@@ -67,14 +67,18 @@
             android:paddingLeft="@dimen/feed_item_status_pad_left_right"
             android:paddingRight="@dimen/feed_item_status_pad_left_right"
             android:paddingTop="@dimen/feed_item_status_pad_top"
-            android:textColor="@color/primary_text" />
+            android:textColor="@color/primary_text"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/eventTimings"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/feed_item_status_pad_left_right"
+            android:paddingRight="@dimen/feed_item_status_pad_left_right"
             android:textColor="@color/primary_text"
-            android:textSize="13sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/eventType"
@@ -83,7 +87,8 @@
             android:paddingBottom="10dp"
             android:paddingLeft="@dimen/feed_item_status_pad_left_right"
             android:paddingRight="@dimen/feed_item_status_pad_left_right"
-            android:textColor="@color/primary_text" />
+            android:textColor="@color/primary_text"
+            android:textSize="16sp"/>
 
     </LinearLayout>
 </LinearLayout>
