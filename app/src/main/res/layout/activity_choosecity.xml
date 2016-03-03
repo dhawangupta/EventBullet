@@ -11,14 +11,14 @@
         android:layout_height="64dp"
         android:background="@color/primary"
         android:elevation="6dp"
-        android:minHeight="?attr/actionBarSize" />
+        android:minHeight="?attr/actionBarSize"
+        android:titleTextColor="@color/White" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        tools:context=".MainActivity"
-        />
+        tools:context=".MainActivity" />
 
 </RelativeLayout>
