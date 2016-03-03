@@ -38,7 +38,7 @@
                 android:layout_height="240dp"
                 android:layout_marginTop="64dp"
                 android:background="@drawable/add_image"
-                android:contentDescription="@string/place_holder"
+                android:contentDescription="@string/event_poster"
                 android:elevation="3dp"
                 android:gravity="top" />
 
