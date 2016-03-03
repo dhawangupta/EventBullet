@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="event_menu">
+        <item>Create Event</item>
+        <item>Create Meetup</item>
+    </string-array>
+
+</resources>
