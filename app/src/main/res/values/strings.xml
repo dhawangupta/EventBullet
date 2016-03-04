@@ -2,7 +2,7 @@
 
 <resources>
 
-    <string name="app_name">Place Discovery</string>
+    <string name="app_name">EventBullet</string>
     <string name="sign_in">Sign in</string>
     <string name="home">Home</string>
     <string name="choose_city">Choose City</string>
@@ -102,8 +102,6 @@
     <string name="drawer_close">Close</string>
     <string name="drawer_open">Open</string>
     <string name="internet_req">Please Connect to Internet</string>
-    <string name="home_page_title">Events</string>
-    <string name="title_activity_test">Test</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="home_page_title">EventBullet</string>
 </resources>
 
