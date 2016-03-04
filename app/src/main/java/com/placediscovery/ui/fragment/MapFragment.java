@@ -50,6 +50,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
 
     private SupportMapFragment fragment;
 
+    public static void setEvents(Object o) {
+        events = (ArrayList<Event>) o;
+    }
+
     public MapFragment() {
         // Required empty public constructor
     }
