@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -41,6 +43,7 @@ public class DrawerFragment extends Fragment {
     private RecyclerView recyclerView;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
+    private int choice = 0;
 
     public DrawerFragment() {
         // Required empty public constructor
@@ -93,9 +96,9 @@ public class DrawerFragment extends Fragment {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         switch (which) {
-                                            case 0:
-
-
+                                            case 1:
+                                                choice = 1;
+                                                break;
                                         }
                                     }
                                 })
@@ -108,6 +111,9 @@ public class DrawerFragment extends Fragment {
                                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        if (choice == 1) {
+                                            createMeetup();
+                                        }
                                         dialog.dismiss();
                                     }
                                 })
@@ -128,6 +134,15 @@ public class DrawerFragment extends Fragment {
             }
         }));
 
+    }
+
+    private void createMeetup() {
+        CreateMeetupFragment fragment = new CreateMeetupFragment();
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.feed_container, fragment, "EventMeetupFragment");
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar) {
