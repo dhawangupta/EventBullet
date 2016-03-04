@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.format.DateUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -61,6 +62,14 @@ public class EventsContentActivity extends AppCompatActivity implements
 //        final double currentRating = Double.parseDouble(event.getAverageRating());
 //        final int currentCount = Integer.parseInt(event.getCount());
         String timings = event.getTimings();
+
+        try {
+            // Converting eventTimings into x ago format
+            timings = DateUtils.formatDateTime(getApplicationContext(),Long.parseLong(timings),
+                    DateUtils.FORMAT_SHOW_DATE|DateUtils.FORMAT_SHOW_TIME|DateUtils.FORMAT_SHOW_WEEKDAY);
+        }catch (Exception e){}
+
+
         String ticket = event.getTicket();
         String type = event.getType();
         String duration = event.getDuration();
