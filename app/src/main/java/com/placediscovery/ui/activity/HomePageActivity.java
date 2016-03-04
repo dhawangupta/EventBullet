@@ -104,7 +104,7 @@ public class HomePageActivity extends AppCompatActivity implements
 
     @Override
     public void sendObjectFromFragment(Object o) {
-        MapsActivity.setEvents(o);
+        MapFragment.setEvents(o);
     }
 
     /**
