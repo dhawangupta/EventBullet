@@ -43,54 +43,48 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/button1"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/filter_button"
                     android:text="All"
                     android:textAlignment="center" />
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/button2"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/filter_button"
                     android:text="Concerts"
                     android:textAlignment="center" />
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/button3"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/filter_button"
                     android:text="Workshops"
                     android:textAlignment="center" />
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/button4"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/filter_button"
                     android:text="MeetUps"
                     android:textAlignment="center" />
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/button5"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/filter_button"
                     android:text="Exhibitions"
                     android:textAlignment="center" />
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/button6"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/filter_button"
@@ -104,7 +98,14 @@
             android:id="@+id/feed_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/horizontalScrollView" />
+            android:layout_below="@id/horizontalScrollView">
+
+            <fragment
+                android:id="@+id/feed_fragment"
+                android:name="com.placediscovery.ui.fragment.FeedItemFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <fragment

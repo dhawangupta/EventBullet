@@ -41,7 +41,7 @@
     <string name="title_activity_maps">Map</string>
 
     <!-- Content Strings -->
-    <string name="place_holder">Place holder</string>
+    <string name="event_poster">Event Poster</string>
     <string name="title_activity_user_test">UserTestActivity</string>
 
     <!-- Facebook app ID -->
