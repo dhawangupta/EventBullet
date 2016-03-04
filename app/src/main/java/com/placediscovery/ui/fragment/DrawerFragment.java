@@ -141,6 +141,7 @@ public class DrawerFragment extends Fragment {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.feed_container, fragment, "EventMeetupFragment");
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
