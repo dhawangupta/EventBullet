@@ -20,7 +20,7 @@ public class CreateMeetupFragment extends Fragment implements View.OnClickListen
 
     EditText meetUpName;
     EditText meetUpDescription;
-    EditText dateSelect;
+    EditText dateSelect, timeSelect;
     Button button;
     private int hour;
     private int min;
@@ -44,8 +44,12 @@ public class CreateMeetupFragment extends Fragment implements View.OnClickListen
         meetUpName = (EditText) view.findViewById(R.id.meetup_name);
         meetUpDescription = (EditText) view.findViewById(R.id.meetup_description);
         dateSelect = (EditText) view.findViewById(R.id.date_select);
+        dateSelect.setOnClickListener(this);
         dateSelect.setInputType(InputType.TYPE_NULL);
         dateSelect.setOnClickListener(this);
+        timeSelect = (EditText) view.findViewById(R.id.time_select);
+        timeSelect.setInputType(InputType.TYPE_NULL);
+        timeSelect.setOnClickListener(this);
         button = (Button) view.findViewById(R.id.btn_submit);
         button.setOnClickListener(this);
 
@@ -58,10 +62,15 @@ public class CreateMeetupFragment extends Fragment implements View.OnClickListen
      */
     @Override
     public void onClick(View v) {
+        Fragment newFragment;
         switch (v.getId()) {
+            case R.id.time_select:
+                newFragment = new TimePickerFragment();
+                ((TimePickerFragment) newFragment).show(getFragmentManager(), "timePicker");
+                break;
             case R.id.date_select:
-                TimePickerFragment newFragment = new TimePickerFragment();
-                newFragment.show(getFragmentManager(), "timePicker");
+                newFragment = new DatePickerFragment();
+                ((DatePickerFragment) newFragment).show(getFragmentManager(), "Datepicker");
                 break;
         }
     }

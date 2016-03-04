@@ -69,6 +69,23 @@
                     android:id="@+id/date_select"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Select Date"
+                    android:inputType="none"
+                    android:textColor="@color/aluminum" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
+
+                <EditText
+                    android:id="@+id/time_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:hint="Pick Time"
                     android:inputType="none"
                     android:textColor="@color/aluminum" />
