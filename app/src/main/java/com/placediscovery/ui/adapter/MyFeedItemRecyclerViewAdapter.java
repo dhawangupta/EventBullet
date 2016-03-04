@@ -2,6 +2,7 @@ package com.placediscovery.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,18 +42,20 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
             imageLoader = MySingleton.getInstance(context).getImageLoader();
         holder.item = feeditems.get(position);
         holder.eventName.setText(holder.item.getName());
-        holder.eventTimings.setText(holder.item.getTimings());
+//        holder.eventTimings.setText(holder.item.getTimings());
         holder.eventType.setText(holder.item.getType());
 
         holder.eventName.setVisibility(View.VISIBLE);
         holder.eventTimings.setVisibility(View.VISIBLE);
         holder.eventType.setVisibility(View.VISIBLE);
 
-        // Converting eventTimings into x ago format
-//        CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
-//                Long.parseLong(holder.item.getTimeStamp()),
-//                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
-//        holder.eventTimings.setText(timeAgo);
+        try {
+            // Converting eventTimings into x ago format
+            CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
+                    Long.parseLong(holder.item.getTimings()),
+                    System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
+            holder.eventTimings.setText(timeAgo);
+        }catch (Exception e){}
 //
 //        // Chcek for empty status message
 //        if (!TextUtils.isEmpty(holder.item.getStatus())) {
