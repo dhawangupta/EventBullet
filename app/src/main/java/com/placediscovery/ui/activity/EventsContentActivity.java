@@ -193,23 +193,7 @@ public class EventsContentActivity extends AppCompatActivity implements
 //        });
         String[] image_urls = image_url.split(",");
 
-        if (image_urls.length <= 1) {
-            // following is old imageloader code
-            int loader = R.drawable.loader;         //loader image
-            String hd_url = image_url.substring(0, image_url.length() - 6) + ".jpg";
-//            ImageLoader class instance
-            ImageLoader imgLoader = new ImageLoader(getApplicationContext());
-//             whenever you want to load an image from url
-//             call DisplayImage function
-//             url - image url to load
-//             loader - loader image, will be displayed before getting image
-//             image - ImageView
-            imgLoader.DisplayImage(hd_url, loader, (ImageView) findViewById(R.id.eventContentPageImage));
-
-        } else {
-
-
-            for (String url : image_urls) {
+        for (String url : image_urls) {
                 DefaultSliderView textSliderView = new DefaultSliderView(this);
                 // initialize a SliderLayout
                 textSliderView
@@ -221,13 +205,14 @@ public class EventsContentActivity extends AppCompatActivity implements
 //            textSliderView.getBundle()
 //                    .putString("extra",name);
                 mDemoSlider.addSlider(textSliderView);
-            }
-            mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Stack);       //replace "Stack" by other transformers to implement different kind of slider animations
-            mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-            mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-            mDemoSlider.setDuration(4000);
-            mDemoSlider.addOnPageChangeListener(this);
         }
+        if(image_urls.length==1)
+            mDemoSlider.stopAutoCycle();
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Stack);       //replace "Stack" by other transformers to implement different kind of slider animations
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setDuration(4000);
+        mDemoSlider.addOnPageChangeListener(this);
 
         //some toolbar code
 //        Toolbar topToolBar = (Toolbar)findViewById(R.id.toolbar);

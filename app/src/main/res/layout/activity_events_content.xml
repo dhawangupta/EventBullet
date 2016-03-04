@@ -29,23 +29,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!-- Normal Image-->
-                <ImageView
-                    android:id="@+id/eventContentPageImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:scaleType="fitXY" />
-
                 <!--Image Slider-->
                 <com.daimajia.slider.library.SliderLayout
                     android:id="@+id/eventContentPageImageSlider"
                     android:layout_width="match_parent"
                     android:layout_height="230dp"
-                    custom:auto_cycle="true"
                     custom:indicator_visibility="visible"
                     custom:pager_animation="Accordion"
-                    custom:pager_animation_span="1100" />     <!-- Height of image slider on content page -->
+                    custom:pager_animation_span="1100"/>
 
             </RelativeLayout>
 
