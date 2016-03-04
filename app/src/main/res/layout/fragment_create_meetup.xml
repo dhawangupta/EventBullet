@@ -1,0 +1,96 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/White"
+        android:fitsSystemWindows="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--  Event Title -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
+
+                <EditText
+                    android:id="@+id/meetup_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Title"
+                    android:inputType="text"
+                    android:textColor="@color/aluminum" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!--  Place Details -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
+
+                <EditText
+                    android:id="@+id/meetup_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:enabled="true"
+                    android:focusable="true"
+                    android:hint="Description"
+                    android:inputType="textMultiLine"
+                    android:isScrollContainer="true"
+                    android:maxLines="10"
+                    android:minLines="1"
+                    android:textColor="@color/aluminum" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
+
+                <EditText
+                    android:id="@+id/date_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pick Time"
+                    android:inputType="none"
+                    android:textColor="@color/aluminum" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/primary"
+                android:paddingBottom="10dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingTop="10dp"
+                android:text="Submit"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
