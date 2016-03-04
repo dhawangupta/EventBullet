@@ -1,11 +1,12 @@
 package com.placediscovery.MongoLabPlace;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  * Created by Dhawan Gupta on 03-02-2016.
  */
-public class Event implements Serializable {
+public class Event implements Serializable, Comparable<Event> {
     private String id = "";
     private String name = "";
     private String timings = "";
@@ -132,4 +133,16 @@ public class Event implements Serializable {
     public void setWeb(String web) {
         this.web = web;
     }
+
+    @Override
+    public int compareTo(Event another) {   //sorting by time, latest events appears as lower index in the collection
+        try {
+            return Long.parseLong(timings) > Long.parseLong(another.timings) ? -1
+                    : Long.parseLong(timings) < Long.parseLong(another.timings)? 1
+                    : 0 ;
+        }catch (Exception e){
+            return 1;
+        }
+    }
+
 }
