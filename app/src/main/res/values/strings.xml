@@ -103,5 +103,7 @@
     <string name="drawer_open">Open</string>
     <string name="internet_req">Please Connect to Internet</string>
     <string name="home_page_title">EventBullet</string>
+    <string name="title_activity_test">Test</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
 </resources>
 
