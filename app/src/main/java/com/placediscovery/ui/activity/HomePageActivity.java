@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import com.placediscovery.Interface.FragmentCommunicator;
 import com.placediscovery.R;
 import com.placediscovery.ui.fragment.DrawerFragment;
+import com.placediscovery.ui.fragment.MapFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +58,11 @@ public class HomePageActivity extends AppCompatActivity implements
         buttons.add((Button) findViewById(R.id.button6));
         for (Button button : buttons) {
             button.setOnClickListener(this);
-            button.setTextColor(Color.BLUE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                button.setTextColor(HomePageActivity.this.getColor(R.color.primary));
+            } else {
+                button.setTextColor(ContextCompat.getColor(HomePageActivity.this, R.color.primary));
+            }
             button.setBackgroundColor(Color.WHITE);
 
         }
@@ -78,13 +85,19 @@ public class HomePageActivity extends AppCompatActivity implements
 
     }
 
+
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.menu_login) {
             startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
         }
         if (item.getItemId() == R.id.map_icon) {
-            startActivity(new Intent(HomePageActivity.this, MapsActivity.class));
+//            startActivity(new Intent(HomePageActivity.this, MapsActivity.class));
+            MapFragment fragment = new MapFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.feed_container, fragment, "MapFragment");
+            transaction.commit();
         }
         return true;
     }

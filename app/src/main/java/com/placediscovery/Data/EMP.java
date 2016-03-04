@@ -4,28 +4,14 @@ package com.placediscovery.Data;
  * Created by ZuberSk on 04-Mar-16.
  */
 public class EMP {
-    private String OrganiserFirstName = "";
-    private String OrganiserSecondName = "";
     private String EventName = "";
-    private int day, month, year;
-    private String PhoneNo = "";
+    private int sartDay;
+    private int startMonth;
+    private int startYear;
     private String venue = "";
+    private String description = "";
+    private int startHour, startMin;
 
-    public String getOrganiserFirstName() {
-        return OrganiserFirstName;
-    }
-
-    public void setOrganiserFirstName(String organiserFirstName) {
-        OrganiserFirstName = organiserFirstName;
-    }
-
-    public String getOrganiserSecondName() {
-        return OrganiserSecondName;
-    }
-
-    public void setOrganiserSecondName(String organiserSecondName) {
-        OrganiserSecondName = organiserSecondName;
-    }
 
     public String getEventName() {
         return EventName;
@@ -35,38 +21,6 @@ public class EMP {
         EventName = eventName;
     }
 
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public String getPhoneNo() {
-        return PhoneNo;
-    }
-
-    public void setPhoneNo(String phoneNo) {
-        PhoneNo = phoneNo;
-    }
-
     public String getVenue() {
         return venue;
     }
@@ -74,4 +28,54 @@ public class EMP {
     public void setVenue(String venue) {
         this.venue = venue;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getStartMin() {
+        return startMin;
+    }
+
+    public void setStartMin(int startMin) {
+        this.startMin = startMin;
+    }
+
+    public int getStartHour() {
+        return startHour;
+    }
+
+    public void setStartHour(int startHour) {
+        this.startHour = startHour;
+    }
+
+    public int getStartYear() {
+        return startYear;
+    }
+
+    public void setStartYear(int startYear) {
+        this.startYear = startYear;
+    }
+
+    public int getSartDay() {
+        return sartDay;
+    }
+
+    public void setSartDay(int sartDay) {
+        this.sartDay = sartDay;
+    }
+
+    public int getStartMonth() {
+        return startMonth;
+    }
+
+    public void setStartMonth(int startMonth) {
+        this.startMonth = startMonth;
+    }
+
+
 }
