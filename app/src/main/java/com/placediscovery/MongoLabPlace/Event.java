@@ -135,13 +135,13 @@ public class Event implements Serializable, Comparable<Event> {
     }
 
     @Override
-    public int compareTo(Event another) {   //sorting by time, latest events appears as lower index in the collection
+    public int compareTo(Event another) {   //sorting by time
         try {
-            return Long.parseLong(timings) > Long.parseLong(another.timings) ? -1
-                    : Long.parseLong(timings) < Long.parseLong(another.timings)? 1
+            return Long.parseLong(timings) > Long.parseLong(another.timings) ? 1
+                    : Long.parseLong(timings) < Long.parseLong(another.timings)? -1
                     : 0 ;
         }catch (Exception e){
-            return 1;
+            return -1;
         }
     }
 

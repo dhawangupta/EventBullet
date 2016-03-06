@@ -26,6 +26,7 @@ import com.placediscovery.Data.Information;
 import com.placediscovery.Interface.ClickListener;
 import com.placediscovery.R;
 import com.placediscovery.ui.activity.ChooseCity;
+import com.placediscovery.ui.activity.HomePageActivity;
 import com.placediscovery.ui.adapter.DrawerAdapter;
 
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class DrawerFragment extends Fragment {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 switch (position) {
                     case 1:
-                        startActivity(new Intent(getActivity(), ChooseCity.class));
+                        startActivity(new Intent(getActivity(), HomePageActivity.class));
                         break;
                     case 2:
                         AlertDialog dialog = new AlertDialog.Builder(getActivity())

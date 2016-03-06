@@ -193,22 +193,11 @@ public class FeedItemFragment extends Fragment {
                 item.setTimings(feedObj.getString("timings"));
                 item.setType(feedObj.getString("type"));
                 item.setImageURL(feedObj.getString("imageURL"));
+                item.setTicket(feedObj.getString("ticket"));
 
-                // Image might be null sometimes
-//                String imageURL = feedObj.isNull("imageURL") ? null : feedObj
-//                        .getString("imageURL");
-//                item.setImageURL(imageURL);
-//                item.setStatus(feedObj.getString("status"));
-//                item.setProfilePic(feedObj.getString("profilePic"));
-//                item.setTimeStamp(feedObj.getString("timeStamp"));
-
-
-                // url might be null sometimes
-//                String feedUrl = feedObj.isNull("url") ? null : feedObj
-//                        .getString("url");
-//                item.setUrl(feedUrl);
-
-                feedItems.add(item);
+                //only adding upcoming events to the list
+                if(System.currentTimeMillis()<Long.parseLong(item.getTimings()))
+                    feedItems.add(item);
             }
 
             Collections.sort(feedItems);
