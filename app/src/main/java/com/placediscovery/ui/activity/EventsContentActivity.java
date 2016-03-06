@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.format.DateUtils;
-import android.widget.ImageView;
+import android.text.method.LinkMovementMethod;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,7 +14,6 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
-import com.placediscovery.ImageLoader.ImageLoader;
 import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.MongoLabUser.UserStatus;
@@ -23,13 +22,15 @@ import com.placediscovery.R;
 public class EventsContentActivity extends AppCompatActivity implements
         BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
-    User loggedInUser;
-    //    float userRating;
+
+//    float userRating;
 //    EditText reviewField;
-    Event event;
-    //    ProgressBar progressBarFooter;
-    private SliderLayout mDemoSlider;   //this is imageslider used
+//    ProgressBar progressBarFooter;
 //    private RatingBar ratingBar;
+
+    Event event;
+    User loggedInUser;
+    private SliderLayout mDemoSlider;   //this is imageslider used
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +48,6 @@ public class EventsContentActivity extends AppCompatActivity implements
 //        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(mToolbar);
 //        getSupportActionBar().setTitle("My title");     //title for the toolbar
-
-
-//        final int imageviewId = intent.getExtras().getInt("imageviewId");
-//        final ArrayList<Place> places = (ArrayList<Place>) intent.getExtras()
-//                .getSerializable("placesObject");
-//        selectedCity = intent.getExtras().getString("selectedCity");
-
-//        selectedPlace = places.get(imageviewId);
 
         String event_name = event.getName();
         String event_content = event.getContent();
@@ -110,35 +103,40 @@ public class EventsContentActivity extends AppCompatActivity implements
         if (timings.equals(""))
             timingsLayout.setVisibility(LinearLayout.GONE);
         else
-            timingsValue.setText(" " + timings);
+            timingsValue.setText(timings);
         if (ticket.equals(""))
             ticketLayout.setVisibility(LinearLayout.GONE);
         else
-            ticketValue.setText(" " + ticket);
+            ticketValue.setText(ticket);
         if (type.equals(""))
             typeLayout.setVisibility(LinearLayout.GONE);
         else
-            typeValue.setText(" " + type);
+            typeValue.setText(type);
         if (duration.equals(""))
             durationLayout.setVisibility(LinearLayout.GONE);
         else
-            durationValue.setText(" " + duration);
+            durationValue.setText(duration);
         if (venue.equals(""))
             venueLayout.setVisibility(LinearLayout.GONE);
         else
-            venueValue.setText(" " + venue);
+            venueValue.setText(venue);
+
         if (web.equals(""))
             webLayout.setVisibility(LinearLayout.GONE);
-        else
-            webValue.setText(" " + web);
+        else {
+            webValue.setText(Html.fromHtml("<a href=\"http://" + web + "\">" + web + "</a>"));
+            // Making url clickable
+            webValue.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+
         if (organizer.equals(""))
             organizerLayout.setVisibility(LinearLayout.GONE);
         else
-            organizerValue.setText(" " + organizer);
+            organizerValue.setText(organizer);
         if (contact.equals(""))
             contactLayout.setVisibility(LinearLayout.GONE);
         else
-            contactValue.setText(" " + contact);
+            contactValue.setText(contact);
 
 
 //        rateThis.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="drawer_tabs">
-        <item>Choose City</item>
+        <item>Home</item>
         <item>Create an Event</item>
         <item>Upcoming</item>
     </string-array>

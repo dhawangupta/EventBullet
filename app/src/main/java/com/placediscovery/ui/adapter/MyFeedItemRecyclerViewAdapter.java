@@ -54,7 +54,7 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
             CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
                     Long.parseLong(holder.item.getTimings()),
                     System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
-            holder.eventTimings.setText(timeAgo);
+            holder.eventTimings.setText("starting "+timeAgo);
         }catch (Exception e){}
 //
 //        // Chcek for empty status message
