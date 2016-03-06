@@ -3,16 +3,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <item
         android:id="@+id/menu_login"
         android:icon="@mipmap/ic_user"
         android:title="@string/login"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
-        android:id="@+id/map_icon"
-        android:icon="@drawable/ic_map_white_48dp"
-        android:title="Map"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/home_icon"
+        android:icon="@drawable/ic_home_white_48dp"
+        android:title="Home"
+        app:showAsAction="always" />
 
 </menu>
