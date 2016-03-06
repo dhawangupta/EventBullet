@@ -8,12 +8,12 @@
         android:id="@+id/menu_login"
         android:icon="@mipmap/ic_user"
         android:title="@string/login"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
-        android:id="@+id/back_icon"
+        android:id="@+id/home_icon"
         android:icon="@drawable/ic_home_white_48dp"
-        android:title="Map"
-        app:showAsAction="ifRoom" />
+        android:title="Home"
+        app:showAsAction="always" />
 
 </menu>

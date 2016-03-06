@@ -15,14 +15,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.placediscovery.Interface.FragmentCommunicator;
 import com.placediscovery.R;
 import com.placediscovery.ui.fragment.DrawerFragment;
+import com.placediscovery.ui.fragment.FeedItemFragment;
 import com.placediscovery.ui.fragment.MapFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 
 public class HomePageActivity extends AppCompatActivity implements
@@ -47,6 +50,9 @@ public class HomePageActivity extends AppCompatActivity implements
         buttons = new ArrayList<>();
         initializeButtons();
         setUpNavDrawer();
+
+
+
     }
 
     private void initializeButtons() {
@@ -97,8 +103,19 @@ public class HomePageActivity extends AppCompatActivity implements
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.feed_container, fragment, "MapFragment");
+            transaction.addToBackStack(null);
             transaction.commit();
         }
+        if (item.getItemId() == R.id.home_icon) {
+//            FragmentManager fm = getSupportFragmentManager();
+//            Toast.makeText(this, String.valueOf(fm.getBackStackEntryCount()),Toast.LENGTH_LONG).show();
+//            if (fm.getBackStackEntryCount() > 0) {
+//                fm.popBackStack();
+//            }
+            onBackPressed();
+        }
+
+
         return true;
     }
 
