@@ -3,12 +3,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--<item-->
-    <!--android:id="@+id/menu_search"-->
-    <!--app:actionViewClass="android.support.v7.widget.SearchView"-->
-    <!--android:icon="@mipmap/ic_search_white_24dp"-->
-    <!--app:showAsAction="ifRoom|collapseActionView"-->
-    <!--android:title="@string/search"/>-->
 
     <item
         android:id="@+id/menu_login"
@@ -17,8 +11,8 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/map_icon"
-        android:icon="@drawable/ic_map_white_48dp"
+        android:id="@+id/back_icon"
+        android:icon="@drawable/ic_home_white_48dp"
         android:title="Map"
         app:showAsAction="ifRoom" />
 
