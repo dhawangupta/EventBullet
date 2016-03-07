@@ -1,13 +1,17 @@
 package com.placediscovery.ui.activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
@@ -18,6 +22,9 @@ import com.placediscovery.MongoLabPlace.Event;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
+import com.placediscovery.notifications.AlaramReceiver;
+
+import java.util.Calendar;
 
 public class EventsContentActivity extends AppCompatActivity implements
         BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
@@ -321,6 +328,20 @@ public class EventsContentActivity extends AppCompatActivity implements
     @Override
     public void onSliderClick(BaseSliderView slider) {
 
+    }
+
+    public void onEnableNotificationsClick(View view) {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(Long.parseLong(event.getTimings()));
+        Intent intent = new Intent(EventsContentActivity.this, AlaramReceiver.class);
+        intent.putExtra("event",event);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast
+                (EventsContentActivity.this, 0,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) EventsContentActivity.this.getSystemService
+                (EventsContentActivity.this.ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+
+        Toast.makeText(this, "You will be notified for " + event.getName(), Toast.LENGTH_SHORT).show();
     }
 
 //    class UpdateUserRatingAsyncTask extends AsyncTask<Object, Void, Boolean> {
