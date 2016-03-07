@@ -90,10 +90,10 @@
             android:name=".ui.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.activity.ProfilePageActivity">
+        <activity android:name=".ui.activity.ProfilePageActivity"/>
 
-        </activity>
-
+        <!-- Register the Alarm Receiver -->
+        <receiver android:name="com.placediscovery.notifications.AlaramReceiver"/>
     </application>
 
 </manifest>

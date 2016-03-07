@@ -290,7 +290,8 @@
                         <LinearLayout
                             android:id="@+id/event_web"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp">
 
                             <TextView
                                 android:id="@+id/event_webLabel"
@@ -333,6 +334,15 @@
                         <!--android:textAllCaps="false"/>-->
                         <!--</LinearLayout>-->
 
+                        <android.support.v7.widget.AppCompatButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Enable Notifications"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/Teal"
+                            android:textColor="@color/White"
+                            android:onClick="onEnableNotificationsClick"/>
                     </LinearLayout>
                 </ScrollView>
 
