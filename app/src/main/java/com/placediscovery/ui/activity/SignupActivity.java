@@ -48,6 +48,8 @@ public class SignupActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        // Session Manager
+        session = new SessionManager(getApplicationContext());
 
         _loginLink = (TextView) findViewById(R.id.link_login);
         _nameText = (EditText) findViewById(R.id.input_name);
@@ -93,7 +95,7 @@ public class SignupActivity extends AppCompatActivity {
 
 
     public void onSignupSuccess() {
-        session.createLoginSession(user.name, user.email, result);
+        session.createLoginSession(user.name, user.email, result);  //result is token to be saved
         Intent intent = new Intent(SignupActivity.this, HomePageActivity.class);
         Toast.makeText(getApplicationContext(), "Welcome " + user.name +
                 ", You are now logged in.", Toast.LENGTH_SHORT).show();
@@ -189,7 +191,6 @@ public class SignupActivity extends AppCompatActivity {
                     json = sb.toString();
 
                 } catch (Exception e) {
-                    Log.e("Buffer Error", "Error converting result " + e.toString());
                     return null;
                 }
 
@@ -197,7 +198,6 @@ public class SignupActivity extends AppCompatActivity {
                 try {
                     jObj = new JSONObject(json);
                 } catch (JSONException e) {
-                    Log.e("JSON Parser", "Error parsing data " + e.toString());
                     return null;
                 }
 
