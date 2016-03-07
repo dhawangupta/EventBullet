@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.android.volley.Request;
@@ -35,9 +34,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class FeedItemFragment extends Fragment {
@@ -196,7 +193,7 @@ public class FeedItemFragment extends Fragment {
                 item.setTicket(feedObj.getString("ticket"));
 
                 //only adding upcoming events to the list
-                if(System.currentTimeMillis()<Long.parseLong(item.getTimings()))
+                if (System.currentTimeMillis() < Long.parseLong(item.getTimings()))
                     feedItems.add(item);
             }
 
