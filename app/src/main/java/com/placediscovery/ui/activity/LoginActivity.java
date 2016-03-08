@@ -12,36 +12,43 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.placediscovery.HelperClasses.HelperMethods;
+import com.placediscovery.HelperClasses.SessionManager;
 import com.placediscovery.MongoLabUser.User;
 import com.placediscovery.MongoLabUser.UserQueryBuilder;
-import com.placediscovery.MongoLabUser.UserStatus;
 import com.placediscovery.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
+    SessionManager session;
+    User user;
+    private String result;
+
     protected EditText _emailText;
     protected EditText _passwordText;
     protected Button _loginButton;
     protected TextView _signupLink;
-
     private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        // Session Manager
+        session = new SessionManager(getApplicationContext());
 
         _signupLink = (TextView) findViewById(R.id.link_signup);
         _emailText = (EditText) findViewById(R.id.input_email);
@@ -78,16 +85,20 @@ public class LoginActivity extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
+        user = new User();
+        user.email = _emailText.getText().toString();
+        user.password = _passwordText.getText().toString();
+
         GetUserAsyncTask task = new GetUserAsyncTask();
-        task.execute();
+        task.execute(user);
     }
 
-    public void onLoginSuccess(User u) {
-        UserStatus.setUserStatus(u);
-        Intent moreDetailsIntent = new Intent(LoginActivity.this, HomePageActivity.class);
-        Toast.makeText(getApplicationContext(), "Welcome " + u.name +
-                ", You are now logged in.", Toast.LENGTH_SHORT).show();
-        startActivity(moreDetailsIntent);
+    public void onLoginSuccess() {
+        session.createLoginSession(user.name, user.email, result);  //result is token to be saved
+        Intent intent = new Intent(this, HomePageActivity.class);
+        Toast.makeText(getApplicationContext(), "Welcome user, You are now logged in.",
+                Toast.LENGTH_SHORT).show();
+        startActivity(intent);
     }
 
     public void onLoginFailed() {
@@ -120,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }
 
-    private class GetUserAsyncTask extends AsyncTask<User, Void, ArrayList<User>> {
+    private class GetUserAsyncTask extends AsyncTask<User, Void, JSONObject> {
         String server_output = null;
         String temp_output = null;
 
@@ -134,86 +145,81 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected ArrayList<User> doInBackground(User... arg0) {
+        protected JSONObject doInBackground(User... arg0) {
 
-            ArrayList<User> users = new ArrayList<>();  //list of all the users in db
+            JSONObject jObj = null;
+            String json = "";
+
             try {
+                User user = arg0[0];
 
                 UserQueryBuilder qb = new UserQueryBuilder();
-                URL url = new URL(qb.buildUsersGetURL());
-                HttpURLConnection conn = (HttpURLConnection) url
-                        .openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Accept", "application/json");
 
-                if (conn.getResponseCode() != 200) {
-                    throw new RuntimeException("Failed : HTTP error code : "
-                            + conn.getResponseCode());
+                URL url = new URL("http://52.192.70.192:80/login");
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+
+                conn.setRequestMethod("POST");
+
+                conn.setRequestProperty("Content-Type", "application/json");
+
+                OutputStream os = conn.getOutputStream();
+                os.write(qb.createUser(user).getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = conn.getInputStream();
+
+                try {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    is.close();
+                    json = sb.toString();
+
+                } catch (Exception e) {
+                    return null;
                 }
 
-                BufferedReader br = new BufferedReader(new InputStreamReader(
-                        (conn.getInputStream())));
 
-                while ((temp_output = br.readLine()) != null) {
-                    server_output = temp_output;
+                try {
+                    jObj = new JSONObject(json);
+                } catch (JSONException e) {
+                    return null;
                 }
 
-                // create a basic db list
-                String mongoarray = "{ artificial_basicdb_list: " + server_output + "}";
-                Object o = com.mongodb.util.JSON.parse(mongoarray);
+                return jObj;
 
-
-                DBObject dbObj = (DBObject) o;
-                BasicDBList usersList = (BasicDBList) dbObj.get("artificial_basicdb_list");
-
-                for (Object obj : usersList) {
-                    DBObject userObj = (DBObject) obj;
-
-                    User temp = new User();
-
-                    temp.setUser_id(userObj.get("_id").toString());
-                    temp.setName(userObj.get("name").toString());
-                    temp.setEmail(userObj.get("email").toString());
-                    temp.setPassword(userObj.get("password").toString());
-                    temp.setSavedplaces(userObj.get("savedplaces").toString());
-
-                    BasicDBList ratingsList = (BasicDBList) userObj.get("ratings");
-                    BasicDBObject[] ratingsArr = ratingsList.toArray(new BasicDBObject[0]);
-                    temp.setRatings(ratingsArr);
-
-                    users.add(temp);
-                }
-
-            } catch (Exception e) {
-                e.getMessage();
+            } catch (IOException e) {
+                return null;
             }
 
-            return users;
         }
 
-        protected void onPostExecute(ArrayList<User> returnValues) {
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
             if (progressDialog != null && progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
 
-            if (returnValues.size() != 0) {
-                String email = _emailText.getText().toString();
-                String password = _passwordText.getText().toString();
-                progressDialog.dismiss();
-                for (User x : returnValues) {
-                    if (x.email.equals(email) && x.password.equals(password)) {
-                        onLoginSuccess(x);
-                        break;
-                    }
-                }
-
-                if (!UserStatus.LoginStatus)
-                    Toast.makeText(getApplicationContext(), "Incorrent Username or Password", Toast.LENGTH_SHORT).show();
-
-                _loginButton.setEnabled(true);
-            } else {
+            if (jsonObject == null) {
                 onLoginFailed();
-            }
+            } else
+                try {
+                    if (jsonObject.getString("response").equals("SUCCESS")) {
+                        result = jsonObject.getString("result");    //this result is to be used as signin token
+                        onLoginSuccess(); //TODO: have to edit signupsuccess
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
         }
     }
 
