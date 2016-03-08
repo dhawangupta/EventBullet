@@ -54,8 +54,9 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
             CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
                     Long.parseLong(holder.item.getTimings()),
                     System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
-            holder.eventTimings.setText("starting "+timeAgo);
-        }catch (Exception e){}
+            holder.eventTimings.setText("starting " + timeAgo);
+        } catch (Exception e) {
+        }
 //
 //        // Chcek for empty status message
 //        if (!TextUtils.isEmpty(holder.item.getStatus())) {
@@ -84,7 +85,7 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
 
         // Feed image
         if (holder.item.getImageURL() != null) {
-
+            holder.feedImageView.setDefaultImageResId(R.drawable.loader);
             holder.feedImageView.setImageUrl(holder.item.getImageURL().split(",")[0], imageLoader);
             holder.feedImageView.setVisibility(View.VISIBLE);
             holder.feedImageView
@@ -129,6 +130,7 @@ public class MyFeedItemRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedIt
             eventType = (TextView) convertView.findViewById(R.id.eventType);
 //            profilePic = (NetworkImageView) convertView.findViewById(R.id.profilePic);
             feedImageView = (FeedImageView) convertView.findViewById(R.id.eventImage);
+
         }
     }
 }
