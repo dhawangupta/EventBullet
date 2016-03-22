@@ -215,6 +215,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     if (jsonObject.getString("response").equals("SUCCESS")) {
                         result = jsonObject.getString("result");    //this result is to be used as signin token
+                        user.setName(jsonObject.getString("name"));
                         onLoginSuccess(); //TODO: have to edit signupsuccess
                     }
                 } catch (JSONException e) {
