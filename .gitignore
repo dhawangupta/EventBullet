@@ -34,3 +34,7 @@ local.properties
 */.DS_Store
 /release.keystore
 /release.properties
+app/src/main/java/com/placediscovery/AWSClasses/Constants.java
+app/build.gradle
+app/src/main/java/com/placediscovery/MongoLabPlace/PlaceQueryBuilder.java
+app/src/main/java/com/placediscovery/MongoLabUser/UserQueryBuilder.java
